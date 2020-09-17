@@ -5,20 +5,16 @@ import java.sql.Date;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 
 import csg.monthly.expensies.domain.Item;
 import csg.monthly.expensies.domain.Tag;
-import csg.monthly.expensies.domain.repository.ItemRepository;
-import csg.monthly.expensies.domain.service.ItemService;
-import csg.monthly.expensies.domain.service.TagService;
-import csg.monthly.expensies.practice.PrioGroupRepository;
-import csg.monthly.expensies.practice.Test;
+import csg.monthly.expensies.view.MonthlyExpensesView;
 
 @SpringBootApplication
-public class Application {
+public class Application extends MonthlyExpensesView {
 
     private static ApplicationContext APPLICATION_CONTEXT = null;
 
@@ -29,13 +25,11 @@ public class Application {
         return APPLICATION_CONTEXT;
     }
 
-    public static void main(final String...args){
-        SpringApplication.run(Application.class);
-//        test();
-
-        final ItemService itemService = getApplicationContext().getBean(ItemService.class);
-        itemService.save(getDummyItem());
-        itemService.getItems().forEach(System.out::println);
+    public static void main(final String... args) {
+        new SpringApplicationBuilder(Application.class).headless(false).run(args);
+        //        final ItemService itemService = getApplicationContext().getBean(ItemService.class);
+        //        itemService.save(getDummyItem());
+        //        itemService.getItems().forEach(System.out::println);
     }
 
     private static Tag getDummyTag() {
@@ -48,15 +42,8 @@ public class Application {
         return new Item("Dummy " + item, getDummyTag(), 9, Date.valueOf("2020-3-05"));
     }
 
-    private static void test() {
-        Test test = getApplicationContext().getBean(Test.class);
-        test.print();
-        PrioGroupRepository repo = getApplicationContext().getBean(PrioGroupRepository.class);
-        repo.findAll().forEach(System.out::println);
-    }
-
     @PostConstruct
-    public void postContruct() {
+    public void postConstruct() {
         APPLICATION_CONTEXT = applicationContext;
     }
 

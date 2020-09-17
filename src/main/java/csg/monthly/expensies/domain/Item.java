@@ -11,7 +11,10 @@ import javax.persistence.OneToOne;
 
 @Entity(name = "Item")
 public class Item {
+
     @Id
+    private int id;
+
     private String name;
 
     @OneToOne
@@ -21,24 +24,37 @@ public class Item {
     private int amount;
     @Column(name = "is_income")
     private boolean isIncome;
-    @Column(name = "is_end_month")
-    private boolean isEndMonth;
+    @Column(name = "is_new_month")
+    private boolean isNewMonth;
     private Date date;
+    private int year;
+    private int month;
 
     public Item() {
     }
 
     public Item(final String name, final Tag tag, final int amount, final Date date) {
-        this(name, tag, amount, false, false, date);
+        this(name, tag, amount, false, false, date, date.getYear(), date.getMonth());
     }
 
-    public Item(final String name, final Tag tag, final int amount, final boolean isIncome, final boolean isEndMonth, final Date date) {
+    public Item(final String name, final Tag tag, final int amount, final boolean isIncome, final boolean isNewMonth, final Date date, final int year,
+                final int month) {
         this.name = name;
         this.tag = tag;
         this.amount = amount;
         this.isIncome = isIncome;
-        this.isEndMonth = isEndMonth;
+        this.isNewMonth = isNewMonth;
         this.date = date;
+        this.year = year;
+        this.month = month;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(final int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -73,12 +89,12 @@ public class Item {
         this.isIncome = income;
     }
 
-    public boolean isEndMonth() {
-        return isEndMonth;
+    public boolean isNewMonth() {
+        return isNewMonth;
     }
 
-    public void setEndMonth(final boolean endMonth) {
-        this.isEndMonth = endMonth;
+    public void setNewMonth(final boolean newMonth) {
+        this.isNewMonth = newMonth;
     }
 
     public Date getDate() {
@@ -89,15 +105,34 @@ public class Item {
         this.date = date;
     }
 
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(final int year) {
+        this.year = year;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(final int month) {
+        this.month = month;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Item{");
-        sb.append("name='").append(name).append('\'');
+        sb.append("id=").append(id);
+        sb.append(", name='").append(name).append('\'');
         sb.append(", tag=").append(tag);
         sb.append(", amount=").append(amount);
         sb.append(", isIncome=").append(isIncome);
-        sb.append(", isEndMonth=").append(isEndMonth);
+        sb.append(", isNewMonth=").append(isNewMonth);
         sb.append(", date=").append(date);
+        sb.append(", year=").append(year);
+        sb.append(", month=").append(month);
         sb.append('}');
         return sb.toString();
     }
