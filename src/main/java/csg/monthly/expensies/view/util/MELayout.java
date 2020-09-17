@@ -19,9 +19,6 @@ public interface MELayout extends LayoutManager {
     }
 
     default void layoutContainer(final Container parent) {
-//        Arrays.stream(parent.getComponents()).forEach(component -> component.setBounds(getRectangleOfComponent(component.getName())));
         Arrays.stream(parent.getComponents()).forEach(component -> component.setBounds(Name.valueOf(component.getName()).getRectangle()));
     }
-
-//    Rectangle getRectangleOfComponent(String name);
 }

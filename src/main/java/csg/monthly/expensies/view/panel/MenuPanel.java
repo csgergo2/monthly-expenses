@@ -1,9 +1,7 @@
 package csg.monthly.expensies.view.panel;
 
-import java.awt.*;
 import java.awt.event.ActionEvent;
 
-import csg.monthly.expensies.exception.NotSupportedNameException;
 import csg.monthly.expensies.view.util.MEButton;
 import csg.monthly.expensies.view.util.MELayout;
 import csg.monthly.expensies.view.util.MEPanel;

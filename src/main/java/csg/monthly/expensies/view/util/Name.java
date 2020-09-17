@@ -6,7 +6,6 @@ import static csg.monthly.expensies.view.MonthlyExpensesView.MEV_WINDOW_WIDTH;
 import java.awt.*;
 
 public enum Name {
-    //    MONTHLY_EXPENSES_VIEW,
     MENU_PANEL(0, 0, MEV_WINDOW_WIDTH, MEV_WINDOW_HEIGHT),
     NEW_ITEM_BUTTON(10, 10, 100, 30),
 

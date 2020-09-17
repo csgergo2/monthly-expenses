@@ -2,6 +2,7 @@ package csg.monthly.expensies.view.panel;
 
 import static csg.monthly.expensies.view.util.Name.ITEM_AMOUNT;
 import static csg.monthly.expensies.view.util.Name.ITEM_AMOUNT_LABEL;
+import static csg.monthly.expensies.view.util.Name.ITEM_BACK_BUTTON;
 import static csg.monthly.expensies.view.util.Name.ITEM_DATE;
 import static csg.monthly.expensies.view.util.Name.ITEM_DATE_LABEL;
 import static csg.monthly.expensies.view.util.Name.ITEM_INCOME_FLAG;
@@ -65,7 +66,6 @@ public class NewItemPanel extends MEPanel implements MELayout {
     private METextField itemYear = getYearTextField();
     private MEComboBox<Month> itemMonth = getMonthComboBox();
 
-
     private NewItemPanel(final Name name) {
         super(name);
         setLayout(this);
@@ -87,6 +87,7 @@ public class NewItemPanel extends MEPanel implements MELayout {
         add(itemMonth);
         add(new MELabel(ITEM_MONTH_LABEL, "Hónap:"));//todo english
         add(new MEButton(ITEM_SAVE_BUTTON, "Mentés", this::saveItem));//todo english
+        add(new MEButton(ITEM_BACK_BUTTON, "Vissza", this::backToMenuPanel));//todo english
     }
 
     private void saveItem(ActionEvent event) {
@@ -103,6 +104,11 @@ public class NewItemPanel extends MEPanel implements MELayout {
         itemAmount.setText("");
         itemNewMonth.setSelected(false);
         itemIncome.setSelected(false);
+    }
+
+    private void backToMenuPanel(ActionEvent event) {
+        setVisible(false);
+        MenuPanel.MENU_PANEL.setVisible(true);
     }
 
     @Override

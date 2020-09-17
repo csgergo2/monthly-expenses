@@ -4,7 +4,6 @@ import javax.swing.*;
 
 import csg.monthly.expensies.view.panel.MenuPanel;
 import csg.monthly.expensies.view.panel.NewItemPanel;
-import csg.monthly.expensies.view.util.Name;
 
 public class MonthlyExpensesView extends JFrame {
     private static final String TITLE = "Monthly Expenses";//todo english
@@ -13,7 +12,6 @@ public class MonthlyExpensesView extends JFrame {
 
     public MonthlyExpensesView() {
         this.setTitle(TITLE);
-//        this.setName(Name.MONTHLY_EXPENSES_VIEW.name());
         this.setSize(MEV_WINDOW_WIDTH, MEV_WINDOW_HEIGHT);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
