@@ -7,7 +7,7 @@ import java.awt.*;
 
 import javax.swing.*;
 
-public abstract class MEPanel extends JPanel {
+public abstract class MEPanel extends JPanel implements MELayout {
 
     public MEPanel(Name name) {
         this(name, 0, 0, MEV_WINDOW_WIDTH, MEV_WINDOW_HEIGHT, null);
@@ -19,6 +19,7 @@ public abstract class MEPanel extends JPanel {
         setLocation(x, y);
         setLayout(layout);
         setBackground(Color.decode("#e3d8b3"));
+        setLayout(this);
         super.setVisible(false);
     }
 }

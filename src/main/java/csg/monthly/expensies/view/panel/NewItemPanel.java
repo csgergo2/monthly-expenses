@@ -35,12 +35,11 @@ import csg.monthly.expensies.view.util.MECheckBox;
 import csg.monthly.expensies.view.util.MEComboBox;
 import csg.monthly.expensies.view.util.MEDatePicker;
 import csg.monthly.expensies.view.util.MELabel;
-import csg.monthly.expensies.view.util.MELayout;
 import csg.monthly.expensies.view.util.MEPanel;
 import csg.monthly.expensies.view.util.METextField;
 import csg.monthly.expensies.view.util.Name;
 
-public class NewItemPanel extends MEPanel implements MELayout {
+public class NewItemPanel extends MEPanel {
     public static final NewItemPanel NEW_ITEM_PANEL = new NewItemPanel(Name.NEW_ITEM_PANEL);
 
     private static METextField getYearTextField() {
@@ -68,7 +67,6 @@ public class NewItemPanel extends MEPanel implements MELayout {
 
     private NewItemPanel(final Name name) {
         super(name);
-        setLayout(this);
 
         add(itemName);
         add(new MELabel(ITEM_NAME_LABEL, "Item:"));//todo english
@@ -92,7 +90,8 @@ public class NewItemPanel extends MEPanel implements MELayout {
 
     private void saveItem(ActionEvent event) {
         if (itemName.getText().isEmpty() || itemAmount.getText().isEmpty() || itemYear.getText().isEmpty()) {
-            throw new MonthlyExpensesException("Empty field at new item; name: " + itemName.getText() + "; amount: " + itemAmount.getText() + "; year: " + itemYear.getText());
+            throw new MonthlyExpensesException(
+                    "Empty field at new item; name: " + itemName.getText() + "; amount: " + itemAmount.getText() + "; year: " + itemYear.getText());
         }
         final Item item =
                 new Item(itemName.getText(), (Tag) itemTags.getSelectedItem(), Integer.valueOf(itemAmount.getText()), itemIncome.isSelected(),
