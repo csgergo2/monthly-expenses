@@ -5,6 +5,8 @@ import static csg.monthly.expensies.view.util.Name.ITEMS_CALCULATE_MONTH_BUTTON;
 import static csg.monthly.expensies.view.util.Name.ITEMS_INCOMES_TABLE;
 import static csg.monthly.expensies.view.util.Name.ITEMS_MONTH_SELECTOR;
 import static csg.monthly.expensies.view.util.Name.ITEMS_OUTGOINGS_TABLE;
+import static csg.monthly.expensies.view.util.Name.ITEMS_SUM_INCOMES;
+import static csg.monthly.expensies.view.util.Name.ITEMS_SUM_OUTGOINGS;
 import static csg.monthly.expensies.view.util.Name.ITEMS_YEAR_SELECTOR;
 
 import java.awt.event.ActionEvent;
@@ -22,6 +24,7 @@ import csg.monthly.expensies.view.util.Name;
 import csg.swing.CsGButton;
 import csg.swing.CsGComboBox;
 import csg.swing.CsGHtmlBuilder;
+import csg.swing.CsGLabel;
 import csg.swing.CsGPanel;
 import csg.swing.CsGScrollableLabel;
 
@@ -41,6 +44,8 @@ public class ItemsPanel extends CsGPanel {
     private CsGComboBox<Month> monthSelector = createMonthSelector();
     private CsGScrollableLabel tableOfOutgoings = new CsGScrollableLabel(ITEMS_OUTGOINGS_TABLE, "");
     private CsGScrollableLabel tableOfIncomes = new CsGScrollableLabel(ITEMS_INCOMES_TABLE, "");
+    private CsGLabel sumOutgoings = new CsGLabel(ITEMS_SUM_OUTGOINGS, "");
+    private CsGLabel sumIncomes = new CsGLabel(ITEMS_SUM_INCOMES, "");
 
     private ItemsPanel() {
         super(Name.ITEMS_PANEL, MELayout.LAYOUT);
@@ -53,6 +58,8 @@ public class ItemsPanel extends CsGPanel {
 
         add(tableOfOutgoings);
         add(tableOfIncomes);
+        add(sumOutgoings);
+        add(sumIncomes);
     }
 
     @Override
@@ -68,20 +75,25 @@ public class ItemsPanel extends CsGPanel {
     private void calculateMonth(ActionEvent event) {
         ItemRepository itemRepository = Application.getBean(ItemRepository.class);
         List<Item> items = itemRepository.findAllByYearAndMonth((int) yearSelector.getSelectedItem(), (Month) monthSelector.getSelectedItem());
-        setTable(items.stream().filter(item -> !item.isIncome()).collect(Collectors.toList()), tableOfOutgoings);
-        setTable(items.stream().filter(Item::isIncome).collect(Collectors.toList()), tableOfIncomes);
+        setTable(items.stream().filter(item -> !item.isIncome()).collect(Collectors.toList()), tableOfOutgoings, sumOutgoings,
+                "Kiadások összesen: ");//todo english
+        setTable(items.stream().filter(Item::isIncome).collect(Collectors.toList()), tableOfIncomes, sumIncomes,
+                "Bevételek összesen: ");//todo english
     }
 
-    private void setTable(List<Item> items, CsGScrollableLabel itemsTable) {
+    private void setTable(List<Item> items, CsGScrollableLabel itemsTable, CsGLabel sum, String sumTextStart) {
         String[][] rows = new String[items.size()][4];
+        int sumAmount = 0;
         for (int i = 0; i < items.size(); i++) {
             rows[i][0] = items.get(i).getDate().toLocalDate().format(DATE_TIME_FORMATTER);
             rows[i][1] = items.get(i).getName();
             rows[i][2] = Integer.toString(items.get(i).getAmount());
             rows[i][3] = items.get(i).getTag().getName();
+            sumAmount += items.get(i).getAmount();
         }
         itemsTable.setText(CsGHtmlBuilder.createHtmlTable(TABLE_HEADERS, rows));
         itemsTable.getVerticalScrollBar().setValue(itemsTable.getVerticalScrollBar().getMaximum());
+        sum.setText(sumTextStart + sumAmount);
     }
 
     private void backToMenuPanel(ActionEvent event) {
