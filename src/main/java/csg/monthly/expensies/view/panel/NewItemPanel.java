@@ -40,7 +40,7 @@ import csg.monthly.expensies.view.util.METextField;
 import csg.monthly.expensies.view.util.Name;
 
 public class NewItemPanel extends MEPanel {
-    public static final NewItemPanel NEW_ITEM_PANEL = new NewItemPanel(Name.NEW_ITEM_PANEL);
+    public static final NewItemPanel NEW_ITEM_PANEL = new NewItemPanel();
 
     private static METextField getYearTextField() {
         METextField itemYear = new METextField(ITEM_YEAR, true);
@@ -65,8 +65,8 @@ public class NewItemPanel extends MEPanel {
     private METextField itemYear = getYearTextField();
     private MEComboBox<Month> itemMonth = getMonthComboBox();
 
-    private NewItemPanel(final Name name) {
-        super(name);
+    private NewItemPanel() {
+        super(Name.NEW_ITEM_PANEL);
 
         add(itemName);
         add(new MELabel(ITEM_NAME_LABEL, "Item:"));//todo english

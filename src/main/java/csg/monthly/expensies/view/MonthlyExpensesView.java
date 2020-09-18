@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import csg.monthly.expensies.view.panel.MenuPanel;
 import csg.monthly.expensies.view.panel.NewItemPanel;
+import csg.monthly.expensies.view.panel.NewTagPanel;
 
 public class MonthlyExpensesView extends JFrame {
     private static final String TITLE = "Monthly Expenses";//todo english
@@ -20,6 +21,7 @@ public class MonthlyExpensesView extends JFrame {
 
         add(MenuPanel.MENU_PANEL);
         add(NewItemPanel.NEW_ITEM_PANEL);
+        add(NewTagPanel.NEW_TAG_PANEL);
 
         this.setVisible(true);
     }
