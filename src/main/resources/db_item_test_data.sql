@@ -3,7 +3,7 @@ INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Tesco", "Auchan
 INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Spar", "Auchan", 10, '2018-12-24', 2018, 'DECEMBER');
 INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Benzin", "Benzin", 20, '2018-12-30', 2018, 'DECEMBER');
 INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Auchan", "Auchan", 10, '2019-1-01', 2018, 'DECEMBER');
-INSERT INTO ITEM (name, tag, amount, date, year, month, is_income, is_end_month) values ("Fizetés", "Fizetés", 200, '2019-1-07', 2019, 'DECEMBER', true, true);
+INSERT INTO ITEM (name, tag, amount, date, year, month, is_income, is_end_month) values ("Fizetés", "Fizetés", 200, '2019-1-07', 2018, 'DECEMBER', true, true);
 
 INSERT INTO ITEM (name, tag, amount, date, year, month) values ("KP Felvétel", "KP Felvétel", 100, '2019-1-08', 2019, 'JANUARY');
 INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Tesco", "Auchan", 10, '2019-1-09', 2019, 'JANUARY');
@@ -82,7 +82,13 @@ INSERT INTO ITEM (name, tag, amount, date, year, month, is_income, is_end_month)
 
 INSERT INTO ITEM (name, tag, amount, date, year, month) values ("KP Felvétel", "KP Felvétel", 100, '2020-8-31', 2020, 'SEPTEMBER');
 INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Tesco", "Auchan", 10, '2020-9-09', 2020, 'SEPTEMBER');
+INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Tesco", "Auchan", 10, '2020-9-10', 2020, 'SEPTEMBER');
+INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Tesco", "Auchan", 10, '2020-9-11', 2020, 'SEPTEMBER');
+INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Tesco", "Auchan", 10, '2020-9-11', 2020, 'SEPTEMBER');
+INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Tesco", "Auchan", 10, '2020-9-12', 2020, 'SEPTEMBER');
 INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Spar", "Auchan", 10, '2020-9-15', 2020, 'SEPTEMBER');
+INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Spar", "Auchan", 10, '2020-9-16', 2020, 'SEPTEMBER');
+INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Spar", "Auchan", 10, '2020-9-17', 2020, 'SEPTEMBER');
 INSERT INTO ITEM (name, tag, amount, date, year, month, is_income) values ("5-ös lottó", "Lottó", 20, '2020-9-18', 2020, 'SEPTEMBER', true);
 INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Benzin", "Benzin", 20, '2020-9-27', 2020, 'SEPTEMBER');
 COMMIT;

@@ -68,26 +68,20 @@ public class ItemsPanel extends CsGPanel {
     private void calculateItemsTable(ActionEvent event) {
         ItemRepository itemRepository = Application.getBean(ItemRepository.class);
         List<Item> items = itemRepository.findAllByYearAndMonth((int) yearSelector.getSelectedItem(), (Month) monthSelector.getSelectedItem());
-        //outgoings
-        List<Item> outgoings = items.stream().filter(item -> !item.isIncome()).collect(Collectors.toList());
-        String[][] rows = new String[outgoings.size()][4];
-        for (int i = 0; i < outgoings.size(); i++) {
-            rows[i][0] = outgoings.get(i).getDate().toLocalDate().format(DATE_TIME_FORMATTER);
-            rows[i][1] = outgoings.get(i).getName();
-            rows[i][2] = Integer.toString(outgoings.get(i).getAmount());
-            rows[i][3] = outgoings.get(i).getTag().getName();
+        setTable(items.stream().filter(item -> !item.isIncome()).collect(Collectors.toList()), tableOfOutgoings);
+        setTable(items.stream().filter(Item::isIncome).collect(Collectors.toList()), tableOfIncomes);
+    }
+
+    private void setTable(List<Item> items, CsGScrollableLabel itemsTable) {
+        String[][] rows = new String[items.size()][4];
+        for (int i = 0; i < items.size(); i++) {
+            rows[i][0] = items.get(i).getDate().toLocalDate().format(DATE_TIME_FORMATTER);
+            rows[i][1] = items.get(i).getName();
+            rows[i][2] = Integer.toString(items.get(i).getAmount());
+            rows[i][3] = items.get(i).getTag().getName();
         }
-        tableOfOutgoings.setText(CsGHtmlBuilder.createHtmlTable(TABLE_HEADERS, rows));
-        //incomes
-        List<Item> incomes = items.stream().filter(Item::isIncome).collect(Collectors.toList());
-        rows = new String[incomes.size()][4];
-        for (int i = 0; i < incomes.size(); i++) {
-            rows[i][0] = incomes.get(i).getDate().toLocalDate().format(DATE_TIME_FORMATTER);
-            rows[i][1] = incomes.get(i).getName();
-            rows[i][2] = Integer.toString(incomes.get(i).getAmount());
-            rows[i][3] = incomes.get(i).getTag().getName();
-        }
-        tableOfIncomes.setText(CsGHtmlBuilder.createHtmlTable(TABLE_HEADERS, rows));
+        itemsTable.setText(CsGHtmlBuilder.createHtmlTable(TABLE_HEADERS, rows));
+        itemsTable.getVerticalScrollBar().setValue(itemsTable.getVerticalScrollBar().getMaximum());
     }
 
     private void backToMenuPanel(ActionEvent event) {
