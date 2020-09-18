@@ -23,10 +23,12 @@ import csg.monthly.expensies.view.util.MELayout;
 import csg.monthly.expensies.view.util.Name;
 import csg.swing.CsGButton;
 import csg.swing.CsGComboBox;
-import csg.swing.CsGHtmlBuilder;
 import csg.swing.CsGLabel;
 import csg.swing.CsGPanel;
 import csg.swing.CsGScrollableLabel;
+import csg.swing.html.CsGHtmlBuilder;
+import csg.swing.html.CsGHtmlHeadBuilder;
+import csg.swing.html.CsGHtmlTableBodyBuilder;
 
 public class ItemsPanel extends CsGPanel {
     public static final ItemsPanel ITEMS_PANEL = new ItemsPanel();
@@ -91,9 +93,20 @@ public class ItemsPanel extends CsGPanel {
             rows[i][3] = items.get(i).getTag().getName();
             sumAmount += items.get(i).getAmount();
         }
-        itemsTable.setText(CsGHtmlBuilder.createHtmlTable(TABLE_HEADERS, rows));
+        itemsTable.setText(buildHtmlTable(rows));
         itemsTable.getVerticalScrollBar().setValue(itemsTable.getVerticalScrollBar().getMaximum());
         sum.setText(sumTextStart + sumAmount);
+    }
+
+    private String buildHtmlTable(String[][] rows) {
+        final CsGHtmlHeadBuilder headerBuilder = new CsGHtmlHeadBuilder();
+        headerBuilder.addStyle("table", "border", "1px solid black");
+        headerBuilder.addStyle("tr", "border-bottom", "1px solid black");
+        headerBuilder.addStyle("th", "padding", "5px");
+        headerBuilder.addStyle("td", "padding", "5px");
+        headerBuilder.addStyle("td", "border-right", "1px solid black");
+        final CsGHtmlTableBodyBuilder tableBuilder = new CsGHtmlTableBodyBuilder(TABLE_HEADERS, rows);
+        return new CsGHtmlBuilder(headerBuilder, tableBuilder).build();
     }
 
     private void backToMenuPanel(ActionEvent event) {

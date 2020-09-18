@@ -17,11 +17,12 @@ import csg.monthly.expensies.domain.repository.TagRepository;
 import csg.monthly.expensies.exception.MonthlyExpensesException;
 import csg.monthly.expensies.view.util.MELayout;
 import csg.swing.CsGButton;
-import csg.swing.CsGHtmlBuilder;
 import csg.swing.CsGLabel;
 import csg.swing.CsGPanel;
 import csg.swing.CsGScrollableLabel;
 import csg.swing.CsGTextField;
+import csg.swing.html.CsGHtmlBodyBuilder;
+import csg.swing.html.CsGHtmlBuilder;
 
 public class NewTagPanel extends CsGPanel {
     public static final NewTagPanel NEW_TAG_PANEL = new NewTagPanel();
@@ -56,9 +57,9 @@ public class NewTagPanel extends CsGPanel {
     }
 
     private String listTagsSeparatedByLines() {
-        final CsGHtmlBuilder builder = new CsGHtmlBuilder();
-        builder.listToLines(Application.getBean(TagRepository.class).findAll());
-        return builder.build();
+        final CsGHtmlBodyBuilder builder = new CsGHtmlBodyBuilder();
+        Application.getBean(TagRepository.class).findAll().forEach(tag -> builder.addText("p", tag.getName()));
+        return new CsGHtmlBuilder(builder).build();
     }
 
     private void backToMenuPanel(ActionEvent event) {
@@ -70,6 +71,7 @@ public class NewTagPanel extends CsGPanel {
     public void setVisible(boolean visible) {
         if (visible) {
             tagTags.setText(listTagsSeparatedByLines());
+            System.out.println(listTagsSeparatedByLines());
         }
         super.setVisible(visible);
     }
