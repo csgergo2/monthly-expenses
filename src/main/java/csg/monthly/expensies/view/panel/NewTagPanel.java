@@ -49,7 +49,10 @@ public class NewTagPanel extends CsGPanel {
         if (tagName.getText().isEmpty() || tagPrio.getText().isEmpty()) {
             throw new MonthlyExpensesException("Empty value via creating tag; name: " + tagName.getText() + "; prio: " + tagPrio.getText());
         }
-        final Tag tag = new Tag(tagName.getText(), Integer.valueOf(tagPrio.getText()));
+        final Tag tag = new Tag();
+        tag.setName(tagName.getText());
+        tag.setPrio(Integer.valueOf(tagPrio.getText()));
+        //todo set prio group
         Application.getBean(TagRepository.class).save(tag);
         tagName.setText("");
         tagPrio.setText("");
@@ -71,7 +74,6 @@ public class NewTagPanel extends CsGPanel {
     public void setVisible(boolean visible) {
         if (visible) {
             tagTags.setText(listTagsSeparatedByLines());
-            System.out.println(listTagsSeparatedByLines());
         }
         super.setVisible(visible);
     }

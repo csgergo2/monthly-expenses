@@ -8,15 +8,19 @@ import javax.persistence.Id;
 @Entity(name = "Tag")
 public class Tag {
     @Id
+    private int id;
     private String name;
     private int prio;
 
     public Tag() {
     }
 
-    public Tag(final String name, final int prio) {
-        this.name = name;
-        this.prio = prio;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(final int id) {
+        this.id = id;
     }
 
     public String getName() {
