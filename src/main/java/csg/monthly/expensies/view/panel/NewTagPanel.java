@@ -48,7 +48,7 @@ public class NewTagPanel extends CsGPanel {
             throw new MonthlyExpensesException("Empty value via creating tag; name: " + tagName.getText() + "; prio: " + tagPrio.getText());
         }
         final Tag tag = new Tag(tagName.getText(), Integer.valueOf(tagPrio.getText()));
-        Application.getApplicationContext().getBean(TagRepository.class).save(tag);
+        Application.getBean(TagRepository.class).save(tag);
         tagName.setText("");
         tagPrio.setText("");
     }

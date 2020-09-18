@@ -98,7 +98,7 @@ public class NewItemPanel extends CsGPanel {
                 new Item(itemName.getText(), (Tag) itemTags.getSelectedItem(), Integer.valueOf(itemAmount.getText()), itemIncome.isSelected(),
                         itemNewMonth.isSelected(), itemDate.getDate(), Integer.valueOf(itemYear.getText()),
                         ((Month) itemMonth.getSelectedItem()).getMonthOfYear());
-        final ItemRepository itemRepository = Application.getApplicationContext().getBean(ItemRepository.class);
+        final ItemRepository itemRepository = Application.getBean(ItemRepository.class);
         itemRepository.save(item);
         itemName.setText("");
         itemAmount.setText("");
@@ -115,7 +115,7 @@ public class NewItemPanel extends CsGPanel {
     public void setVisible(boolean visible) {
         if (visible) {
             //tags
-            final Iterable<Tag> tags = Application.getApplicationContext().getBean(TagRepository.class).findAll();
+            final Iterable<Tag> tags = Application.getBean(TagRepository.class).findAll();
             itemTags.removeAllItems();
             tags.forEach(itemTags::addItem);
         }
