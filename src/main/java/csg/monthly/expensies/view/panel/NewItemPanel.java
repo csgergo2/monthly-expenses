@@ -96,8 +96,7 @@ public class NewItemPanel extends CsGPanel {
         }
         final Item item =
                 new Item(itemName.getText(), (Tag) itemTags.getSelectedItem(), Integer.valueOf(itemAmount.getText()), itemIncome.isSelected(),
-                        itemNewMonth.isSelected(), itemDate.getDate(), Integer.valueOf(itemYear.getText()),
-                        ((Month) itemMonth.getSelectedItem()).getMonthOfYear());
+                        itemNewMonth.isSelected(), itemDate.getDate(), Integer.valueOf(itemYear.getText()), (Month) itemMonth.getSelectedItem());
         final ItemRepository itemRepository = Application.getBean(ItemRepository.class);
         itemRepository.save(item);
         itemName.setText("");

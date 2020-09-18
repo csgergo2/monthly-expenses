@@ -34,6 +34,7 @@ SET SQL_SAFE_UPDATES = 0;
 SET SQL_SAFE_UPDATES = 1;
 commit;
 
+INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Auchan", "Auchan", 10, '2019-3-01', 2019, 'FEBRUARY');
 INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Auchan", "Auchan", 10, '2020-3-01', 2020, 'FEBRUARY');
 INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Spar", "Auchan", 15, '2020-3-01', 2020, 'FEBRUARY');
 INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Tesco", "Auchan", 11, '2020-3-02', 2020, 'FEBRUARY');

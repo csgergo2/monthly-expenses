@@ -3,14 +3,15 @@ package csg.monthly.expensies.domain;
 import java.sql.Date;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
-import csg.monthly.expensies.domain.date.MonthDate;
+import csg.monthly.expensies.domain.date.Month;
 
 @Entity(name = "Item")
 public class Item {
@@ -31,23 +32,24 @@ public class Item {
     private boolean isNewMonth;
     private Date date;
 
-    @Embedded
-    private MonthDate monthDate;
+    private int year;
+    @Enumerated(EnumType.STRING)
+    private Month month;
 
-    public Item() {
-    }
-
-    public Item(final String name, final Tag tag, final int amount, final Date date) {
-        this(name, tag, amount, false, false, date);
-    }
-
-    public Item(final String name, final Tag tag, final int amount, final boolean isIncome, final boolean isNewMonth, final Date date) {
+    public Item(final String name, final Tag tag, final int amount, final boolean isIncome, final boolean isNewMonth, final Date date, final int year,
+                final Month month) {
+        this.id = id;
         this.name = name;
         this.tag = tag;
         this.amount = amount;
         this.isIncome = isIncome;
         this.isNewMonth = isNewMonth;
         this.date = date;
+        this.year = year;
+        this.month = month;
+    }
+
+    public Item() {
     }
 
     public int getId() {
@@ -106,12 +108,20 @@ public class Item {
         this.date = date;
     }
 
-    public MonthDate getMonthDate() {
-        return monthDate;
+    public int getYear() {
+        return year;
     }
 
-    public void setMonthDate(final MonthDate monthDate) {
-        this.monthDate = monthDate;
+    public void setYear(final int year) {
+        this.year = year;
+    }
+
+    public Month getMonth() {
+        return month;
+    }
+
+    public void setMonth(final Month month) {
+        this.month = month;
     }
 
     @Override
@@ -124,7 +134,8 @@ public class Item {
         sb.append(", isIncome=").append(isIncome);
         sb.append(", isNewMonth=").append(isNewMonth);
         sb.append(", date=").append(date);
-        sb.append(", monthDate=").append(monthDate);
+        sb.append(", year=").append(year);
+        sb.append(", month=").append(month);
         sb.append('}');
         return sb.toString();
     }
