@@ -1,6 +1,7 @@
 package csg.monthly.expensies.view.panel;
 
 import static csg.monthly.expensies.view.util.Name.TAG_BACK_BUTTON;
+import static csg.monthly.expensies.view.util.Name.TAG_LIST_LABEL;
 import static csg.monthly.expensies.view.util.Name.TAG_NAME;
 import static csg.monthly.expensies.view.util.Name.TAG_NAME_LABEL;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL;
@@ -16,20 +17,18 @@ import csg.monthly.expensies.domain.repository.TagRepository;
 import csg.monthly.expensies.exception.MonthlyExpensesException;
 import csg.monthly.expensies.view.util.MELayout;
 import csg.swing.CsGButton;
+import csg.swing.CsGHtmlBuilder;
 import csg.swing.CsGLabel;
 import csg.swing.CsGPanel;
+import csg.swing.CsGScrollableLabel;
 import csg.swing.CsGTextField;
-
-//import csg.monthly.expensies.view.util.MEHtmlBuilder;
-
-//import csg.monthly.expensies.view.util.MEScrollableLabel;
 
 public class NewTagPanel extends CsGPanel {
     public static final NewTagPanel NEW_TAG_PANEL = new NewTagPanel();
 
     private CsGTextField tagName = new CsGTextField(TAG_NAME);
     private CsGTextField tagPrio = new CsGTextField(TAG_PRIO, true);
-    //    private MEScrollableLabel tagTags = new MEScrollableLabel(TAG_LIST_LABEL, "");
+    private CsGScrollableLabel tagTags = new CsGScrollableLabel(TAG_LIST_LABEL, "");
 
     private NewTagPanel() {
         super(TAG_PANEL, MELayout.LAYOUT);
@@ -41,6 +40,8 @@ public class NewTagPanel extends CsGPanel {
 
         add(new CsGButton(TAG_SAVE_BUTTON, "Mentés", this::saveTag));//todo english
         add(new CsGButton(TAG_BACK_BUTTON, "Vissza", this::backToMenuPanel));//todo english
+
+        add(tagTags);
     }
 
     private void saveTag(ActionEvent event) {
@@ -51,13 +52,14 @@ public class NewTagPanel extends CsGPanel {
         Application.getBean(TagRepository.class).save(tag);
         tagName.setText("");
         tagPrio.setText("");
+        tagTags.setText(listTagsSeparatedByLines());
     }
 
-    //    private String listTagsSeparatedByLines() {
-    //        final MEHtmlBuilder builder = new MEHtmlBuilder();
-    //        builder.listToLines(Application.getApplicationContext().getBean(TagRepository.class).findAll());
-    //        return builder.build();
-    //    }
+    private String listTagsSeparatedByLines() {
+        final CsGHtmlBuilder builder = new CsGHtmlBuilder(true);
+        builder.listToLines(Application.getBean(TagRepository.class).findAll());
+        return builder.build();
+    }
 
     private void backToMenuPanel(ActionEvent event) {
         setVisible(false);
@@ -66,9 +68,9 @@ public class NewTagPanel extends CsGPanel {
 
     @Override
     public void setVisible(boolean visible) {
-        //        if (visible) {
-        //            tagTags.setText(listTagsSeparatedByLines());
-        //        }
+        if (visible) {
+            tagTags.setText(listTagsSeparatedByLines());
+        }
         super.setVisible(visible);
     }
 }
