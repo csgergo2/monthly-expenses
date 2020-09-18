@@ -1,5 +1,6 @@
 package csg.monthly.expensies.view.panel;
 
+import static csg.monthly.expensies.view.util.Name.ITEMS_BUTTON;
 import static csg.monthly.expensies.view.util.Name.NEW_ITEM_BUTTON;
 import static csg.monthly.expensies.view.util.Name.NEW_TAG_BUTTON;
 
@@ -17,6 +18,7 @@ public class MenuPanel extends CsGPanel {
         super(Name.MENU_PANEL, MELayout.LAYOUT);
         add(new CsGButton(NEW_ITEM_BUTTON, "Új item", this::newItemAction));//todo english
         add(new CsGButton(NEW_TAG_BUTTON, "Új tag", this::newTagAction));//todo english
+        add(new CsGButton(ITEMS_BUTTON, "Itemek", this::itemsPanel));//todo english
 
         setVisible(true);
     }
@@ -29,6 +31,11 @@ public class MenuPanel extends CsGPanel {
     private void newTagAction(ActionEvent event) {
         setVisible(false);
         NewTagPanel.NEW_TAG_PANEL.setVisible(true);
+    }
+
+    private void itemsPanel(ActionEvent event) {
+        setVisible(false);
+        ItemsPanel.ITEMS_PANEL.setVisible(true);
     }
 
 }
