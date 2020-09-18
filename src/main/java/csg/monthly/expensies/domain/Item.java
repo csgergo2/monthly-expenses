@@ -3,11 +3,14 @@ package csg.monthly.expensies.domain;
 import java.sql.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+
+import csg.monthly.expensies.domain.date.MonthDate;
 
 @Entity(name = "Item")
 public class Item {
@@ -27,26 +30,24 @@ public class Item {
     @Column(name = "is_new_month")
     private boolean isNewMonth;
     private Date date;
-    private int year;
-    private int month;
+
+    @Embedded
+    private MonthDate monthDate;
 
     public Item() {
     }
 
     public Item(final String name, final Tag tag, final int amount, final Date date) {
-        this(name, tag, amount, false, false, date, date.getYear(), date.getMonth());
+        this(name, tag, amount, false, false, date);
     }
 
-    public Item(final String name, final Tag tag, final int amount, final boolean isIncome, final boolean isNewMonth, final Date date, final int year,
-                final int month) {
+    public Item(final String name, final Tag tag, final int amount, final boolean isIncome, final boolean isNewMonth, final Date date) {
         this.name = name;
         this.tag = tag;
         this.amount = amount;
         this.isIncome = isIncome;
         this.isNewMonth = isNewMonth;
         this.date = date;
-        this.year = year;
-        this.month = month;
     }
 
     public int getId() {
@@ -105,20 +106,12 @@ public class Item {
         this.date = date;
     }
 
-    public int getYear() {
-        return year;
+    public MonthDate getMonthDate() {
+        return monthDate;
     }
 
-    public void setYear(final int year) {
-        this.year = year;
-    }
-
-    public int getMonth() {
-        return month;
-    }
-
-    public void setMonth(final int month) {
-        this.month = month;
+    public void setMonthDate(final MonthDate monthDate) {
+        this.monthDate = monthDate;
     }
 
     @Override
@@ -131,8 +124,7 @@ public class Item {
         sb.append(", isIncome=").append(isIncome);
         sb.append(", isNewMonth=").append(isNewMonth);
         sb.append(", date=").append(date);
-        sb.append(", year=").append(year);
-        sb.append(", month=").append(month);
+        sb.append(", monthDate=").append(monthDate);
         sb.append('}');
         return sb.toString();
     }

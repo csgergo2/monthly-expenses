@@ -12,6 +12,7 @@ INSERT INTO TAG (name, prio) values ("BKV", 3);
 INSERT INTO TAG (name, prio) values ("KV", 1);
 INSERT INTO TAG (name, prio) values ("Fizetés", 1);
 
+delete from tag where name like "test";
 select * from TAG;
 
 
@@ -24,21 +25,23 @@ CREATE TABLE ITEM (
     is_new_month boolean default false,
     date date,
     year int(4),
-    month int(2),
+    month VARCHAR(50),
     constraint item_on_tag foreign key (tag) references Tag(name)
 );
 delete from ITEM;
 drop table ITEM;
+SET SQL_SAFE_UPDATES = 0;
+SET SQL_SAFE_UPDATES = 1;
 commit;
 
-INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Auchan", "Auchan", 10, '2020-3-01', 2020, 2);
-INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Spar", "Auchan", 15, '2020-3-01', 2020, 2);
-INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Tesco", "Auchan", 11, '2020-3-02', 2020, 2);
-INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Benzin", "Benzin", 20, '2020-3-03', 2020, 2);
-INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Auchan", "Auchan", 15, '2020-3-04', 2020, 3);
-INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Spar", "Auchan", 15, '2020-3-04', 2020, 3);
-INSERT INTO ITEM (name, tag, amount, date, year, month, is_income, is_new_month) values ("Fizetés", "Fizetés", 200, '2020-3-04', 2020, 3, true, true);
-INSERT INTO ITEM (name, tag, amount, date, year, month) values ("KP Felvétel", "KP Felvétel", 100, '2020-3-04', 2020, 3);
-INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Auchan", "Auchan", 12, '2020-3-04', 2020, 3);
+INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Auchan", "Auchan", 10, '2020-3-01', 2020, 'FEBRUARY');
+INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Spar", "Auchan", 15, '2020-3-01', 2020, 'FEBRUARY');
+INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Tesco", "Auchan", 11, '2020-3-02', 2020, 'FEBRUARY');
+INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Benzin", "Benzin", 20, '2020-3-03', 2020, 'FEBRUARY');
+INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Auchan", "Auchan", 15, '2020-3-04', 2020, 'MARCH');
+INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Spar", "Auchan", 15, '2020-3-04', 2020, 'MARCH');
+INSERT INTO ITEM (name, tag, amount, date, year, month, is_income, is_new_month) values ("Fizetés", "Fizetés", 200, '2020-3-04', 2020, 'MARCH', true, true);
+INSERT INTO ITEM (name, tag, amount, date, year, month) values ("KP Felvétel", "KP Felvétel", 100, '2020-3-04', 2020, 'MARCH');
+INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Auchan", "Auchan", 12, '2020-3-04', 2020, 'MARCH');
 
 select * from item;

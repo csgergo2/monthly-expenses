@@ -2,12 +2,21 @@ package csg.monthly.expensies.domain.date;
 
 import java.util.Objects;
 
+import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
 import csg.monthly.expensies.exception.SameMonthDateException;
 
+@Embeddable
 public class MonthDate implements Comparable<MonthDate> {
 
+    @Enumerated(EnumType.STRING)
     private Month month;
     private int year;
+
+    public MonthDate() {
+    }
 
     public MonthDate(final Month month, final int year) {
         this.month = month;
