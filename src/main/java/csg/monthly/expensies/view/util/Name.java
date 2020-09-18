@@ -45,7 +45,7 @@ public enum Name {
     ITEMS_MONTH_SELECTOR(120, 10, 100, 25),
     ITEMS_CALCULATE_TABLE_BUTTON(230, 10, 100, 25),
     ITEMS_BACK_BUTTON(340, 10, 100, 25),
-    ITEMS_TABLE(10, 45, 200, 200);
+    ITEMS_TABLE(10, 45, 500, 200);
 
     private final int x;
     private final int y;

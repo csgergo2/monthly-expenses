@@ -56,7 +56,7 @@ public class NewTagPanel extends CsGPanel {
     }
 
     private String listTagsSeparatedByLines() {
-        final CsGHtmlBuilder builder = new CsGHtmlBuilder(true);
+        final CsGHtmlBuilder builder = new CsGHtmlBuilder();
         builder.listToLines(Application.getBean(TagRepository.class).findAll());
         return builder.build();
     }
