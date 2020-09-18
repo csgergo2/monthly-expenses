@@ -28,22 +28,22 @@ public class Item {
     private int amount;
     @Column(name = "is_income")
     private boolean isIncome;
-    @Column(name = "is_new_month")
-    private boolean isNewMonth;
+    @Column(name = "is_end_month")
+    private boolean isEndMonth;
     private Date date;
 
     private int year;
     @Enumerated(EnumType.STRING)
     private Month month;
 
-    public Item(final String name, final Tag tag, final int amount, final boolean isIncome, final boolean isNewMonth, final Date date, final int year,
+    public Item(final String name, final Tag tag, final int amount, final boolean isIncome, final boolean isEndMonth, final Date date, final int year,
                 final Month month) {
         this.id = id;
         this.name = name;
         this.tag = tag;
         this.amount = amount;
         this.isIncome = isIncome;
-        this.isNewMonth = isNewMonth;
+        this.isEndMonth = isEndMonth;
         this.date = date;
         this.year = year;
         this.month = month;
@@ -92,12 +92,12 @@ public class Item {
         this.isIncome = income;
     }
 
-    public boolean isNewMonth() {
-        return isNewMonth;
+    public boolean isEndMonth() {
+        return isEndMonth;
     }
 
-    public void setNewMonth(final boolean newMonth) {
-        this.isNewMonth = newMonth;
+    public void setEndMonth(final boolean isEndMonth) {
+        this.isEndMonth = isEndMonth;
     }
 
     public Date getDate() {
@@ -132,7 +132,7 @@ public class Item {
         sb.append(", tag=").append(tag);
         sb.append(", amount=").append(amount);
         sb.append(", isIncome=").append(isIncome);
-        sb.append(", isNewMonth=").append(isNewMonth);
+        sb.append(", isEndMonth=").append(isEndMonth);
         sb.append(", date=").append(date);
         sb.append(", year=").append(year);
         sb.append(", month=").append(month);

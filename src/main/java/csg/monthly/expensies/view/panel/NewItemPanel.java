@@ -78,7 +78,7 @@ public class NewItemPanel extends CsGPanel {
         add(itemDate);
         add(new CsGLabel(ITEM_DATE_LABEL, "Dátum:"));//todo english
         add(itemNewMonth);
-        add(new CsGLabel(ITEM_NEW_MONTH_FLAG_LABEL, "Új hónap"));//todo english
+        add(new CsGLabel(ITEM_NEW_MONTH_FLAG_LABEL, "Hó vége"));//todo english
         add(itemIncome);
         add(new CsGLabel(ITEM_INCOME_FLAG_LABEL, "Bevétel"));//todo english
         add(itemYear);
