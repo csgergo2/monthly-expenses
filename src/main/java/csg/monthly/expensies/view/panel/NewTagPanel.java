@@ -14,32 +14,33 @@ import csg.monthly.expensies.Application;
 import csg.monthly.expensies.domain.Tag;
 import csg.monthly.expensies.domain.repository.TagRepository;
 import csg.monthly.expensies.exception.MonthlyExpensesException;
-import csg.monthly.expensies.view.util.MEButton;
-import csg.monthly.expensies.view.util.MELabel;
-import csg.monthly.expensies.view.util.MEPanel;
-import csg.monthly.expensies.view.util.METextField;
+import csg.monthly.expensies.view.util.MELayout;
+import csg.swing.CsGButton;
+import csg.swing.CsGLabel;
+import csg.swing.CsGPanel;
+import csg.swing.CsGTextField;
 
 //import csg.monthly.expensies.view.util.MEHtmlBuilder;
 
 //import csg.monthly.expensies.view.util.MEScrollableLabel;
 
-public class NewTagPanel extends MEPanel {
+public class NewTagPanel extends CsGPanel {
     public static final NewTagPanel NEW_TAG_PANEL = new NewTagPanel();
 
-    private METextField tagName = new METextField(TAG_NAME);
-    private METextField tagPrio = new METextField(TAG_PRIO, true);
+    private CsGTextField tagName = new CsGTextField(TAG_NAME);
+    private CsGTextField tagPrio = new CsGTextField(TAG_PRIO, true);
     //    private MEScrollableLabel tagTags = new MEScrollableLabel(TAG_LIST_LABEL, "");
 
     private NewTagPanel() {
-        super(TAG_PANEL);
+        super(TAG_PANEL, MELayout.LAYOUT);
 
         add(tagName);
-        add(new MELabel(TAG_NAME_LABEL, "Név:"));
+        add(new CsGLabel(TAG_NAME_LABEL, "Név:"));
         add(tagPrio);
-        add(new MELabel(TAG_PRIO_LABEL, "Prio:"));
+        add(new CsGLabel(TAG_PRIO_LABEL, "Prio:"));
 
-        add(new MEButton(TAG_SAVE_BUTTON, "Mentés", this::saveTag));//todo english
-        add(new MEButton(TAG_BACK_BUTTON, "Vissza", this::backToMenuPanel));//todo english
+        add(new CsGButton(TAG_SAVE_BUTTON, "Mentés", this::saveTag));//todo english
+        add(new CsGButton(TAG_BACK_BUTTON, "Vissza", this::backToMenuPanel));//todo english
     }
 
     private void saveTag(ActionEvent event) {

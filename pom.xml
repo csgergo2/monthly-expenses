@@ -39,9 +39,9 @@
 
         <!-- SWING -->
         <dependency>
-            <groupId>org.jdatepicker</groupId>
-            <artifactId>jdatepicker</artifactId>
-            <version>1.3.4</version>
+            <groupId>csg</groupId>
+            <artifactId>csg-swing</artifactId>
+            <version>1.0</version>
         </dependency>
 
     </dependencies>

@@ -1,24 +1,18 @@
 package csg.monthly.expensies.view.util;
 
 import java.awt.*;
-import java.util.Arrays;
 
-public interface MELayout extends LayoutManager {
-    default void addLayoutComponent(final String name, final Component comp) {
+import csg.swing.CsGLayout;
+
+public final class MELayout implements CsGLayout {
+
+    public static final MELayout LAYOUT = new MELayout();
+
+    private MELayout() {
     }
 
-    default void removeLayoutComponent(final Component comp) {
-    }
-
-    default Dimension preferredLayoutSize(final Container parent) {
-        return null;
-    }
-
-    default Dimension minimumLayoutSize(final Container parent) {
-        return null;
-    }
-
-    default void layoutContainer(final Container parent) {
-        Arrays.stream(parent.getComponents()).forEach(component -> component.setBounds(Name.valueOf(component.getName()).getRectangle()));
+    @Override
+    public Rectangle getRectangleForComponentName(final String name) {
+        return Name.valueOf(name).getRectangle();
     }
 }

@@ -1,16 +1,16 @@
 package csg.monthly.expensies.view.util;
 
-import static csg.monthly.expensies.view.MonthlyExpensesView.MEV_WINDOW_HEIGHT;
-import static csg.monthly.expensies.view.MonthlyExpensesView.MEV_WINDOW_WIDTH;
+import static csg.swing.CsGFrameWindow.PREFERRED_HEIGHT;
+import static csg.swing.CsGFrameWindow.PREFERRED_WIDTH;
 
 import java.awt.*;
 
 public enum Name {
-    MENU_PANEL(0, 0, MEV_WINDOW_WIDTH, MEV_WINDOW_HEIGHT),
+    MENU_PANEL(0, 0, PREFERRED_WIDTH, PREFERRED_HEIGHT),
     NEW_ITEM_BUTTON(10, 10, 100, 30),
     NEW_TAG_BUTTON(120, 10, 100, 30),
 
-    NEW_ITEM_PANEL(0, 0, MEV_WINDOW_WIDTH, MEV_WINDOW_HEIGHT),
+    NEW_ITEM_PANEL(0, 0, PREFERRED_WIDTH, PREFERRED_HEIGHT),
     ITEM_NAME(10, 45, 200, 25),
     ITEM_NAME_LABEL(10, 10, 200, 25),
     ITEM_TAG_LIST(220, 45, 100, 25),
@@ -30,16 +30,14 @@ public enum Name {
     ITEM_SAVE_BUTTON(10, 150, 100, 50),
     ITEM_BACK_BUTTON(120, 150, 100, 50),
 
-    TAG_PANEL(0, 0, MEV_WINDOW_WIDTH, MEV_WINDOW_HEIGHT),
+    TAG_PANEL(0, 0, PREFERRED_WIDTH, PREFERRED_HEIGHT),
     TAG_BACK_BUTTON(120, 80, 100, 50),
     TAG_NAME_LABEL(10, 10, 200, 25),
     TAG_NAME(10, 45, 200, 25),
     TAG_PRIO_LABEL(220, 10, 200, 25),
     TAG_PRIO(220, 45, 35, 25),
     TAG_SAVE_BUTTON(10, 80, 100, 50),
-    TAG_LIST_LABEL(10, 140, 100, 200),
-
-    ;
+    TAG_LIST_LABEL(10, 140, 100, 200),;
 
     private final int x;
     private final int y;

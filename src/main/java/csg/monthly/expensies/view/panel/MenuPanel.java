@@ -5,17 +5,18 @@ import static csg.monthly.expensies.view.util.Name.NEW_TAG_BUTTON;
 
 import java.awt.event.ActionEvent;
 
-import csg.monthly.expensies.view.util.MEButton;
-import csg.monthly.expensies.view.util.MEPanel;
+import csg.monthly.expensies.view.util.MELayout;
 import csg.monthly.expensies.view.util.Name;
+import csg.swing.CsGButton;
+import csg.swing.CsGPanel;
 
-public class MenuPanel extends MEPanel {
+public class MenuPanel extends CsGPanel {
     public static final MenuPanel MENU_PANEL = new MenuPanel();
 
     private MenuPanel() {
-        super(Name.MENU_PANEL);
-        add(new MEButton(NEW_ITEM_BUTTON, "Új item", this::newItemAction));//todo english
-        add(new MEButton(NEW_TAG_BUTTON, "Új tag", this::newTagAction));//todo english
+        super(Name.MENU_PANEL, MELayout.LAYOUT);
+        add(new CsGButton(NEW_ITEM_BUTTON, "Új item", this::newItemAction));//todo english
+        add(new CsGButton(NEW_TAG_BUTTON, "Új tag", this::newTagAction));//todo english
 
         setVisible(true);
     }
