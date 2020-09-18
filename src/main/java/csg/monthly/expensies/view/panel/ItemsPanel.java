@@ -1,7 +1,7 @@
 package csg.monthly.expensies.view.panel;
 
 import static csg.monthly.expensies.view.util.Name.ITEMS_BACK_BUTTON;
-import static csg.monthly.expensies.view.util.Name.ITEMS_CALCULATE_TABLE_BUTTON;
+import static csg.monthly.expensies.view.util.Name.ITEMS_CALCULATE_MONTH_BUTTON;
 import static csg.monthly.expensies.view.util.Name.ITEMS_INCOMES_TABLE;
 import static csg.monthly.expensies.view.util.Name.ITEMS_MONTH_SELECTOR;
 import static csg.monthly.expensies.view.util.Name.ITEMS_OUTGOINGS_TABLE;
@@ -49,7 +49,7 @@ public class ItemsPanel extends CsGPanel {
         add(monthSelector);
 
         add(new CsGButton(ITEMS_BACK_BUTTON, "Vissza", this::backToMenuPanel));//todo english
-        add(new CsGButton(ITEMS_CALCULATE_TABLE_BUTTON, "Mutasd", this::calculateItemsTable));//todo english
+        add(new CsGButton(ITEMS_CALCULATE_MONTH_BUTTON, "Mutasd", this::calculateMonth));//todo english
 
         add(tableOfOutgoings);
         add(tableOfIncomes);
@@ -60,12 +60,12 @@ public class ItemsPanel extends CsGPanel {
         if (visible) {
             final ItemRepository itemRepository = Application.getBean(ItemRepository.class);
             yearSelector.reset(itemRepository.findAllYear());
-            calculateItemsTable(null);
+            calculateMonth(null);
         }
         super.setVisible(visible);
     }
 
-    private void calculateItemsTable(ActionEvent event) {
+    private void calculateMonth(ActionEvent event) {
         ItemRepository itemRepository = Application.getBean(ItemRepository.class);
         List<Item> items = itemRepository.findAllByYearAndMonth((int) yearSelector.getSelectedItem(), (Month) monthSelector.getSelectedItem());
         setTable(items.stream().filter(item -> !item.isIncome()).collect(Collectors.toList()), tableOfOutgoings);
