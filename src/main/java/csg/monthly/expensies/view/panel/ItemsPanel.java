@@ -66,11 +66,18 @@ public class ItemsPanel extends CsGPanel {
         if (visible) {
             final ItemRepository itemRepository = Application.getBean(ItemRepository.class);
             yearSelector.reset(itemRepository.findAllYear());
+            calculateMonth();
         }
         super.setVisible(visible);
     }
 
     private void calculateMonth(ActionEvent event) {
+        calculateMonth();
+        doLayout();
+        setVisible(true);
+    }
+
+    private void calculateMonth() {
         final ItemRepository itemRepository = Application.getBean(ItemRepository.class);
         final TagRepository tagRepository = Application.getBean(TagRepository.class);
         List<Item> items = itemRepository.findAllByYearAndMonth((int) yearSelector.getSelectedItem(), (Month) monthSelector.getSelectedItem());
@@ -78,9 +85,6 @@ public class ItemsPanel extends CsGPanel {
 
         calculateOutgoings(items, tags);
         calculateIncomes(items, tags);
-
-        doLayout();
-        setVisible(true);
     }
 
     private void calculateOutgoings(List<Item> items, List<Tag> tags) {
