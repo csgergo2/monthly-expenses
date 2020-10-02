@@ -1,6 +1,5 @@
 package csg.monthly.expensies.view.panel;
 
-import static csg.monthly.expensies.view.util.Name.TAG_BACK_BUTTON;
 import static csg.monthly.expensies.view.util.Name.TAG_LIST_LABEL;
 import static csg.monthly.expensies.view.util.Name.TAG_NAME;
 import static csg.monthly.expensies.view.util.Name.TAG_NAME_LABEL;
@@ -9,7 +8,10 @@ import static csg.monthly.expensies.view.util.Name.TAG_PRIO;
 import static csg.monthly.expensies.view.util.Name.TAG_PRIO_LABEL;
 import static csg.monthly.expensies.view.util.Name.TAG_SAVE_BUTTON;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
+
+import javax.swing.BorderFactory;
 
 import csg.monthly.expensies.Application;
 import csg.monthly.expensies.domain.Tag;
@@ -33,16 +35,21 @@ public class NewTagPanel extends CsGPanel {
 
     private NewTagPanel() {
         super(TAG_PANEL, MELayout.LAYOUT);
+        setBorder(BorderFactory.createLineBorder(Color.black));
 
         add(tagName);
-        add(new CsGLabel(TAG_NAME_LABEL, "Név:"));
+        add(new CsGLabel(TAG_NAME_LABEL, "Tag név:"));
         add(tagPrio);
-        add(new CsGLabel(TAG_PRIO_LABEL, "Prio:"));
+        add(new CsGLabel(TAG_PRIO_LABEL, "Tag prio:"));
 
-        add(new CsGButton(TAG_SAVE_BUTTON, "Mentés", this::saveTag));//todo english
-        add(new CsGButton(TAG_BACK_BUTTON, "Vissza", this::backToMenuPanel));//todo english
+        add(new CsGButton(TAG_SAVE_BUTTON, "Tag Mentés", this::saveTag));//todo english
 
         add(tagTags);
+    }
+
+    public void refresh() {
+        tagTags.setText(listTagsSeparatedByLines());
+        setVisible(true);
     }
 
     private void saveTag(ActionEvent event) {
@@ -63,11 +70,6 @@ public class NewTagPanel extends CsGPanel {
         final CsGHtmlBodyBuilder builder = new CsGHtmlBodyBuilder();
         Application.getBean(TagRepository.class).findAll().forEach(tag -> builder.addText("p", tag.getName()));
         return new CsGHtmlBuilder(builder).build();
-    }
-
-    private void backToMenuPanel(ActionEvent event) {
-        setVisible(false);
-        MenuPanel.MENU_PANEL.setVisible(true);
     }
 
     @Override

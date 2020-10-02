@@ -2,7 +2,6 @@ package csg.monthly.expensies.view.panel;
 
 import static csg.monthly.expensies.view.util.Name.ITEM_AMOUNT;
 import static csg.monthly.expensies.view.util.Name.ITEM_AMOUNT_LABEL;
-import static csg.monthly.expensies.view.util.Name.ITEM_BACK_BUTTON;
 import static csg.monthly.expensies.view.util.Name.ITEM_DATE;
 import static csg.monthly.expensies.view.util.Name.ITEM_DATE_LABEL;
 import static csg.monthly.expensies.view.util.Name.ITEM_INCOME_FLAG;
@@ -19,9 +18,12 @@ import static csg.monthly.expensies.view.util.Name.ITEM_TAG_LIST_LABEL;
 import static csg.monthly.expensies.view.util.Name.ITEM_YEAR;
 import static csg.monthly.expensies.view.util.Name.ITEM_YEAR_LABEL;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.time.LocalDate;
 import java.util.Arrays;
+
+import javax.swing.BorderFactory;
 
 import csg.monthly.expensies.Application;
 import csg.monthly.expensies.domain.Item;
@@ -68,6 +70,7 @@ public class NewItemPanel extends CsGPanel {
 
     private NewItemPanel() {
         super(Name.NEW_ITEM_PANEL, MELayout.LAYOUT);
+        setBorder(BorderFactory.createLineBorder(Color.black));
 
         add(itemName);
         add(new CsGLabel(ITEM_NAME_LABEL, "Item:"));//todo english
@@ -86,7 +89,10 @@ public class NewItemPanel extends CsGPanel {
         add(itemMonth);
         add(new CsGLabel(ITEM_MONTH_LABEL, "Hónap:"));//todo english
         add(new CsGButton(ITEM_SAVE_BUTTON, "Mentés", this::saveItem));//todo english
-        add(new CsGButton(ITEM_BACK_BUTTON, "Vissza", this::backToMenuPanel));//todo english
+    }
+
+    public void refresh() {
+        setVisible(true);
     }
 
     private void saveItem(ActionEvent event) {
@@ -106,14 +112,12 @@ public class NewItemPanel extends CsGPanel {
         itemIncome.setSelected(false);
     }
 
-    private void backToMenuPanel(ActionEvent event) {
-        setVisible(false);
-        MenuPanel.MENU_PANEL.setVisible(true);
-    }
-
     @Override
     public void setVisible(boolean visible) {
         if (visible) {
+            if (itemDate.getText().isEmpty()) {
+                itemDate.setText(LocalDate.now().toString());
+            }
             //tags
             final Iterable<Tag> tags = Application.getBean(TagRepository.class).findAll();
             itemTags.removeAllItems();

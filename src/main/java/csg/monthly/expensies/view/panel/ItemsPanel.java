@@ -1,6 +1,5 @@
 package csg.monthly.expensies.view.panel;
 
-import static csg.monthly.expensies.view.util.Name.ITEMS_BACK_BUTTON;
 import static csg.monthly.expensies.view.util.Name.ITEMS_CALCULATE_MONTH_BUTTON;
 import static csg.monthly.expensies.view.util.Name.ITEMS_INCOMES_TABLE;
 import static csg.monthly.expensies.view.util.Name.ITEMS_MONTH_SELECTOR;
@@ -9,10 +8,13 @@ import static csg.monthly.expensies.view.util.Name.ITEMS_SUM_INCOMES;
 import static csg.monthly.expensies.view.util.Name.ITEMS_SUM_OUTGOINGS;
 import static csg.monthly.expensies.view.util.Name.ITEMS_YEAR_SELECTOR;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.swing.BorderFactory;
 
 import csg.monthly.expensies.Application;
 import csg.monthly.expensies.domain.Item;
@@ -50,15 +52,19 @@ public class ItemsPanel extends CsGPanel {
 
     private ItemsPanel() {
         super(Name.ITEMS_PANEL, MELayout.LAYOUT);
+        setBorder(BorderFactory.createLineBorder(Color.black));
 
         add(yearSelector);
         add(monthSelector);
 
-        add(new CsGButton(ITEMS_BACK_BUTTON, "Vissza", this::backToMenuPanel));//todo english
         add(new CsGButton(ITEMS_CALCULATE_MONTH_BUTTON, "Mutasd", this::calculateMonth));//todo english
 
         add(outgoingsSum);
         add(incomesSum);
+    }
+
+    public void refresh() {
+        calculateMonth(null);
     }
 
     @Override
@@ -120,10 +126,4 @@ public class ItemsPanel extends CsGPanel {
         incomesSum.setText("Összesen: " + Integer.toString(sum));//todo english
         add(tableOfIncomes);
     }
-
-    private void backToMenuPanel(ActionEvent event) {
-        setVisible(false);
-        MenuPanel.MENU_PANEL.setVisible(true);
-    }
-
 }
