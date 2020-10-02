@@ -1,6 +1,5 @@
 package csg.monthly.expensies.view.panel;
 
-import static csg.monthly.expensies.view.panel.items.TableItem.DATE_TIME_FORMATTER;
 import static csg.monthly.expensies.view.util.Name.ITEM_AMOUNT;
 import static csg.monthly.expensies.view.util.Name.ITEM_AMOUNT_LABEL;
 import static csg.monthly.expensies.view.util.Name.ITEM_BACK_BUTTON;
@@ -21,7 +20,6 @@ import static csg.monthly.expensies.view.util.Name.ITEM_YEAR;
 import static csg.monthly.expensies.view.util.Name.ITEM_YEAR_LABEL;
 
 import java.awt.event.ActionEvent;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Arrays;
 
@@ -32,12 +30,12 @@ import csg.monthly.expensies.domain.date.Month;
 import csg.monthly.expensies.domain.repository.ItemRepository;
 import csg.monthly.expensies.domain.repository.TagRepository;
 import csg.monthly.expensies.exception.MonthlyExpensesException;
+import csg.monthly.expensies.view.util.DateParser;
 import csg.monthly.expensies.view.util.MELayout;
 import csg.monthly.expensies.view.util.Name;
 import csg.swing.CsGButton;
 import csg.swing.CsGCheckBox;
 import csg.swing.CsGComboBox;
-import csg.swing.CsGDatePicker;
 import csg.swing.CsGLabel;
 import csg.swing.CsGPanel;
 import csg.swing.CsGTextField;
@@ -61,7 +59,7 @@ public class NewItemPanel extends CsGPanel {
     private CsGTextField itemName = new CsGTextField(ITEM_NAME);
     private CsGComboBox<Tag> itemTags = new CsGComboBox<>(ITEM_TAG_LIST);
     private CsGTextField itemAmount = new CsGTextField(ITEM_AMOUNT, true);
-    private CsGDatePicker itemDate = new CsGDatePicker(ITEM_DATE);
+    private CsGTextField itemDate = new CsGTextField(ITEM_DATE);
 
     private CsGCheckBox itemNewMonth = new CsGCheckBox(ITEM_NEW_MONTH_FLAG);
     private CsGCheckBox itemIncome = new CsGCheckBox(ITEM_INCOME_FLAG);
@@ -98,8 +96,8 @@ public class NewItemPanel extends CsGPanel {
         }
         final Item item =
                 new Item(itemName.getText(), (Tag) itemTags.getSelectedItem(), Integer.valueOf(itemAmount.getText()), itemIncome.isSelected(),
-                        itemNewMonth.isSelected(), Date.valueOf(LocalDate.parse(itemDate.getDate().toString(), DATE_TIME_FORMATTER)),
-                        Integer.valueOf(itemYear.getText()), (Month) itemMonth.getSelectedItem());
+                        itemNewMonth.isSelected(), DateParser.stringToDate(itemDate.getText()), Integer.valueOf(itemYear.getText()),
+                        (Month) itemMonth.getSelectedItem());
         final ItemRepository itemRepository = Application.getBean(ItemRepository.class);
         itemRepository.save(item);
         itemName.setText("");

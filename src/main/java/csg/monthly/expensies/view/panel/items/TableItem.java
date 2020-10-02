@@ -5,8 +5,6 @@ import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.lang.reflect.Array;
-import java.sql.Date;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -14,6 +12,7 @@ import csg.monthly.expensies.Application;
 import csg.monthly.expensies.domain.Item;
 import csg.monthly.expensies.domain.Tag;
 import csg.monthly.expensies.domain.repository.ItemRepository;
+import csg.monthly.expensies.view.util.DateParser;
 import csg.swing.CsGButton;
 import csg.swing.CsGComboBox;
 import csg.swing.CsGLayout;
@@ -57,7 +56,7 @@ public class TableItem extends CsGPanel {
     }
 
     private void save(ActionEvent event) {
-        item.setDate(Date.valueOf(LocalDate.parse(dateField.getText(), DATE_TIME_FORMATTER)));
+        item.setDate(DateParser.stringToDate(dateField.getText()));
         item.setName(nameField.getText());
         item.setAmount(Integer.parseInt(amountField.getText()));
         item.setTag((Tag) tagBox.getSelectedItem());
