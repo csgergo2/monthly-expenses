@@ -19,7 +19,7 @@ public class ItemsTablePanel extends JScrollPane {
     private CsGPanel panel = new CsGPanel(Name.MENU_PANEL, new ItemsTableLayout()) {
     };
 
-    private int width = 535;
+    private int width = 737;
 
     public ItemsTablePanel(final Name name) {
         panel.setPreferredSize(new Dimension(width, 10));
@@ -66,7 +66,7 @@ public class ItemsTablePanel extends JScrollPane {
         public void layoutContainer(final Container parent) {
             int currentY = RANGE_Y;
             for (Component component : parent.getComponents()) {
-                component.setBounds(RANGE_X, currentY, 595, 25);
+                component.setBounds(RANGE_X, currentY, 797, 25);
                 currentY = currentY + 25 + RANGE_Y;
             }
         }

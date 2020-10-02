@@ -21,8 +21,8 @@ import csg.swing.CsGPanel;
 import csg.swing.CsGTextField;
 
 public class TableItem extends CsGPanel {
-    private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
-    private static final long HOURS_12 = 12L * 60L * 60L * 1000L;
+    public static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    public static final long HOURS_12 = 12L * 60L * 60L * 1000L;
     private Item item;
 
     private CsGTextField dateField;
@@ -49,6 +49,8 @@ public class TableItem extends CsGPanel {
         add(amountField);
         add(tagBox);
         add(new CsGButton(TableItemName.SAVE, "Mentés", this::save));//todo english
+        add(new CsGButton(TableItemName.NOT_IS_INCOME, "NotIsIncome", this::notIsIncome));//todo english
+        add(new CsGButton(TableItemName.DELETE, "Delete", this::delete));//todo english
 
         itemRepository = Application.getBean(ItemRepository.class);
         setBackground(Color.BLACK);
@@ -61,6 +63,15 @@ public class TableItem extends CsGPanel {
         item.setAmount(Integer.parseInt(amountField.getText()));
         item.setTag((Tag) tagBox.getSelectedItem());
         itemRepository.save(item);
+    }
+
+    private void notIsIncome(ActionEvent event) {
+        item.setIncome(!item.isIncome());
+        itemRepository.save(item);
+    }
+
+    private void delete(ActionEvent event) {
+        itemRepository.delete(item);
     }
 
     private Date convertStringToDate(String date) {
@@ -78,7 +89,9 @@ public class TableItem extends CsGPanel {
         NAME(71, 0, 200, 25),
         AMOUNT(272, 0, 60, 25),
         TAG(333, 0, 100, 25),
-        SAVE(434, 0, 100, 25);
+        SAVE(434, 0, 100, 25),
+        NOT_IS_INCOME(535, 0, 100, 25),
+        DELETE(636, 0, 100, 25);
         private final int x;
         private final int y;
         private final int width;
