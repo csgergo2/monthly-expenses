@@ -1,3 +1,12 @@
+INSERT INTO TAG (name, prio, prio_group) values ("KP Felvétel", 1, 1);
+INSERT INTO TAG (name, prio, prio_group) values ("Rezsi", 2, 1);
+INSERT INTO TAG (name, prio, prio_group) values ("Auchan", 1, 2);
+INSERT INTO TAG (name, prio, prio_group) values ("Benzin", 2, 2);
+INSERT INTO TAG (name, prio, prio_group) values ("BKV", 3, 2);
+INSERT INTO TAG (name, prio, prio_group) values ("KV", 1, 3);
+INSERT INTO TAG (name, prio, prio_group) values ("Fizetés", 1, 4);
+INSERT INTO TAG (name, prio, prio_group) values ("Lottó", 2, 4);
+
 DELETE FROM ITEM;
 INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Tesco", 3, 10, '2018-12-15', 2018, 'DECEMBER');
 INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Spar", 3, 10, '2018-12-24', 2018, 'DECEMBER');
@@ -91,4 +100,17 @@ INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Spar", 3, 10, '
 INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Spar", 3, 10, '2020-9-17', 2020, 'SEPTEMBER');
 INSERT INTO ITEM (name, tag, amount, date, year, month, is_income) values ("5-ös lottó", 8, 20, '2020-9-18', 2020, 'SEPTEMBER', true);
 INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Benzin", 4, 20, '2020-9-27', 2020, 'SEPTEMBER');
+INSERT INTO ITEM (name, tag, amount, date, year, month, is_income, is_end_month) values ("Fizetés", 7, 200, '2020-9-30', 2020, 'SEPTEMBER', true, true);
+
+INSERT INTO ITEM (name, tag, amount, date, year, month) values ("KP Felvétel", 1, 100, '2020-9-30', 2020, 'OCTOBER');
+INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Rezsi", 2, 10, '2020-10-09', 2020, 'OCTOBER');
+INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Tesco", 3, 10, '2020-10-10', 2020, 'OCTOBER');
+INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Tesco", 3, 10, '2020-10-11', 2020, 'OCTOBER');
+INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Tesco", 3, 10, '2020-10-11', 2020, 'OCTOBER');
+INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Tesco", 3, 10, '2020-10-12', 2020, 'OCTOBER');
+INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Spar", 3, 10, '2020-10-15', 2020, 'OCTOBER');
+INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Spar", 3, 10, '2020-10-16', 2020, 'OCTOBER');
+INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Spar", 3, 10, '2020-10-17', 2020, 'OCTOBER');
+INSERT INTO ITEM (name, tag, amount, date, year, month, is_income) values ("5-ös lottó", 8, 20, '2020-10-18', 2020, 'OCTOBER', true);
+INSERT INTO ITEM (name, tag, amount, date, year, month) values ("Benzin", 4, 20, '2020-10-27', 2020, 'OCTOBER');
 COMMIT;

@@ -1,7 +1,6 @@
 package csg.monthly.expensies.view.panel;
 
-import static csg.monthly.expensies.view.panel.items.TableItem.HOURS_12;
-import static csg.monthly.expensies.view.panel.items.TableItem.SIMPLE_DATE_FORMAT;
+import static csg.monthly.expensies.view.panel.items.TableItem.DATE_TIME_FORMATTER;
 import static csg.monthly.expensies.view.util.Name.ITEM_AMOUNT;
 import static csg.monthly.expensies.view.util.Name.ITEM_AMOUNT_LABEL;
 import static csg.monthly.expensies.view.util.Name.ITEM_BACK_BUTTON;
@@ -23,7 +22,6 @@ import static csg.monthly.expensies.view.util.Name.ITEM_YEAR_LABEL;
 
 import java.awt.event.ActionEvent;
 import java.sql.Date;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.Arrays;
 
@@ -100,23 +98,14 @@ public class NewItemPanel extends CsGPanel {
         }
         final Item item =
                 new Item(itemName.getText(), (Tag) itemTags.getSelectedItem(), Integer.valueOf(itemAmount.getText()), itemIncome.isSelected(),
-                        itemNewMonth.isSelected(), convertStringToDate(itemDate.getDate().toString()), Integer.valueOf(itemYear.getText()),
-                        (Month) itemMonth.getSelectedItem());
+                        itemNewMonth.isSelected(), Date.valueOf(LocalDate.parse(itemDate.getDate().toString(), DATE_TIME_FORMATTER)),
+                        Integer.valueOf(itemYear.getText()), (Month) itemMonth.getSelectedItem());
         final ItemRepository itemRepository = Application.getBean(ItemRepository.class);
         itemRepository.save(item);
         itemName.setText("");
         itemAmount.setText("");
         itemNewMonth.setSelected(false);
         itemIncome.setSelected(false);
-    }
-
-    private Date convertStringToDate(String date) {
-        try {
-            java.util.Date parsed = SIMPLE_DATE_FORMAT.parse(date);
-            return new Date(parsed.getTime() + HOURS_12);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private void backToMenuPanel(ActionEvent event) {

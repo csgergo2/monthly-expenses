@@ -6,8 +6,8 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.lang.reflect.Array;
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import csg.monthly.expensies.Application;
@@ -21,8 +21,7 @@ import csg.swing.CsGPanel;
 import csg.swing.CsGTextField;
 
 public class TableItem extends CsGPanel {
-    public static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
-    public static final long HOURS_12 = 12L * 60L * 60L * 1000L;
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private Item item;
 
     private CsGTextField dateField;
@@ -58,7 +57,7 @@ public class TableItem extends CsGPanel {
     }
 
     private void save(ActionEvent event) {
-        item.setDate(convertStringToDate(dateField.getText()));
+        item.setDate(Date.valueOf(LocalDate.parse(dateField.getText(), DATE_TIME_FORMATTER)));
         item.setName(nameField.getText());
         item.setAmount(Integer.parseInt(amountField.getText()));
         item.setTag((Tag) tagBox.getSelectedItem());
@@ -72,15 +71,6 @@ public class TableItem extends CsGPanel {
 
     private void delete(ActionEvent event) {
         itemRepository.delete(item);
-    }
-
-    private Date convertStringToDate(String date) {
-        try {
-            java.util.Date parsed = SIMPLE_DATE_FORMAT.parse(date);
-            return new Date(parsed.getTime() + HOURS_12);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private enum TableItemName {
