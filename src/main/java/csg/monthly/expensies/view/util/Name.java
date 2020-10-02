@@ -3,7 +3,7 @@ package csg.monthly.expensies.view.util;
 import static csg.swing.CsGFrameWindow.PREFERRED_HEIGHT;
 import static csg.swing.CsGFrameWindow.PREFERRED_WIDTH;
 
-import java.awt.*;
+import java.awt.Rectangle;
 
 public enum Name {
     MENU_PANEL(0, 0, PREFERRED_WIDTH, PREFERRED_HEIGHT),
@@ -45,10 +45,10 @@ public enum Name {
     ITEMS_MONTH_SELECTOR(120, 10, 100, 25),
     ITEMS_CALCULATE_MONTH_BUTTON(230, 10, 100, 25),
     ITEMS_BACK_BUTTON(340, 10, 100, 25),
-    ITEMS_OUTGOINGS_TABLE(10, 45, 500, 200),
-    ITEMS_INCOMES_TABLE(520, 45, 500, 200),
+    ITEMS_OUTGOINGS_TABLE(10, 45, 555, 200),
+    ITEMS_INCOMES_TABLE(575, 45, 555, 200),
     ITEMS_SUM_OUTGOINGS(10, 255, 500, 25),
-    ITEMS_SUM_INCOMES(520, 255, 500, 25);
+    ITEMS_SUM_INCOMES(575, 255, 500, 25);
 
     private final int x;
     private final int y;
@@ -62,7 +62,7 @@ public enum Name {
         this.height = height;
     }
 
-    Rectangle getRectangle() {
+    public Rectangle getRectangle() {
         return new Rectangle(x, y, width, height);
     }
 

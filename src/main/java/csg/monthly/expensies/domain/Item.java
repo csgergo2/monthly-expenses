@@ -14,7 +14,7 @@ import javax.persistence.OneToOne;
 import csg.monthly.expensies.domain.date.Month;
 
 @Entity(name = "Item")
-public class Item {
+public class Item implements Comparable<Item> {
 
     @Id
     private int id;
@@ -138,5 +138,14 @@ public class Item {
         sb.append(", month=").append(month);
         sb.append('}');
         return sb.toString();
+    }
+
+    @Override
+    public int compareTo(final Item o) {
+        final int comparedDate = date.compareTo(o.date);
+        if (comparedDate != 0) {
+            return comparedDate;
+        }
+        return name.compareTo(o.name);
     }
 }
