@@ -1,6 +1,9 @@
 package csg.monthly.expensies.domain.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,15 @@ public class TagService {
 
     public List<Tag> findAll() {
         return tagRepository.findAll();
+    }
+
+    public List<Tag> findAllOrderedByFrequency() {
+        List<Tag> tags = tagRepository.findAll();
+        Map<String, Tag> tagMap = new HashMap<>();
+        for (Tag tag : tags) {
+            tagMap.put(tag.getName(), tag);
+        }
+        return tagRepository.findTagsByTheirFrequency().stream().map(tag -> tagMap.get(tag[0])).collect(Collectors.toList());
     }
 
     public void save(final Tag tag) {
