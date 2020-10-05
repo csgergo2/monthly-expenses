@@ -20,8 +20,8 @@ import csg.monthly.expensies.Application;
 import csg.monthly.expensies.domain.Item;
 import csg.monthly.expensies.domain.Tag;
 import csg.monthly.expensies.domain.date.Month;
-import csg.monthly.expensies.domain.repository.ItemRepository;
 import csg.monthly.expensies.domain.repository.TagRepository;
+import csg.monthly.expensies.domain.service.ItemService;
 import csg.monthly.expensies.view.panel.items.ItemsTablePanel;
 import csg.monthly.expensies.view.panel.items.TableItem;
 import csg.monthly.expensies.view.util.MELayout;
@@ -70,8 +70,8 @@ public class ItemsPanel extends CsGPanel {
     @Override
     public void setVisible(boolean visible) {
         if (visible) {
-            final ItemRepository itemRepository = Application.getBean(ItemRepository.class);
-            yearSelector.reset(itemRepository.findAllYear());
+            final ItemService itemService = Application.getBean(ItemService.class);
+            yearSelector.reset(itemService.findAllYear());
             calculateMonth();
         }
         super.setVisible(visible);
@@ -84,9 +84,9 @@ public class ItemsPanel extends CsGPanel {
     }
 
     private void calculateMonth() {
-        final ItemRepository itemRepository = Application.getBean(ItemRepository.class);
+        final ItemService itemService = Application.getBean(ItemService.class);
         final TagRepository tagRepository = Application.getBean(TagRepository.class);
-        List<Item> items = itemRepository.findAllByYearAndMonth((int) yearSelector.getSelectedItem(), (Month) monthSelector.getSelectedItem());
+        List<Item> items = itemService.findAllByYearAndMonth((int) yearSelector.getSelectedItem(), (Month) monthSelector.getSelectedItem());
         final List<Tag> tags = tagRepository.findAll();
 
         calculateOutgoings(items, tags);

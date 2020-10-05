@@ -36,8 +36,8 @@ public class Item implements Comparable<Item> {
     @Enumerated(EnumType.STRING)
     private Month month;
 
-    public Item(final String name, final Tag tag, final int amount, final boolean isIncome, final boolean isEndMonth, final Date date, final int year,
-                final Month month) {
+    private Item(final String name, final Tag tag, final int amount, final boolean isIncome, final boolean isEndMonth, final Date date,
+                 final int year, final Month month) {
         this.id = id;
         this.name = name;
         this.tag = tag;
@@ -147,5 +147,60 @@ public class Item implements Comparable<Item> {
             return comparedDate;
         }
         return Integer.compare(id, o.id);
+    }
+
+    public static class ItemBuilder {
+        private String name;
+        private Tag tag;
+        private int amount;
+        private boolean isIncome;
+        private boolean isEndMonth;
+        private Date date;
+        private int year;
+        private Month month;
+
+        public ItemBuilder setName(final String name) {
+            this.name = name;
+            return this;
+        }
+
+        public ItemBuilder setTag(final Tag tag) {
+            this.tag = tag;
+            return this;
+        }
+
+        public ItemBuilder setAmount(final int amount) {
+            this.amount = amount;
+            return this;
+        }
+
+        public ItemBuilder setIncome(final boolean income) {
+            isIncome = income;
+            return this;
+        }
+
+        public ItemBuilder setEndMonth(final boolean endMonth) {
+            isEndMonth = endMonth;
+            return this;
+        }
+
+        public ItemBuilder setDate(final Date date) {
+            this.date = date;
+            return this;
+        }
+
+        public ItemBuilder setYear(final int year) {
+            this.year = year;
+            return this;
+        }
+
+        public ItemBuilder setMonth(final Month month) {
+            this.month = month;
+            return this;
+        }
+
+        public Item build() {
+            return new Item(name, tag, amount, isIncome, isEndMonth, date, year, month);
+        }
     }
 }

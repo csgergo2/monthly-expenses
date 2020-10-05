@@ -29,8 +29,8 @@ import csg.monthly.expensies.Application;
 import csg.monthly.expensies.domain.Item;
 import csg.monthly.expensies.domain.Tag;
 import csg.monthly.expensies.domain.date.Month;
-import csg.monthly.expensies.domain.repository.ItemRepository;
 import csg.monthly.expensies.domain.repository.TagRepository;
+import csg.monthly.expensies.domain.service.ItemService;
 import csg.monthly.expensies.exception.MonthlyExpensesException;
 import csg.monthly.expensies.view.util.DateParser;
 import csg.monthly.expensies.view.util.MELayout;
@@ -100,12 +100,12 @@ public class NewItemPanel extends CsGPanel {
             throw new MonthlyExpensesException(
                     "Empty field at new item; name: " + itemName.getText() + "; amount: " + itemAmount.getText() + "; year: " + itemYear.getText());
         }
-        final Item item =
-                new Item(itemName.getText(), (Tag) itemTags.getSelectedItem(), Integer.valueOf(itemAmount.getText()), itemIncome.isSelected(),
-                        itemNewMonth.isSelected(), DateParser.stringToDate(itemDate.getText()), Integer.valueOf(itemYear.getText()),
-                        (Month) itemMonth.getSelectedItem());
-        final ItemRepository itemRepository = Application.getBean(ItemRepository.class);
-        itemRepository.save(item);
+        final Item item = new Item.ItemBuilder().setName(itemName.getText()).setTag((Tag) itemTags.getSelectedItem())
+                                                .setAmount(Integer.valueOf(itemAmount.getText())).setIncome(itemIncome.isSelected())
+                                                .setEndMonth(itemNewMonth.isSelected()).setDate(DateParser.stringToDate(itemDate.getText()))
+                                                .setYear(Integer.valueOf(itemYear.getText())).setMonth((Month) itemMonth.getSelectedItem()).build();
+        final ItemService itemService = Application.getBean(ItemService.class);
+        itemService.save(item);
         itemName.setText("");
         itemAmount.setText("");
         itemNewMonth.setSelected(false);

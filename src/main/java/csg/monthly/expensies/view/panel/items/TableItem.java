@@ -11,7 +11,7 @@ import java.util.List;
 import csg.monthly.expensies.Application;
 import csg.monthly.expensies.domain.Item;
 import csg.monthly.expensies.domain.Tag;
-import csg.monthly.expensies.domain.repository.ItemRepository;
+import csg.monthly.expensies.domain.service.ItemService;
 import csg.monthly.expensies.view.util.DateParser;
 import csg.swing.CsGButton;
 import csg.swing.CsGComboBox;
@@ -28,7 +28,7 @@ public class TableItem extends CsGPanel {
     private CsGTextField amountField;
     private CsGComboBox<Tag> tagBox;
 
-    private ItemRepository itemRepository;
+    private ItemService itemService;
 
     public TableItem(Item item, List<Tag> tags) {
         super(TableItemName.PANEL, new TableItemLayout());
@@ -50,7 +50,7 @@ public class TableItem extends CsGPanel {
         add(new CsGButton(TableItemName.NOT_IS_INCOME, "NotIsIncome", this::notIsIncome));//todo english
         add(new CsGButton(TableItemName.DELETE, "Delete", this::delete));//todo english
 
-        itemRepository = Application.getBean(ItemRepository.class);
+        itemService = Application.getBean(ItemService.class);
         setBackground(Color.BLACK);
         setVisible(true);
     }
@@ -60,16 +60,16 @@ public class TableItem extends CsGPanel {
         item.setName(nameField.getText());
         item.setAmount(Integer.parseInt(amountField.getText()));
         item.setTag((Tag) tagBox.getSelectedItem());
-        itemRepository.save(item);
+        itemService.save(item);
     }
 
     private void notIsIncome(ActionEvent event) {
         item.setIncome(!item.isIncome());
-        itemRepository.save(item);
+        itemService.save(item);
     }
 
     private void delete(ActionEvent event) {
-        itemRepository.delete(item);
+        itemService.deleteItem(item);
     }
 
     private enum TableItemName {
