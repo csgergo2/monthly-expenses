@@ -107,6 +107,7 @@ public class ItemsPanel extends CsGPanel {
             sum += item.getAmount();
         }
         outgoingsSum.setText("Összesen: " + Integer.toString(sum));//todo english
+        tableOfOutgoings.setScrollBarToBottom();
         add(tableOfOutgoings);
     }
 
@@ -124,6 +125,7 @@ public class ItemsPanel extends CsGPanel {
             sum += item.getAmount();
         }
         incomesSum.setText("Összesen: " + Integer.toString(sum));//todo english
+        tableOfIncomes.setScrollBarToBottom();
         add(tableOfIncomes);
     }
 }

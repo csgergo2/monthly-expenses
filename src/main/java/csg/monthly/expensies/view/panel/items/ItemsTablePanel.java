@@ -32,6 +32,11 @@ public class ItemsTablePanel extends JScrollPane {
         setVisible(true);
     }
 
+    public void setScrollBarToBottom() {
+        getVerticalScrollBar().setMaximum(getHeight() - 50);
+        getVerticalScrollBar().setValue(getVerticalScrollBar().getMaximum());
+    }
+
     @Override
     public Component add(final Component comp) {
         if (comp instanceof TableItem) {
