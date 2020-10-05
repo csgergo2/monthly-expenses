@@ -69,3 +69,25 @@ select * from item;
 
 select year from item group by year;
 select i.year from item i group by i.year;
+
+select t.id, t.name, t.prio, t.prio_group, t.prio_group_id from item i join tag t on i.tag = t.id group by t.name order by count(t.id) desc;
+
+
+select a.item_name from (
+select i.name item_name from item i
+left join tag t on i.tag = t.id where i.name = null
+union all
+select t.name tag_name from item i
+right join tag t on i.tag = t.id) a
+group by (a.item_name)
+order by count(a.item_name) desc;
+
+
+
+
+
+
+
+
+
+
