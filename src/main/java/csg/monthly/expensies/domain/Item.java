@@ -146,6 +146,6 @@ public class Item implements Comparable<Item> {
         if (comparedDate != 0) {
             return comparedDate;
         }
-        return name.compareTo(o.name);
+        return Integer.compare(id, o.id);
     }
 }
