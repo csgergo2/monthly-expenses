@@ -29,8 +29,8 @@ import csg.monthly.expensies.Application;
 import csg.monthly.expensies.domain.Item;
 import csg.monthly.expensies.domain.Tag;
 import csg.monthly.expensies.domain.date.Month;
-import csg.monthly.expensies.domain.repository.TagRepository;
 import csg.monthly.expensies.domain.service.ItemService;
+import csg.monthly.expensies.domain.service.TagService;
 import csg.monthly.expensies.exception.MonthlyExpensesException;
 import csg.monthly.expensies.view.util.DateParser;
 import csg.monthly.expensies.view.util.MELayout;
@@ -119,7 +119,7 @@ public class NewItemPanel extends CsGPanel {
                 itemDate.setText(LocalDate.now().toString());
             }
             //tags
-            final Iterable<Tag> tags = Application.getBean(TagRepository.class).findAll();
+            final Iterable<Tag> tags = Application.getBean(TagService.class).findAll();
             itemTags.removeAllItems();
             tags.forEach(itemTags::addItem);
         }

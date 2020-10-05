@@ -20,8 +20,8 @@ import csg.monthly.expensies.Application;
 import csg.monthly.expensies.domain.Item;
 import csg.monthly.expensies.domain.Tag;
 import csg.monthly.expensies.domain.date.Month;
-import csg.monthly.expensies.domain.repository.TagRepository;
 import csg.monthly.expensies.domain.service.ItemService;
+import csg.monthly.expensies.domain.service.TagService;
 import csg.monthly.expensies.view.panel.items.ItemsTablePanel;
 import csg.monthly.expensies.view.panel.items.TableItem;
 import csg.monthly.expensies.view.util.MELayout;
@@ -85,9 +85,9 @@ public class ItemsPanel extends CsGPanel {
 
     private void calculateMonth() {
         final ItemService itemService = Application.getBean(ItemService.class);
-        final TagRepository tagRepository = Application.getBean(TagRepository.class);
+        final TagService tagService = Application.getBean(TagService.class);
         List<Item> items = itemService.findAllByYearAndMonth((int) yearSelector.getSelectedItem(), (Month) monthSelector.getSelectedItem());
-        final List<Tag> tags = tagRepository.findAll();
+        final List<Tag> tags = tagService.findAll();
 
         calculateOutgoings(items, tags);
         calculateIncomes(items, tags);

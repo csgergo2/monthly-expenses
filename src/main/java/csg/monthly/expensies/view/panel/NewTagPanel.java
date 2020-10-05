@@ -15,7 +15,7 @@ import javax.swing.BorderFactory;
 
 import csg.monthly.expensies.Application;
 import csg.monthly.expensies.domain.Tag;
-import csg.monthly.expensies.domain.repository.TagRepository;
+import csg.monthly.expensies.domain.service.TagService;
 import csg.monthly.expensies.exception.MonthlyExpensesException;
 import csg.monthly.expensies.view.util.MELayout;
 import csg.swing.CsGButton;
@@ -60,7 +60,7 @@ public class NewTagPanel extends CsGPanel {
         tag.setName(tagName.getText());
         tag.setPrio(Integer.valueOf(tagPrio.getText()));
         //todo set prio group
-        Application.getBean(TagRepository.class).save(tag);
+        Application.getBean(TagService.class).save(tag);
         tagName.setText("");
         tagPrio.setText("");
         tagTags.setText(listTagsSeparatedByLines());
@@ -68,7 +68,7 @@ public class NewTagPanel extends CsGPanel {
 
     private String listTagsSeparatedByLines() {
         final CsGHtmlBodyBuilder builder = new CsGHtmlBodyBuilder();
-        Application.getBean(TagRepository.class).findAll().forEach(tag -> builder.addText("p", tag.getName()));
+        Application.getBean(TagService.class).findAll().forEach(tag -> builder.addText("p", tag.getName()));
         return new CsGHtmlBuilder(builder).build();
     }
 

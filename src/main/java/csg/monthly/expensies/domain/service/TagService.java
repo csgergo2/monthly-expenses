@@ -1,6 +1,5 @@
 package csg.monthly.expensies.domain.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +14,8 @@ public class TagService {
     @Autowired
     private TagRepository tagRepository;
 
-    public List<Tag> getTags() {
-        final List<Tag> tags = new ArrayList<>();
-        tagRepository.findAll().forEach(tags::add);
-        return tags;
+    public List<Tag> findAll() {
+        return tagRepository.findAll();
     }
 
     public void save(final Tag tag) {
