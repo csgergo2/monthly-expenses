@@ -2,8 +2,10 @@ package csg.monthly.expensies.view.panel;
 
 import static csg.monthly.expensies.view.util.Name.ITEMS_CALCULATE_MONTH_BUTTON;
 import static csg.monthly.expensies.view.util.Name.ITEMS_INCOMES_TABLE;
+import static csg.monthly.expensies.view.util.Name.ITEMS_MONTH_COMMENT;
 import static csg.monthly.expensies.view.util.Name.ITEMS_MONTH_SELECTOR;
 import static csg.monthly.expensies.view.util.Name.ITEMS_OUTGOINGS_TABLE;
+import static csg.monthly.expensies.view.util.Name.ITEMS_SAVE_COMMENT_BUTTON;
 import static csg.monthly.expensies.view.util.Name.ITEMS_SUM_INCOMES;
 import static csg.monthly.expensies.view.util.Name.ITEMS_SUM_OUTGOINGS;
 import static csg.monthly.expensies.view.util.Name.ITEMS_YEAR_SELECTOR;
@@ -18,6 +20,7 @@ import javax.swing.BorderFactory;
 
 import csg.monthly.expensies.Application;
 import csg.monthly.expensies.domain.Item;
+import csg.monthly.expensies.domain.MonthComment;
 import csg.monthly.expensies.domain.Tag;
 import csg.monthly.expensies.domain.date.Month;
 import csg.monthly.expensies.domain.service.ItemService;
@@ -30,6 +33,7 @@ import csg.swing.CsGButton;
 import csg.swing.CsGComboBox;
 import csg.swing.CsGLabel;
 import csg.swing.CsGPanel;
+import csg.swing.CsGScrollableTextArea;
 
 public class ItemsPanel extends CsGPanel {
     public static final ItemsPanel ITEMS_PANEL = new ItemsPanel();
@@ -49,6 +53,7 @@ public class ItemsPanel extends CsGPanel {
 
     private CsGLabel outgoingsSum = new CsGLabel(ITEMS_SUM_OUTGOINGS, "");
     private CsGLabel incomesSum = new CsGLabel(ITEMS_SUM_INCOMES, "");
+    private CsGScrollableTextArea comment = new CsGScrollableTextArea(ITEMS_MONTH_COMMENT);
 
     private ItemsPanel() {
         super(Name.ITEMS_PANEL, MELayout.LAYOUT);
@@ -58,9 +63,11 @@ public class ItemsPanel extends CsGPanel {
         add(monthSelector);
 
         add(new CsGButton(ITEMS_CALCULATE_MONTH_BUTTON, "Mutasd", this::calculateMonth));//todo english
+        add(new CsGButton(ITEMS_SAVE_COMMENT_BUTTON, "Megjegyzés mentése", this::saveComment));//todo english
 
         add(outgoingsSum);
         add(incomesSum);
+        add(comment);
     }
 
     public void refresh() {
@@ -78,7 +85,6 @@ public class ItemsPanel extends CsGPanel {
     }
 
     private void calculateMonth(ActionEvent event) {
-        calculateMonth();
         doLayout();
         setVisible(true);
     }
@@ -91,6 +97,9 @@ public class ItemsPanel extends CsGPanel {
 
         calculateOutgoings(items, tags);
         calculateIncomes(items, tags);
+        comment.setText(
+                itemService.getComment((Month) monthSelector.getSelectedItem()).orElse(new MonthComment((Month) monthSelector.getSelectedItem(), ""))
+                           .getComment());
     }
 
     private void calculateOutgoings(List<Item> items, List<Tag> tags) {
@@ -127,5 +136,10 @@ public class ItemsPanel extends CsGPanel {
         incomesSum.setText("Összesen: " + Integer.toString(sum));//todo english
         tableOfIncomes.setScrollBarToBottom();
         add(tableOfIncomes);
+    }
+
+    private void saveComment(ActionEvent event) {
+        Application.getBean(ItemService.class).saveComment((Month) monthSelector.getSelectedItem(), comment.getText());
+
     }
 }

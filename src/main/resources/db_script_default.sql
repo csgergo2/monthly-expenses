@@ -85,8 +85,13 @@ order by count(a.item_name) desc;
 
 
 
-
-
+CREATE TABLE MONTH_COMMENT (
+	id int(100) AUTO_INCREMENT PRIMARY KEY,
+    month VARCHAR(50) not null,
+    comment VARCHAR(5000) not null
+);
+select * from month_comment;
+delete from month_comment;
 
 
 
