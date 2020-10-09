@@ -20,8 +20,9 @@ public interface ItemRepository extends CrudRepository<Item, String> {
 
     //@formatter:off
     @Query(value = "select * from item i where " +
-            "(:year IS NULL OR (:year IS NOT NULL && i.year = :year))", nativeQuery = true)
+            "(:year IS NULL OR i.year = :year) AND " +
+            "(:name IS NULL OR i.name LIKE %:name%) AND " +
+            "(:tagId IS NULL OR i.tag = :tagId)", nativeQuery = true)
     //@formatter:on
-    //    List<Item> findByFilters(@Param("year") Integer year, @Param("name") String name);
-    List<Item> findByFilters(@Param("year") Integer year);
+    List<Item> findByFilters(@Param("year") Integer year, @Param("name") String name, @Param("tagId") Integer tagId);
 }

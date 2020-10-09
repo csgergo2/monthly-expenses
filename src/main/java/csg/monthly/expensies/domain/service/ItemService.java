@@ -1,6 +1,7 @@
 package csg.monthly.expensies.domain.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import csg.monthly.expensies.domain.Item;
 import csg.monthly.expensies.domain.MonthComment;
+import csg.monthly.expensies.domain.Tag;
 import csg.monthly.expensies.domain.date.Month;
 import csg.monthly.expensies.domain.repository.ItemRepository;
 import csg.monthly.expensies.domain.repository.MonthCommentRepository;
@@ -51,11 +53,14 @@ public class ItemService {
         }
     }
 
-    public List<Item> findAllByFilter(String yearFilter) {
+    public List<Item> findAllByFilter(String yearFilter, String nameFilter, Tag tag) {
         Integer year = yearFilter == null || yearFilter.isEmpty() ? null : Integer.valueOf(yearFilter);
-        final Iterable<Item> all = itemRepository.findByFilters(year);
+        String name = nameFilter == null || nameFilter.isEmpty() ? null : nameFilter;
+        Integer tagId = tag.getId();
+        final Iterable<Item> all = itemRepository.findByFilters(year, name, tagId);
         List<Item> items = new ArrayList<>();
         all.forEach(items::add);
+        Collections.sort(items);
         return items;
     }
 }

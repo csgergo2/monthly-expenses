@@ -4,6 +4,7 @@ import static csg.monthly.expensies.view.util.Name.FILTERING_FILTER_BUTTON;
 import static csg.monthly.expensies.view.util.Name.FILTERING_ITEMS;
 import static csg.monthly.expensies.view.util.Name.FILTERING_NAME_FILTER;
 import static csg.monthly.expensies.view.util.Name.FILTERING_PANEL_BACK_BUTTON;
+import static csg.monthly.expensies.view.util.Name.FILTERING_TAG_FILTER;
 import static csg.monthly.expensies.view.util.Name.FILTERING_YEAR_FILTER;
 
 import java.awt.event.ActionEvent;
@@ -31,14 +32,19 @@ public class FilteringPanel extends CsGPanel {
     private CsGComboBox<String> year = new CsGComboBox<>(FILTERING_YEAR_FILTER);
 
     private final CsGTextField name = new CsGTextField(FILTERING_NAME_FILTER);
+    private final CsGComboBox<Tag> tag = new CsGComboBox<>(FILTERING_TAG_FILTER);
+
     private ItemsTablePanel items = new ItemsTablePanel(FILTERING_ITEMS);
 
     private FilteringPanel() {
         super(Name.FILTERING_PANEL, MELayout.LAYOUT);
 
-        add(year);
         final List<String> years = Collections.singletonList("");
         year.reset(years);
+        add(year);
+        final List<Tag> tags = Collections.singletonList(new Tag());
+        tag.reset(tags);
+        add(tag);
 
         add(name);
         add(new CsGButton(FILTERING_FILTER_BUTTON, "Szűrés", this::filter));//todo english
@@ -51,11 +57,19 @@ public class FilteringPanel extends CsGPanel {
 
     private void setYearSelector() {
         final String selectedYear = (String) year.getSelectedItem();
-        final ItemService itemService = Application.getBean(ItemService.class);
-        final List<String> years = itemService.findAllYear().stream().map(year -> Integer.toString(year)).collect(Collectors.toList());
+        final List<String> years =
+                Application.getBean(ItemService.class).findAllYear().stream().map(year -> Integer.toString(year)).collect(Collectors.toList());
         years.add("");
         year.reset(years);
         year.setSelectedItem(selectedYear);
+    }
+
+    private void setTagSelector() {
+        Tag selectedTag = (Tag) tag.getSelectedItem();
+        final List<Tag> tags = Application.getBean(TagService.class).findAll();
+        tags.add(new Tag());
+        tag.reset(tags);
+        tag.setSelectedItem(selectedTag);
     }
 
     @Override
@@ -63,6 +77,7 @@ public class FilteringPanel extends CsGPanel {
         if (visible) {
             filter();
             setYearSelector();
+            setTagSelector();
         }
         super.setVisible(visible);
     }
@@ -74,7 +89,13 @@ public class FilteringPanel extends CsGPanel {
 
     private void filter() {
         final List<Tag> tags = Application.getBean(TagService.class).findAll();
-        final List<Item> filteredItems = Application.getBean(ItemService.class).findAllByFilter((String) year.getSelectedItem());
+        //@formatter:off
+        final List<Item> filteredItems = Application.getBean(ItemService.class).findAllByFilter(
+                (String) year.getSelectedItem(),
+                name.getText(),
+                (Tag) tag.getSelectedItem()
+        );
+        //@formatter:on
         if (items != null) {
             items.setVisible(false);
             items.setEnabled(false);
