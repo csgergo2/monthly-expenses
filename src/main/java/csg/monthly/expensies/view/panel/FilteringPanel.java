@@ -2,11 +2,15 @@ package csg.monthly.expensies.view.panel;
 
 import static csg.monthly.expensies.view.util.Name.FILTERING_FILTER_BUTTON;
 import static csg.monthly.expensies.view.util.Name.FILTERING_INCOME_FILTER;
+import static csg.monthly.expensies.view.util.Name.FILTERING_INCOME_FILTER_LABEL;
 import static csg.monthly.expensies.view.util.Name.FILTERING_ITEMS;
 import static csg.monthly.expensies.view.util.Name.FILTERING_NAME_FILTER;
+import static csg.monthly.expensies.view.util.Name.FILTERING_NAME_FILTER_LABEL;
 import static csg.monthly.expensies.view.util.Name.FILTERING_PANEL_BACK_BUTTON;
 import static csg.monthly.expensies.view.util.Name.FILTERING_TAG_FILTER;
+import static csg.monthly.expensies.view.util.Name.FILTERING_TAG_FILTER_LABEL;
 import static csg.monthly.expensies.view.util.Name.FILTERING_YEAR_FILTER;
+import static csg.monthly.expensies.view.util.Name.FILTERING_YEAR_FILTER_LABEL;
 
 import java.awt.event.ActionEvent;
 import java.util.Collections;
@@ -25,6 +29,7 @@ import csg.monthly.expensies.view.util.Name;
 import csg.swing.CsGButton;
 import csg.swing.CsGCheckBox;
 import csg.swing.CsGComboBox;
+import csg.swing.CsGLabel;
 import csg.swing.CsGPanel;
 import csg.swing.CsGTextField;
 
@@ -45,12 +50,17 @@ public class FilteringPanel extends CsGPanel {
         final List<String> years = Collections.singletonList("");
         year.reset(years);
         add(year);
+        add(new CsGLabel(FILTERING_YEAR_FILTER_LABEL, "Év:"));//todo english
+
+        add(name);
+        add(new CsGLabel(FILTERING_NAME_FILTER_LABEL, "Név:"));//todo english
         final List<Tag> tags = Collections.singletonList(new Tag());
         tag.reset(tags);
         add(tag);
+        add(new CsGLabel(FILTERING_TAG_FILTER_LABEL, "Tag:"));//todo english
         add(isIncome);
+        add(new CsGLabel(FILTERING_INCOME_FILTER_LABEL, "Bevétel:"));//todo english
 
-        add(name);
         add(new CsGButton(FILTERING_FILTER_BUTTON, "Szűrés", this::filter));//todo english
         add(new CsGButton(FILTERING_PANEL_BACK_BUTTON, "Vissza", this::back));//todo english
     }
