@@ -1,5 +1,6 @@
 package csg.monthly.expensies.domain.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,5 +49,13 @@ public class ItemService {
         if (comment != null && !comment.isEmpty()) {
             monthCommentRepository.save(new MonthComment(month, comment));
         }
+    }
+
+    public List<Item> findAllByFilter(String yearFilter) {
+        Integer year = yearFilter == null || yearFilter.isEmpty() ? null : Integer.valueOf(yearFilter);
+        final Iterable<Item> all = itemRepository.findByFilters(year);
+        List<Item> items = new ArrayList<>();
+        all.forEach(items::add);
+        return items;
     }
 }

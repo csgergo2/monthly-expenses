@@ -17,4 +17,11 @@ public interface ItemRepository extends CrudRepository<Item, String> {
 
     @Query(value = "select year from item group by year", nativeQuery = true)
     List<Integer> findAllYear();
+
+    //@formatter:off
+    @Query(value = "select * from item i where " +
+            "(:year IS NULL OR (:year IS NOT NULL && i.year = :year))", nativeQuery = true)
+    //@formatter:on
+    //    List<Item> findByFilters(@Param("year") Integer year, @Param("name") String name);
+    List<Item> findByFilters(@Param("year") Integer year);
 }
