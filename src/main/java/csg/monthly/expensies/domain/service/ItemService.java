@@ -1,5 +1,6 @@
 package csg.monthly.expensies.domain.service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,6 +17,7 @@ import csg.monthly.expensies.domain.Tag;
 import csg.monthly.expensies.domain.date.Month;
 import csg.monthly.expensies.domain.repository.ItemRepository;
 import csg.monthly.expensies.domain.repository.MonthCommentRepository;
+import csg.monthly.expensies.view.util.DateParser;
 
 @Service
 public class ItemService {
@@ -53,11 +55,13 @@ public class ItemService {
         }
     }
 
-    public List<Item> findAllByFilter(String yearFilter, String nameFilter, Tag tag, boolean isIncome) {
+    public List<Item> findAllByFilter(String yearFilter, String nameFilter, Tag tag, boolean isIncome, String rawStartDate, String rawEndDate) {
         Integer year = yearFilter == null || yearFilter.isEmpty() ? null : Integer.valueOf(yearFilter);
         String name = nameFilter == null || nameFilter.isEmpty() ? null : nameFilter;
         Integer tagId = tag.getId();
-        final Iterable<Item> all = itemRepository.findByFilters(year, name, tagId, isIncome);
+        Date startDate = rawStartDate == null || rawStartDate.isEmpty() ? null : DateParser.stringToDate(rawStartDate);
+        Date endDate = rawEndDate == null || rawEndDate.isEmpty() ? null : DateParser.stringToDate(rawEndDate);
+        final Iterable<Item> all = itemRepository.findByFilters(year, name, tagId, isIncome, startDate, endDate);
         List<Item> items = new ArrayList<>();
         all.forEach(items::add);
         Collections.sort(items);

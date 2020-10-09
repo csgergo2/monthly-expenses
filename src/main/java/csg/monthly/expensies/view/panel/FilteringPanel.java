@@ -121,7 +121,9 @@ public class FilteringPanel extends CsGPanel {
                 (String) year.getSelectedItem(),
                 name.getText(),
                 (Tag) tag.getSelectedItem(),
-                isIncome.isSelected()
+                isIncome.isSelected(),
+                startDate.getText(),
+                endDate.getText()
         );
         //@formatter:on
         if (items != null) {
