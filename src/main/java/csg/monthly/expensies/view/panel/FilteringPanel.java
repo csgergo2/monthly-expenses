@@ -1,5 +1,9 @@
 package csg.monthly.expensies.view.panel;
 
+import static csg.monthly.expensies.view.util.Name.FILTERING_DATE_END;
+import static csg.monthly.expensies.view.util.Name.FILTERING_DATE_END_LABEL;
+import static csg.monthly.expensies.view.util.Name.FILTERING_DATE_START;
+import static csg.monthly.expensies.view.util.Name.FILTERING_DATE_START_LABEL;
 import static csg.monthly.expensies.view.util.Name.FILTERING_FILTER_BUTTON;
 import static csg.monthly.expensies.view.util.Name.FILTERING_INCOME_FILTER;
 import static csg.monthly.expensies.view.util.Name.FILTERING_INCOME_FILTER_LABEL;
@@ -13,6 +17,7 @@ import static csg.monthly.expensies.view.util.Name.FILTERING_YEAR_FILTER;
 import static csg.monthly.expensies.view.util.Name.FILTERING_YEAR_FILTER_LABEL;
 
 import java.awt.event.ActionEvent;
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,7 +41,9 @@ import csg.swing.CsGTextField;
 public class FilteringPanel extends CsGPanel {
     public static final FilteringPanel FILTERING_PANEL = new FilteringPanel();
 
-    private CsGComboBox<String> year = new CsGComboBox<>(FILTERING_YEAR_FILTER);
+    private final CsGComboBox<String> year = new CsGComboBox<>(FILTERING_YEAR_FILTER);
+    private final CsGTextField startDate = new CsGTextField(FILTERING_DATE_START);
+    private final CsGTextField endDate = new CsGTextField(FILTERING_DATE_END);
 
     private final CsGTextField name = new CsGTextField(FILTERING_NAME_FILTER);
     private final CsGComboBox<Tag> tag = new CsGComboBox<>(FILTERING_TAG_FILTER);
@@ -51,6 +58,12 @@ public class FilteringPanel extends CsGPanel {
         year.reset(years);
         add(year);
         add(new CsGLabel(FILTERING_YEAR_FILTER_LABEL, "Év:"));//todo english
+        add(new CsGLabel(FILTERING_DATE_START_LABEL, "Kezdő dátum:"));//todo english
+        startDate.setText(LocalDate.now().minusYears(1).toString());
+        add(startDate);
+        add(new CsGLabel(FILTERING_DATE_END_LABEL, "Vég dátum:"));//todo english
+        endDate.setText(LocalDate.now().toString());
+        add(endDate);
 
         add(name);
         add(new CsGLabel(FILTERING_NAME_FILTER_LABEL, "Név:"));//todo english
