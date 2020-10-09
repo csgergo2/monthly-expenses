@@ -1,6 +1,7 @@
 package csg.monthly.expensies.view.panel;
 
 import static csg.monthly.expensies.view.util.Name.FILTERING_FILTER_BUTTON;
+import static csg.monthly.expensies.view.util.Name.FILTERING_INCOME_FILTER;
 import static csg.monthly.expensies.view.util.Name.FILTERING_ITEMS;
 import static csg.monthly.expensies.view.util.Name.FILTERING_NAME_FILTER;
 import static csg.monthly.expensies.view.util.Name.FILTERING_PANEL_BACK_BUTTON;
@@ -22,6 +23,7 @@ import csg.monthly.expensies.view.panel.items.TableItem;
 import csg.monthly.expensies.view.util.MELayout;
 import csg.monthly.expensies.view.util.Name;
 import csg.swing.CsGButton;
+import csg.swing.CsGCheckBox;
 import csg.swing.CsGComboBox;
 import csg.swing.CsGPanel;
 import csg.swing.CsGTextField;
@@ -33,6 +35,7 @@ public class FilteringPanel extends CsGPanel {
 
     private final CsGTextField name = new CsGTextField(FILTERING_NAME_FILTER);
     private final CsGComboBox<Tag> tag = new CsGComboBox<>(FILTERING_TAG_FILTER);
+    private final CsGCheckBox isIncome = new CsGCheckBox(FILTERING_INCOME_FILTER);
 
     private ItemsTablePanel items = new ItemsTablePanel(FILTERING_ITEMS);
 
@@ -45,6 +48,7 @@ public class FilteringPanel extends CsGPanel {
         final List<Tag> tags = Collections.singletonList(new Tag());
         tag.reset(tags);
         add(tag);
+        add(isIncome);
 
         add(name);
         add(new CsGButton(FILTERING_FILTER_BUTTON, "Szűrés", this::filter));//todo english
@@ -93,7 +97,8 @@ public class FilteringPanel extends CsGPanel {
         final List<Item> filteredItems = Application.getBean(ItemService.class).findAllByFilter(
                 (String) year.getSelectedItem(),
                 name.getText(),
-                (Tag) tag.getSelectedItem()
+                (Tag) tag.getSelectedItem(),
+                isIncome.isSelected()
         );
         //@formatter:on
         if (items != null) {

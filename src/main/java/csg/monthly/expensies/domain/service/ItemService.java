@@ -53,11 +53,11 @@ public class ItemService {
         }
     }
 
-    public List<Item> findAllByFilter(String yearFilter, String nameFilter, Tag tag) {
+    public List<Item> findAllByFilter(String yearFilter, String nameFilter, Tag tag, boolean isIncome) {
         Integer year = yearFilter == null || yearFilter.isEmpty() ? null : Integer.valueOf(yearFilter);
         String name = nameFilter == null || nameFilter.isEmpty() ? null : nameFilter;
         Integer tagId = tag.getId();
-        final Iterable<Item> all = itemRepository.findByFilters(year, name, tagId);
+        final Iterable<Item> all = itemRepository.findByFilters(year, name, tagId, isIncome);
         List<Item> items = new ArrayList<>();
         all.forEach(items::add);
         Collections.sort(items);
