@@ -14,6 +14,8 @@ import csg.monthly.expensies.domain.date.Month;
 @Repository
 public interface ItemRepository extends CrudRepository<Item, String> {
 
+    List<Item> findAll();
+
     List<Item> findAllByYearAndMonth(@Param("year") int year, @Param("month") Month month);
 
     @Query(value = "select year from item group by year", nativeQuery = true)

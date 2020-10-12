@@ -48,7 +48,7 @@ public class Tag {
             return false;
         }
         final Tag tag = (Tag) o;
-        return prio == tag.prio && Objects.equals(name, tag.name);
+        return Objects.equals(name, tag.name);
     }
 
     @Override

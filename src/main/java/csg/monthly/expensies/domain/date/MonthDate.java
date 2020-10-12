@@ -2,16 +2,10 @@ package csg.monthly.expensies.domain.date;
 
 import java.util.Objects;
 
-import javax.persistence.Embeddable;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-
 import csg.monthly.expensies.exception.SameMonthDateException;
 
-@Embeddable
 public class MonthDate implements Comparable<MonthDate> {
 
-    @Enumerated(EnumType.STRING)
     private Month month;
     private int year;
 
@@ -71,6 +65,6 @@ public class MonthDate implements Comparable<MonthDate> {
         if (year == o.year && month == o.month) {
             throw new SameMonthDateException("Month and year can not be the same! Current MonthDate: " + this + "; Compared to " + o);
         }
-        return year < o.year ? -1 : year > o.year ? 1 : month.getMonthOfYear() < o.getMonth().getMonthOfYear() ? -1 : 1;
+        return year > o.year ? -1 : year < o.year ? 1 : month.getMonthOfYear() > o.getMonth().getMonthOfYear() ? -1 : 1;
     }
 }

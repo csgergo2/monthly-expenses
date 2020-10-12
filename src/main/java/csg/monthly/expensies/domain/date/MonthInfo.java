@@ -32,6 +32,14 @@ public class MonthInfo implements Comparable<MonthInfo> {
         this.items = items;
     }
 
+    public String getHtmlName() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(month.getYear());
+        sb.append("<br/>");
+        sb.append(month.getMonth().getMonthOfYear()).append('.');
+        return sb.toString();
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
