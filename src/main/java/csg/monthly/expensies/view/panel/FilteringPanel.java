@@ -8,6 +8,8 @@ import static csg.monthly.expensies.view.util.Name.FILTERING_FILTER_BUTTON;
 import static csg.monthly.expensies.view.util.Name.FILTERING_INCOME_FILTER;
 import static csg.monthly.expensies.view.util.Name.FILTERING_INCOME_FILTER_LABEL;
 import static csg.monthly.expensies.view.util.Name.FILTERING_ITEMS;
+import static csg.monthly.expensies.view.util.Name.FILTERING_MONTH_FILTER;
+import static csg.monthly.expensies.view.util.Name.FILTERING_MONTH_FILTER_LABEL;
 import static csg.monthly.expensies.view.util.Name.FILTERING_NAME_FILTER;
 import static csg.monthly.expensies.view.util.Name.FILTERING_NAME_FILTER_LABEL;
 import static csg.monthly.expensies.view.util.Name.FILTERING_PANEL_BACK_BUTTON;
@@ -19,6 +21,7 @@ import static csg.monthly.expensies.view.util.Name.FILTERING_YEAR_FILTER_LABEL;
 
 import java.awt.event.ActionEvent;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,6 +29,7 @@ import java.util.stream.Collectors;
 import csg.monthly.expensies.Application;
 import csg.monthly.expensies.domain.Item;
 import csg.monthly.expensies.domain.Tag;
+import csg.monthly.expensies.domain.date.Month;
 import csg.monthly.expensies.domain.service.ItemService;
 import csg.monthly.expensies.domain.service.TagService;
 import csg.monthly.expensies.view.panel.items.ItemsTablePanel;
@@ -43,6 +47,7 @@ public class FilteringPanel extends CsGPanel {
     public static final FilteringPanel FILTERING_PANEL = new FilteringPanel();
 
     private final CsGComboBox<String> year = new CsGComboBox<>(FILTERING_YEAR_FILTER);
+    private final CsGComboBox<String> month = new CsGComboBox<>(FILTERING_MONTH_FILTER);
     private final CsGTextField startDate = new CsGTextField(FILTERING_DATE_START);
     private final CsGTextField endDate = new CsGTextField(FILTERING_DATE_END);
 
@@ -57,10 +62,14 @@ public class FilteringPanel extends CsGPanel {
     private FilteringPanel() {
         super(Name.FILTERING_PANEL, MELayout.LAYOUT);
 
+        add(new CsGLabel(FILTERING_YEAR_FILTER_LABEL, "Év:"));//todo english
         final List<String> years = Collections.singletonList("");
         year.reset(years);
         add(year);
-        add(new CsGLabel(FILTERING_YEAR_FILTER_LABEL, "Év:"));//todo english
+        add(new CsGLabel(FILTERING_MONTH_FILTER_LABEL, "Hó:"));//todo english
+        List<String> months = Collections.singletonList("");
+        month.reset(months);
+        add(month);
         add(new CsGLabel(FILTERING_DATE_START_LABEL, "Kezdő dátum:"));//todo english
         startDate.setText(LocalDate.now().minusYears(1).toString());
         add(startDate);
@@ -96,6 +105,14 @@ public class FilteringPanel extends CsGPanel {
         year.setSelectedItem(selectedYear);
     }
 
+    private void setMonthSelector() {
+        String selectedMonth = (String) month.getSelectedItem();
+        final List<String> months = Arrays.stream(Month.values()).map(Month::name).collect(Collectors.toList());
+        months.add(0, "");
+        month.reset(months);
+        month.setSelectedItem(selectedMonth);
+    }
+
     private void setTagSelector() {
         Tag selectedTag = (Tag) tag.getSelectedItem();
         final List<Tag> tags = Application.getBean(TagService.class).findAll();
@@ -109,6 +126,7 @@ public class FilteringPanel extends CsGPanel {
         if (visible) {
             filter();
             setYearSelector();
+            setMonthSelector();
             setTagSelector();
         }
         super.setVisible(visible);
@@ -124,6 +142,7 @@ public class FilteringPanel extends CsGPanel {
         //@formatter:off
         final List<Item> filteredItems = Application.getBean(ItemService.class).findAllByFilter(
                 (String) year.getSelectedItem(),
+                (String) month.getSelectedItem(),
                 name.getText(),
                 (Tag) tag.getSelectedItem(),
                 isIncome.isSelected(),
@@ -144,7 +163,8 @@ public class FilteringPanel extends CsGPanel {
         }
         items.setScrollBarToBottom();
         add(items);
-        summarize.setText("Darab: " + filteredItems.size() + "; Összeg: " + sum + "; Átlag: " + (sum / filteredItems.size()));//todo english
+        int avg = filteredItems.size() == 0 || sum == 0 ? 0 : sum / filteredItems.size();
+        summarize.setText("Darab: " + filteredItems.size() + "; Összeg: " + sum + "; Átlag: " + avg);//todo english
     }
 
     private void back(ActionEvent event) {

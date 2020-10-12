@@ -55,13 +55,15 @@ public class ItemService {
         }
     }
 
-    public List<Item> findAllByFilter(String yearFilter, String nameFilter, Tag tag, boolean isIncome, String rawStartDate, String rawEndDate) {
+    public List<Item> findAllByFilter(String yearFilter, String monthFilter, String nameFilter, Tag tag, boolean isIncome, String rawStartDate,
+                                      String rawEndDate) {
         Integer year = yearFilter == null || yearFilter.isEmpty() ? null : Integer.valueOf(yearFilter);
+        String month = monthFilter == null || monthFilter.isEmpty() ? null : monthFilter;
         String name = nameFilter == null || nameFilter.isEmpty() ? null : nameFilter;
         Integer tagId = tag.getId();
         Date startDate = rawStartDate == null || rawStartDate.isEmpty() ? null : DateParser.stringToDate(rawStartDate);
         Date endDate = rawEndDate == null || rawEndDate.isEmpty() ? null : DateParser.stringToDate(rawEndDate);
-        final Iterable<Item> all = itemRepository.findByFilters(year, name, tagId, isIncome, startDate, endDate);
+        final Iterable<Item> all = itemRepository.findByFilters(year, month, name, tagId, isIncome, startDate, endDate);
         List<Item> items = new ArrayList<>();
         all.forEach(items::add);
         Collections.sort(items);
