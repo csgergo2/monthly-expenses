@@ -18,10 +18,6 @@ public class TagService {
     private TagRepository tagRepository;
 
     public List<Tag> findAll() {
-        return tagRepository.findAll();
-    }
-
-    public List<Tag> findAllOrderedByFrequency() {
         List<Tag> tags = tagRepository.findAll();
         Map<String, Tag> tagMap = new HashMap<>();
         for (Tag tag : tags) {

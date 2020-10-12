@@ -1,7 +1,9 @@
 package csg.monthly.expensies.view.panel;
 
+import static csg.monthly.expensies.view.panel.FilteringPanel.FILTERING_PANEL;
 import static csg.monthly.expensies.view.panel.MainPanel.MAIN_PANEL;
 import static csg.monthly.expensies.view.panel.MonthlySumPanel.MONTHLY_SUM_PANEL;
+import static csg.monthly.expensies.view.util.Name.MENU_PANEL_FILTERING_PANEL_BUTTON;
 import static csg.monthly.expensies.view.util.Name.MENU_PANEL_START_BUTTON;
 import static csg.monthly.expensies.view.util.Name.MONTHLY_SUM_PANEL_BUTTON;
 
@@ -18,7 +20,7 @@ public class MenuPanel extends CsGPanel {
     private MenuPanel() {
         super(Name.MENU_PANEL, MELayout.LAYOUT);
         add(new CsGButton(MENU_PANEL_START_BUTTON, "Itemek", this::mainPanelStart));//todo english
-        add(new CsGButton(MONTHLY_SUM_PANEL_BUTTON, "Havi összegzés", this::monthlySumPanel));//todo english
+        add(new CsGButton(MENU_PANEL_FILTERING_PANEL_BUTTON, "Szűrő panel", this::filteringPanel));//todo english
 
         setVisible(true);
     }
@@ -28,8 +30,8 @@ public class MenuPanel extends CsGPanel {
         MAIN_PANEL.setVisible(true);
     }
 
-    private void monthlySumPanel(ActionEvent event) {
+    private void filteringPanel(ActionEvent event) {
         setVisible(false);
-        MONTHLY_SUM_PANEL.setVisible(true);
+        FILTERING_PANEL.setVisible(true);
     }
 }
