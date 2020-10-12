@@ -38,6 +38,7 @@ public class MonthlySumPanel extends CsGPanel {
         }
         sb.append("</html>");
         table.setText(sb.toString());
+        table.getVerticalScrollBar().addAdjustmentListener(this::changeTableScroll);
         add(table);
 
         sb = new StringBuilder("<html>");
@@ -60,6 +61,13 @@ public class MonthlySumPanel extends CsGPanel {
         if (!event.getValueIsAdjusting()) {
             JScrollBar source = (JScrollBar) event.getAdjustable();
             table.getVerticalScrollBar().getModel().setValue(source.getModel().getValue());
+        }
+    }
+
+    private void changeTableScroll(AdjustmentEvent event) {
+        if (!event.getValueIsAdjusting()) {
+            JScrollBar source = (JScrollBar) event.getAdjustable();
+            tags.getVerticalScrollBar().getModel().setValue(source.getModel().getValue());
         }
     }
 }

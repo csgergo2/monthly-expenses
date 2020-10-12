@@ -82,6 +82,9 @@ right join tag t on i.tag = t.id) a
 group by (a.item_name)
 order by count(a.item_name) desc;
 
+select * from item i where 
+	(null IS NULL OR (null IS NOT NULL && i.year = null)) AND
+    ("5" IS NULL OR ("5" IS NOT NULL && i.name LIKE "5%"));
 
 
 
