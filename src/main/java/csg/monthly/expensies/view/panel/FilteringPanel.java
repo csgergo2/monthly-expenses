@@ -11,6 +11,7 @@ import static csg.monthly.expensies.view.util.Name.FILTERING_ITEMS;
 import static csg.monthly.expensies.view.util.Name.FILTERING_NAME_FILTER;
 import static csg.monthly.expensies.view.util.Name.FILTERING_NAME_FILTER_LABEL;
 import static csg.monthly.expensies.view.util.Name.FILTERING_PANEL_BACK_BUTTON;
+import static csg.monthly.expensies.view.util.Name.FILTERING_SUMMARIZE_LABEL;
 import static csg.monthly.expensies.view.util.Name.FILTERING_TAG_FILTER;
 import static csg.monthly.expensies.view.util.Name.FILTERING_TAG_FILTER_LABEL;
 import static csg.monthly.expensies.view.util.Name.FILTERING_YEAR_FILTER;
@@ -51,6 +52,8 @@ public class FilteringPanel extends CsGPanel {
 
     private ItemsTablePanel items = new ItemsTablePanel(FILTERING_ITEMS);
 
+    private final CsGLabel summarize = new CsGLabel(FILTERING_SUMMARIZE_LABEL, "");
+
     private FilteringPanel() {
         super(Name.FILTERING_PANEL, MELayout.LAYOUT);
 
@@ -76,6 +79,8 @@ public class FilteringPanel extends CsGPanel {
 
         add(new CsGButton(FILTERING_FILTER_BUTTON, "Szűrés", this::filter));//todo english
         add(new CsGButton(FILTERING_PANEL_BACK_BUTTON, "Vissza", this::back));//todo english
+
+        add(summarize);
     }
 
     private void setFilteringFields() {
@@ -131,12 +136,15 @@ public class FilteringPanel extends CsGPanel {
             items.setEnabled(false);
             remove(items);
         }
+        int sum = 0;
         items = new ItemsTablePanel(FILTERING_ITEMS);
         for (Item item : filteredItems) {
             items.add(new TableItem(item, tags));
+            sum += item.getAmount();
         }
         items.setScrollBarToBottom();
         add(items);
+        summarize.setText("Darab: " + filteredItems.size() + "; Összeg: " + sum + "; Átlag: " + (sum / filteredItems.size()));//todo english
     }
 
     private void back(ActionEvent event) {
