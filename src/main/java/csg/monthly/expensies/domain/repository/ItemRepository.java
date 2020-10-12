@@ -1,5 +1,6 @@
 package csg.monthly.expensies.domain.repository;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
@@ -17,4 +18,16 @@ public interface ItemRepository extends CrudRepository<Item, String> {
 
     @Query(value = "select year from item group by year", nativeQuery = true)
     List<Integer> findAllYear();
+
+    //@formatter:off
+    @Query(value = "select * from item i where " +
+            "(:year IS NULL OR i.year = :year) AND " +
+            "(:name IS NULL OR i.name LIKE %:name%) AND " +
+            "(:tagId IS NULL OR i.tag = :tagId) AND " +
+            "i.is_income = :isIncome AND " +
+            "(:startDate IS NULL OR i.date >= :startDate) AND " +
+            "(:endDate IS NULL OR i.date <= :endDate)", nativeQuery = true)
+    //@formatter:on
+    List<Item> findByFilters(@Param("year") Integer year, @Param("name") String name, @Param("tagId") Integer tagId,
+                             @Param("isIncome") boolean isIncome, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
 }
