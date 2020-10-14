@@ -55,7 +55,7 @@ public class ItemService {
         }
     }
 
-    public List<Item> findAllByFilter(String yearFilter, String monthFilter, String nameFilter, Tag tag, boolean isIncome, String rawStartDate,
+    public List<Item> findAllByFilter(String yearFilter, String monthFilter, String nameFilter, Tag tag, Boolean isIncome, String rawStartDate,
                                       String rawEndDate) {
         Integer year = yearFilter == null || yearFilter.isEmpty() ? null : Integer.valueOf(yearFilter);
         String month = monthFilter == null || monthFilter.isEmpty() ? null : monthFilter;

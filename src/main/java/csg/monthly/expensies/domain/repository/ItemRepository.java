@@ -27,10 +27,10 @@ public interface ItemRepository extends CrudRepository<Item, String> {
             "(:month IS NULL OR i.month = :month) AND " +
             "(:name IS NULL OR i.name LIKE %:name%) AND " +
             "(:tagId IS NULL OR i.tag = :tagId) AND " +
-            "i.is_income = :isIncome AND " +
+            "(:isIncome IS NULL OR i.is_income = :isIncome) AND " +
             "(:startDate IS NULL OR i.date >= :startDate) AND " +
             "(:endDate IS NULL OR i.date <= :endDate)", nativeQuery = true)
     //@formatter:on
     List<Item> findByFilters(@Param("year") Integer year, @Param("month") String month, @Param("name") String name, @Param("tagId") Integer tagId,
-                             @Param("isIncome") boolean isIncome, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
+                             @Param("isIncome") Boolean isIncome, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
 }
