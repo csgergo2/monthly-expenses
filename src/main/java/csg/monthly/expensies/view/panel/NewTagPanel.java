@@ -3,7 +3,7 @@ package csg.monthly.expensies.view.panel;
 import static csg.monthly.expensies.view.util.Name.TAG_LIST_LABEL;
 import static csg.monthly.expensies.view.util.Name.TAG_NAME;
 import static csg.monthly.expensies.view.util.Name.TAG_NAME_LABEL;
-import static csg.monthly.expensies.view.util.Name.TAG_PANEL;
+import static csg.monthly.expensies.view.util.Name.TAG_NEW_TAG_PANEL;
 import static csg.monthly.expensies.view.util.Name.TAG_PRIO;
 import static csg.monthly.expensies.view.util.Name.TAG_PRIO_LABEL;
 import static csg.monthly.expensies.view.util.Name.TAG_SAVE_BUTTON;
@@ -34,7 +34,7 @@ public class NewTagPanel extends CsGPanel {
     private CsGScrollableLabel tagTags = new CsGScrollableLabel(TAG_LIST_LABEL, "");
 
     private NewTagPanel() {
-        super(TAG_PANEL, MELayout.LAYOUT);
+        super(TAG_NEW_TAG_PANEL, MELayout.LAYOUT);
         setBorder(BorderFactory.createLineBorder(Color.black));
 
         add(tagName);
