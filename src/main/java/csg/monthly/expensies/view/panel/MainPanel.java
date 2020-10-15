@@ -5,8 +5,6 @@ import static csg.monthly.expensies.view.panel.MenuPanel.MENU_PANEL;
 import static csg.monthly.expensies.view.util.Name.ITEMS_BACK_BUTTON;
 import static csg.monthly.expensies.view.util.Name.TAG_NEW_TAG_PANEL;
 
-import java.awt.event.ActionEvent;
-
 import csg.monthly.expensies.view.panel.tag.NewTagPanel;
 import csg.monthly.expensies.view.util.MELayout;
 import csg.monthly.expensies.view.util.Name;
@@ -16,7 +14,7 @@ import csg.swing.CsGPanel;
 public class MainPanel extends CsGPanel {
     public static final MainPanel MAIN_PANEL = new MainPanel();
 
-    private NewItemPanel newItemPanel = new NewItemPanel(ITEMS_PANEL::refresh);
+    private NewItemPanel newItemPanel = new NewItemPanel(() -> ITEMS_PANEL.setVisible(true));
     private NewTagPanel newTagPanel = new NewTagPanel(TAG_NEW_TAG_PANEL, this::refresh);
 
     private MainPanel() {
@@ -25,15 +23,15 @@ public class MainPanel extends CsGPanel {
         add(ITEMS_PANEL);
         add(newItemPanel);
         add(newTagPanel);
-        add(new CsGButton(ITEMS_BACK_BUTTON, "Vissza", this::back));//todo english
+        add(new CsGButton(ITEMS_BACK_BUTTON, "Vissza", event -> back()));//todo english
     }
 
-    private void refresh(ActionEvent event) {
-        ITEMS_PANEL.refresh();
-        newItemPanel.refresh();
+    private void refresh() {
+        ITEMS_PANEL.setVisible(true);
+        newItemPanel.setVisible(true);
     }
 
-    private void back(ActionEvent event) {
+    private void back() {
         setVisible(false);
         MENU_PANEL.setVisible(true);
     }

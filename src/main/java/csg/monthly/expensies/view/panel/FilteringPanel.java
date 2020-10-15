@@ -5,7 +5,6 @@ import static csg.monthly.expensies.view.util.Name.FILTERING_ITEMS;
 import static csg.monthly.expensies.view.util.Name.FILTERING_PANEL_BACK_BUTTON;
 import static csg.monthly.expensies.view.util.Name.FILTERING_SUMMARIZE_LABEL;
 
-import java.awt.event.ActionEvent;
 import java.util.List;
 
 import csg.monthly.expensies.Application;
@@ -25,14 +24,14 @@ public class FilteringPanel extends CsGPanel {
     public static final FilteringPanel FILTERING_PANEL = new FilteringPanel();
 
     private ItemsTablePanel items = new ItemsTablePanel(FILTERING_ITEMS);
-    private DetailedFiltersPanel filters = new DetailedFiltersPanel(FILTERING_FILTER_PANEL, this::filter);
+    private DetailedFiltersPanel filters = new DetailedFiltersPanel(FILTERING_FILTER_PANEL, event -> setVisible(true));
 
     private final CsGLabel summarize = new CsGLabel(FILTERING_SUMMARIZE_LABEL, "");
 
     private FilteringPanel() {
         super(Name.FILTERING_PANEL, MELayout.LAYOUT);
 
-        add(new CsGButton(FILTERING_PANEL_BACK_BUTTON, "Vissza", this::back));//todo english
+        add(new CsGButton(FILTERING_PANEL_BACK_BUTTON, "Vissza", event -> back()));//todo english
 
         add(filters);
         add(summarize);
@@ -45,11 +44,6 @@ public class FilteringPanel extends CsGPanel {
             filters.setVisible(true);
         }
         super.setVisible(visible);
-    }
-
-    private void filter(ActionEvent event) {
-        doLayout();
-        setVisible(true);
     }
 
     private void filter() {
@@ -72,7 +66,7 @@ public class FilteringPanel extends CsGPanel {
         summarize.setText("Darab: " + filteredItems.size() + "; Összeg: " + sum + "; Átlag: " + avg);//todo english
     }
 
-    private void back(ActionEvent event) {
+    private void back() {
         setVisible(false);
         MenuPanel.MENU_PANEL.setVisible(true);
     }

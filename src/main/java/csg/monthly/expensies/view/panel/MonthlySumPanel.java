@@ -4,7 +4,6 @@ import static csg.monthly.expensies.view.panel.MenuPanel.MENU_PANEL;
 import static csg.monthly.expensies.view.util.Name.MONTHLY_SUM_BACK_BUTTON;
 import static csg.monthly.expensies.view.util.Name.MONTHLY_SUM_MAIN_LABEL;
 
-import java.awt.event.ActionEvent;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,7 +31,7 @@ public class MonthlySumPanel extends CsGPanel {
     private MonthlySumPanel() {
         super(Name.MONTHLY_SUM_PANEL, MELayout.LAYOUT);
 
-        add(new CsGButton(MONTHLY_SUM_BACK_BUTTON, "Vissza", this::back));//todo english
+        add(new CsGButton(MONTHLY_SUM_BACK_BUTTON, "Vissza", event -> back()));//todo english
         add(table);
     }
 
@@ -85,7 +84,7 @@ public class MonthlySumPanel extends CsGPanel {
         super.setVisible(visible);
     }
 
-    private void back(ActionEvent event) {
+    private void back() {
         setVisible(false);
         MENU_PANEL.setVisible(true);
     }

@@ -93,10 +93,6 @@ public class NewItemPanel extends CsGPanel {
         add(new CsGButton(ITEM_SAVE_BUTTON, "Mentés", this::saveItem));//todo english
     }
 
-    public void refresh() {
-        setVisible(true);
-    }
-
     private void saveItem(ActionEvent event) {
         if (itemName.getText().isEmpty() || itemAmount.getText().isEmpty() || itemYear.getText().isEmpty()) {
             throw new MonthlyExpensesException(

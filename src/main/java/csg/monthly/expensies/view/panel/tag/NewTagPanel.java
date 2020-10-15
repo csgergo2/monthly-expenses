@@ -3,7 +3,6 @@ package csg.monthly.expensies.view.panel.tag;
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 
@@ -21,7 +20,7 @@ public class NewTagPanel extends CsGPanel {
     private CsGTextField tagName = new CsGTextField(Name.NAME);
     private CsGTextField tagPrio = new CsGTextField(Name.PRIO, true);
 
-    private ActionListener postSaveAction = null;
+    private Runnable postSaveAction = null;
 
     public NewTagPanel(final Enum<?> panelName) {
         super(panelName, new NewTagPanelLayout());
@@ -38,7 +37,7 @@ public class NewTagPanel extends CsGPanel {
         add(new CsGButton(Name.SAVE_BUTTON, "Tag Mentés", this::saveTag));//todo english
     }
 
-    public NewTagPanel(final Enum<?> panelName, final ActionListener postSaveAction) {
+    public NewTagPanel(final Enum<?> panelName, final Runnable postSaveAction) {
         this(panelName);
         this.postSaveAction = postSaveAction;
     }
@@ -54,7 +53,7 @@ public class NewTagPanel extends CsGPanel {
         tagName.setText("");
         tagPrio.setText("");
         if (postSaveAction != null) {
-            postSaveAction.actionPerformed(event);
+            postSaveAction.run();
         }
     }
 

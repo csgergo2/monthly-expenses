@@ -11,7 +11,6 @@ import static csg.monthly.expensies.view.util.Name.ITEMS_SUM_OUTGOINGS;
 import static csg.monthly.expensies.view.util.Name.ITEMS_YEAR_SELECTOR;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -62,16 +61,12 @@ public class ItemsPanel extends CsGPanel {
         add(yearSelector);
         add(monthSelector);
 
-        add(new CsGButton(ITEMS_CALCULATE_MONTH_BUTTON, "Mutasd", this::calculateMonth));//todo english
-        add(new CsGButton(ITEMS_SAVE_COMMENT_BUTTON, "Megjegyzés mentése", this::saveComment));//todo english
+        add(new CsGButton(ITEMS_CALCULATE_MONTH_BUTTON, "Mutasd", event -> setVisible(true)));//todo english
+        add(new CsGButton(ITEMS_SAVE_COMMENT_BUTTON, "Megjegyzés mentése", event -> saveComment()));//todo english
 
         add(outgoingsSum);
         add(incomesSum);
         add(comment);
-    }
-
-    public void refresh() {
-        calculateMonth(null);
     }
 
     @Override
@@ -82,11 +77,6 @@ public class ItemsPanel extends CsGPanel {
             calculateMonth();
         }
         super.setVisible(visible);
-    }
-
-    private void calculateMonth(ActionEvent event) {
-        doLayout();
-        setVisible(true);
     }
 
     private void calculateMonth() {
@@ -138,8 +128,7 @@ public class ItemsPanel extends CsGPanel {
         add(tableOfIncomes);
     }
 
-    private void saveComment(ActionEvent event) {
+    private void saveComment() {
         Application.getBean(ItemService.class).saveComment((Month) monthSelector.getSelectedItem(), comment.getText());
-
     }
 }
