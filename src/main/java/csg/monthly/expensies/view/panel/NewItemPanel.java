@@ -43,7 +43,6 @@ import csg.swing.CsGPanel;
 import csg.swing.CsGTextField;
 
 public class NewItemPanel extends CsGPanel {
-    public static final NewItemPanel NEW_ITEM_PANEL = new NewItemPanel();
 
     private static CsGTextField getYearTextField() {
         CsGTextField itemYear = new CsGTextField(ITEM_YEAR, true);
@@ -58,6 +57,8 @@ public class NewItemPanel extends CsGPanel {
         return itemMonth;
     }
 
+    private final Runnable refreshAction;
+
     private CsGTextField itemName = new CsGTextField(ITEM_NAME);
     private CsGComboBox<Tag> itemTags = new CsGComboBox<>(ITEM_TAG_LIST);
     private CsGTextField itemAmount = new CsGTextField(ITEM_AMOUNT, true);
@@ -68,8 +69,9 @@ public class NewItemPanel extends CsGPanel {
     private CsGTextField itemYear = getYearTextField();
     private CsGComboBox<Month> itemMonth = getMonthComboBox();
 
-    private NewItemPanel() {
+    public NewItemPanel(Runnable refreshAction) {
         super(Name.NEW_ITEM_PANEL, MELayout.LAYOUT);
+        this.refreshAction = refreshAction;
         setBorder(BorderFactory.createLineBorder(Color.black));
 
         add(itemName);
@@ -110,6 +112,7 @@ public class NewItemPanel extends CsGPanel {
         itemAmount.setText("");
         itemNewMonth.setSelected(false);
         itemIncome.setSelected(false);
+        refreshAction.run();
     }
 
     @Override
