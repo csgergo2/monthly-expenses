@@ -58,7 +58,7 @@ public class NewTagPanel extends CsGPanel {
         }
         final Tag tag = new Tag();
         tag.setName(tagName.getText());
-        tag.setPrio(Integer.valueOf(tagPrio.getText()));
+        tag.setPrio(tagPrio.getTextAsInteger());
         //todo set prio group
         Application.getBean(TagService.class).save(tag);
         tagName.setText("");

@@ -21,6 +21,9 @@ public interface ItemRepository extends CrudRepository<Item, String> {
     @Query(value = "select year from item group by year", nativeQuery = true)
     List<Integer> findAllYear();
 
+    @Query(value = "select count(*) from item i where i.tag = :tagId", nativeQuery = true)
+    int findByTagId(@Param("tagId") int tagId);
+
     //@formatter:off
     @Query(value = "select * from item i where " +
             "(:year IS NULL OR i.year = :year) AND " +

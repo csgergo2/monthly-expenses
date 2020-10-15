@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import csg.monthly.expensies.domain.Tag;
+import csg.monthly.expensies.domain.repository.ItemRepository;
 import csg.monthly.expensies.domain.repository.TagRepository;
 
 @Service
@@ -16,6 +17,8 @@ public class TagService {
 
     @Autowired
     private TagRepository tagRepository;
+    @Autowired
+    private ItemRepository itemRepository;
 
     public List<Tag> findAll() {
         List<Tag> tags = tagRepository.findAll();
@@ -28,5 +31,13 @@ public class TagService {
 
     public void save(final Tag tag) {
         tagRepository.save(tag);
+    }
+
+    public boolean isTagDeletable(Tag tag) {
+        return itemRepository.findByTagId(tag.getId()) == 0;
+    }
+
+    public void delete(Tag tag) {
+        tagRepository.delete(tag);
     }
 }
