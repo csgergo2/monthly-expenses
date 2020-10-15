@@ -20,7 +20,6 @@ import java.util.List;
 import csg.monthly.expensies.Application;
 import csg.monthly.expensies.domain.Item;
 import csg.monthly.expensies.domain.Tag;
-import csg.monthly.expensies.domain.service.ItemService;
 import csg.monthly.expensies.domain.service.TagService;
 import csg.monthly.expensies.view.panel.items.ItemsTablePanel;
 import csg.monthly.expensies.view.panel.items.TableItem;
@@ -103,17 +102,7 @@ public class TagPanel extends CsGPanel {
     }
 
     private void setItems() {
-        //@formatter:off
-        final List<Item> filteredItems = Application.getBean(ItemService.class).findAllByFilter(
-                filters.getYear(),
-                filters.getMonth(),
-                filters.getNameFilter(),
-                (Tag) tagSelector.getSelectedItem(),
-                null,
-                filters.getStartDate(),
-                filters.getEndDate()
-        );
-        //@formatter:on
+        final List<Item> filteredItems = filters.filterWithTag((Tag) tagSelector.getSelectedItem());
         if (items != null) {
             items.setVisible(false);
             items.setEnabled(false);

@@ -11,7 +11,6 @@ import java.util.List;
 import csg.monthly.expensies.Application;
 import csg.monthly.expensies.domain.Item;
 import csg.monthly.expensies.domain.Tag;
-import csg.monthly.expensies.domain.service.ItemService;
 import csg.monthly.expensies.domain.service.TagService;
 import csg.monthly.expensies.view.panel.items.ItemsTablePanel;
 import csg.monthly.expensies.view.panel.items.TableItem;
@@ -55,17 +54,7 @@ public class FilteringPanel extends CsGPanel {
 
     private void filter() {
         final List<Tag> tags = Application.getBean(TagService.class).findAll();
-        //@formatter:off
-        final List<Item> filteredItems = Application.getBean(ItemService.class).findAllByFilter(
-                filters.getYear(),
-                filters.getMonth(),
-                filters.getNameFilter(),
-                filters.getTag(),
-                filters.getIsIncome(),
-                filters.getStartDate(),
-                filters.getEndDate()
-        );
-        //@formatter:on
+        final List<Item> filteredItems = filters.filter();
         if (items != null) {
             items.setVisible(false);
             items.setEnabled(false);

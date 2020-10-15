@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 import javax.swing.BorderFactory;
 
 import csg.monthly.expensies.Application;
+import csg.monthly.expensies.domain.Item;
+import csg.monthly.expensies.domain.Tag;
 import csg.monthly.expensies.domain.date.Month;
 import csg.monthly.expensies.domain.service.ItemService;
 import csg.swing.CsGButton;
@@ -29,9 +31,14 @@ public class DefaultFiltersPanel extends CsGPanel {
     private final CsGTextField startDate = new CsGTextField(Name.DATE_START);
     private final CsGTextField endDate = new CsGTextField(Name.DATE_END);
     private final CsGTextField name = new CsGTextField(Name.NAME);
+    private final CsGTextField amountMin = new CsGTextField(Name.AMOUNT_MIN, true);
+    private final CsGTextField amountMax = new CsGTextField(Name.AMOUNT_MAX, true);
+
+    private final ActionListener filterAction;
 
     public DefaultFiltersPanel(final Enum<?> panelName, final ActionListener filterAction) {
         super(panelName, new FiltersPanelLayout());
+        this.filterAction = filterAction;
         setBorder(BorderFactory.createLineBorder(Color.black));
 
         add(new CsGLabel(Name.TITLE, "Item szűrő:"));//todo english
@@ -57,6 +64,12 @@ public class DefaultFiltersPanel extends CsGPanel {
         add(new CsGLabel(Name.NAME_LABEL, "Név:"));//todo english
         add(name);
 
+        add(new CsGLabel(Name.AMOUNT_MIN_LABEL, "Min. összeg:"));
+        add(amountMin);
+
+        add(new CsGLabel(Name.AMOUNT_MAX_LABEL, "Max. összeg:"));
+        add(amountMax);
+
         add(new CsGButton(Name.FILTER_BUTTON, "Szűrés", filterAction));//todo english
         add(new CsGButton(Name.RESET_BUTTON, "Reset", this::resetFilters));//todo english
     }
@@ -79,6 +92,42 @@ public class DefaultFiltersPanel extends CsGPanel {
 
     public String getNameFilter() {
         return name.getText();
+    }
+
+    public Integer getAmountMin() {
+        return amountMin.getTextAsInteger();
+    }
+
+    public Integer getAmountMax() {
+        return amountMax.getTextAsInteger();
+    }
+
+    public List<Item> filter() {
+        //@formatter:off
+        return Application.getBean(ItemService.class).findAllByFilter(
+                getYear(),
+                getMonth(),
+                getNameFilter(),
+                null,
+                null,
+                getStartDate(),
+                getEndDate()
+        );
+        //@formatter:on
+    }
+
+    public List<Item> filterWithTag(Tag tag) {
+        //@formatter:off
+        return Application.getBean(ItemService.class).findAllByFilter(
+                getYear(),
+                getMonth(),
+                getNameFilter(),
+                tag,
+                null,
+                getStartDate(),
+                getEndDate()
+        );
+        //@formatter:on
     }
 
     private void setYearSelector() {
@@ -115,12 +164,12 @@ public class DefaultFiltersPanel extends CsGPanel {
         startDate.setText(LocalDate.now().minusYears(1).toString());
         endDate.setText(LocalDate.now().toString());
         name.setText("");
-        setVisible(true);
+        filterAction.actionPerformed(event);
     }
 
     @Override
     public void setBounds(Rectangle r) {
-        super.setBounds(new Rectangle((int) r.getX(), (int) r.getY(), 230, 325));
+        super.setBounds(new Rectangle((int) r.getX(), (int) r.getY(), 230, 395));
     }
 
     protected enum Name {
@@ -137,10 +186,14 @@ public class DefaultFiltersPanel extends CsGPanel {
         DATE_END(100, 185, 80, 25),
         NAME_LABEL(10, 220, 25, 25),
         NAME(45, 220, 175, 25),
-        TAG_LABEL(10, 255, 25, 25),
-        TAG(45, 255, 100, 25),
-        INCOME_LABEL(10, 290, 50, 25),
-        INCOME(70, 290, 25, 25);
+        AMOUNT_MIN_LABEL(10, 255, 80, 25),
+        AMOUNT_MIN(100, 255, 90, 25),
+        AMOUNT_MAX_LABEL(10, 290, 80, 25),
+        AMOUNT_MAX(100, 290, 90, 25),
+        TAG_LABEL(10, 325, 25, 25),
+        TAG(45, 325, 100, 25),
+        INCOME_LABEL(10, 360, 50, 25),
+        INCOME(70, 360, 25, 25);
 
         private final int x;
         private final int y;

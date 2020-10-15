@@ -6,7 +6,9 @@ import java.util.Collections;
 import java.util.List;
 
 import csg.monthly.expensies.Application;
+import csg.monthly.expensies.domain.Item;
 import csg.monthly.expensies.domain.Tag;
+import csg.monthly.expensies.domain.service.ItemService;
 import csg.monthly.expensies.domain.service.TagService;
 import csg.swing.CsGCheckBox;
 import csg.swing.CsGComboBox;
@@ -34,6 +36,21 @@ public class DetailedFiltersPanel extends DefaultFiltersPanel {
             setTagSelector();
         }
         super.setVisible(visible);
+    }
+
+    @Override
+    public List<Item> filter() {
+        //@formatter:off
+        return Application.getBean(ItemService.class).findAllByFilter(
+                getYear(),
+                getMonth(),
+                getNameFilter(),
+                getTag(),
+                getIsIncome(),
+                getStartDate(),
+                getEndDate()
+        );
+        //@formatter:on
     }
 
     private void setTagSelector() {
