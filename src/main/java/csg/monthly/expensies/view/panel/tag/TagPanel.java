@@ -2,12 +2,14 @@ package csg.monthly.expensies.view.panel.tag;
 
 import static csg.monthly.expensies.view.panel.MenuPanel.MENU_PANEL;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_BACK_BUTTON;
+import static csg.monthly.expensies.view.util.Name.TAG_PANEL_COMMENT;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_DELETE_BUTTON;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_DELETE_LABEL;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_FILTER_PANEL;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_ITEMS;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_NEW_TAG_PANEL;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_OVERWRITE_BUTTON;
+import static csg.monthly.expensies.view.util.Name.TAG_PANEL_SAVE_COMMENT_BUTTON;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_SHOW_BUTTON;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_TAG_NAME;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_TAG_PRIO;
@@ -16,10 +18,12 @@ import static csg.monthly.expensies.view.util.Name.TAG_PANEL_TAG_SELECTOR;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import csg.monthly.expensies.Application;
 import csg.monthly.expensies.domain.Item;
 import csg.monthly.expensies.domain.Tag;
+import csg.monthly.expensies.domain.TagComment;
 import csg.monthly.expensies.domain.service.TagService;
 import csg.monthly.expensies.view.panel.items.ItemsTablePanel;
 import csg.monthly.expensies.view.panel.items.TableItem;
@@ -30,6 +34,7 @@ import csg.swing.CsGButton;
 import csg.swing.CsGComboBox;
 import csg.swing.CsGLabel;
 import csg.swing.CsGPanel;
+import csg.swing.CsGScrollableTextArea;
 import csg.swing.CsGTextField;
 
 public class TagPanel extends CsGPanel {
@@ -44,6 +49,8 @@ public class TagPanel extends CsGPanel {
     private DefaultFiltersPanel filters = new DefaultFiltersPanel(TAG_PANEL_FILTER_PANEL, this::filter);
 
     private NewTagPanel newTagPanel = new NewTagPanel(TAG_PANEL_NEW_TAG_PANEL, this::filter);
+
+    private CsGScrollableTextArea comment = new CsGScrollableTextArea(TAG_PANEL_COMMENT);
 
     private TagPanel() {
         super(Name.TAG_PANEL, MELayout.LAYOUT);
@@ -61,6 +68,8 @@ public class TagPanel extends CsGPanel {
 
         add(filters);
         add(newTagPanel);
+        add(comment);
+        add(new CsGButton(TAG_PANEL_SAVE_COMMENT_BUTTON, "Komment mentése", this::saveComment));//todo english
     }
 
     @Override
@@ -68,6 +77,7 @@ public class TagPanel extends CsGPanel {
         if (visible) {
             setTagSelector();
             setItems();
+            setComment();
             filters.setVisible(visible);
         }
         if (newTagPanel != null) {
@@ -93,6 +103,19 @@ public class TagPanel extends CsGPanel {
             tagSelector.setSelectedItem(tags.get(0));
             name.setText(tags.get(0).getName());
             prio.setText(Integer.toString(tags.get(0).getPrio()));
+        }
+    }
+
+    private void setComment() {
+        final TagService tagService = Application.getBean(TagService.class);
+        final Optional<TagComment> commentByTag = tagService.getCommentByTag((Tag) tagSelector.getSelectedItem());
+        String comment = commentByTag.map(TagComment::getComment).orElse("");
+        this.comment.setText(comment);
+    }
+
+    private void saveComment(ActionEvent event) {
+        if (!comment.getText().isEmpty()) {
+            Application.getBean(TagService.class).saveComment((Tag) tagSelector.getSelectedItem(), comment.getText());
         }
     }
 

@@ -95,7 +95,15 @@ CREATE TABLE MONTH_COMMENT (
 );
 select * from month_comment;
 delete from month_comment;
+drop table month_comment;
 
-
+CREATE TABLE TAG_COMMENT (
+	id int(100) AUTO_INCREMENT PRIMARY KEY,
+	comment VARCHAR(5000) not null,
+    tag int(100) not null
+);
+select * from TAG_COMMENT;
+delete from TAG_COMMENT;
+drop table tag_comment;
 
 
