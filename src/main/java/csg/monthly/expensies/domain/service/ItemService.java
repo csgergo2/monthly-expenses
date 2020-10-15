@@ -60,7 +60,7 @@ public class ItemService {
         Integer year = yearFilter == null || yearFilter.isEmpty() ? null : Integer.valueOf(yearFilter);
         String month = monthFilter == null || monthFilter.isEmpty() ? null : monthFilter;
         String name = nameFilter == null || nameFilter.isEmpty() ? null : nameFilter;
-        Integer tagId = tag.getId() == 0 ? null : tag.getId();
+        Integer tagId = tag == null || tag.getId() == 0 ? null : tag.getId();
         Date startDate = rawStartDate == null || rawStartDate.isEmpty() ? null : DateParser.stringToDate(rawStartDate);
         Date endDate = rawEndDate == null || rawEndDate.isEmpty() ? null : DateParser.stringToDate(rawEndDate);
         final Iterable<Item> all = itemRepository.findByFilters(year, month, name, tagId, isIncome, startDate, endDate);

@@ -4,6 +4,7 @@ import static csg.monthly.expensies.view.panel.MenuPanel.MENU_PANEL;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_BACK_BUTTON;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_DELETE_BUTTON;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_DELETE_LABEL;
+import static csg.monthly.expensies.view.util.Name.TAG_PANEL_FILTER_PANEL;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_ITEMS;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_OVERWRITE_BUTTON;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_SHOW_BUTTON;
@@ -21,6 +22,7 @@ import csg.monthly.expensies.domain.service.ItemService;
 import csg.monthly.expensies.domain.service.TagService;
 import csg.monthly.expensies.view.panel.items.ItemsTablePanel;
 import csg.monthly.expensies.view.panel.items.TableItem;
+import csg.monthly.expensies.view.panel.items.filter.DefaultFiltersPanel;
 import csg.monthly.expensies.view.util.MELayout;
 import csg.monthly.expensies.view.util.Name;
 import csg.swing.CsGButton;
@@ -38,7 +40,7 @@ public class TagPanel extends CsGPanel {
     private CsGTextField prio = new CsGTextField(TAG_PANEL_TAG_PRIO, true);
 
     private ItemsTablePanel items = new ItemsTablePanel(TAG_PANEL_ITEMS);
-
+    private DefaultFiltersPanel filters = new DefaultFiltersPanel(TAG_PANEL_FILTER_PANEL, this::filter);
 
     private TagPanel() {
         super(Name.TAG_PANEL, MELayout.LAYOUT);
@@ -53,6 +55,8 @@ public class TagPanel extends CsGPanel {
 
         add(new CsGLabel(TAG_PANEL_DELETE_LABEL, "Figyelem, csak akkor lehet törölni ha nem tartozik hozzá item!"));//todo english
         add(new CsGButton(TAG_PANEL_DELETE_BUTTON, "Törlés", this::delete));//todo english
+
+        add(filters);
     }
 
     @Override
@@ -60,6 +64,7 @@ public class TagPanel extends CsGPanel {
         if (visible) {
             setTagSelector();
             setItems();
+            filters.setVisible(visible);
         }
         super.setVisible(visible);
     }
@@ -84,16 +89,21 @@ public class TagPanel extends CsGPanel {
         }
     }
 
+    private void filter(ActionEvent event) {
+        doLayout();
+        setVisible(true);
+    }
+
     private void setItems() {
         //@formatter:off
         final List<Item> filteredItems = Application.getBean(ItemService.class).findAllByFilter(
-                null,
-                null,
-                null,
+                filters.getYear(),
+                filters.getMonth(),
+                filters.getNameFilter(),
                 (Tag) tagSelector.getSelectedItem(),
                 null,
-                null,
-                null
+                filters.getStartDate(),
+                filters.getEndDate()
         );
         //@formatter:on
         if (items != null) {
