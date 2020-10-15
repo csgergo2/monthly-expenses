@@ -14,6 +14,7 @@ import static csg.monthly.expensies.view.util.Name.TAG_PANEL_TAG_PRIO;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_TAG_SELECTOR;
 
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import csg.monthly.expensies.Application;
@@ -43,7 +44,7 @@ public class TagPanel extends CsGPanel {
     private ItemsTablePanel items = new ItemsTablePanel(TAG_PANEL_ITEMS);
     private DefaultFiltersPanel filters = new DefaultFiltersPanel(TAG_PANEL_FILTER_PANEL, this::filter);
 
-    private NewTagPanel newTagPanel = new NewTagPanel(TAG_PANEL_NEW_TAG_PANEL);
+    private NewTagPanel newTagPanel = new NewTagPanel(TAG_PANEL_NEW_TAG_PANEL, this::filter);
 
     private TagPanel() {
         super(Name.TAG_PANEL, MELayout.LAYOUT);
@@ -143,6 +144,8 @@ public class TagPanel extends CsGPanel {
         if (tagService.isTagDeletable(selectedTag)) {
             tagService.delete(selectedTag);
         }
+        tagSelector.reset(new ArrayList<>());
+        filter(event);
     }
 
     private void back(ActionEvent event) {

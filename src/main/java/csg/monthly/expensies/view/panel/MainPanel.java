@@ -18,7 +18,7 @@ import csg.swing.CsGPanel;
 public class MainPanel extends CsGPanel {
     public static final MainPanel MAIN_PANEL = new MainPanel();
 
-    private NewTagPanel newTagPanel = new NewTagPanel(TAG_NEW_TAG_PANEL);
+    private NewTagPanel newTagPanel = new NewTagPanel(TAG_NEW_TAG_PANEL, this::refresh);
 
     private MainPanel() {
         super(Name.MAIN_PANEL, MELayout.LAYOUT);
