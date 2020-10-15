@@ -3,7 +3,6 @@ package csg.monthly.expensies.view.panel;
 import static csg.monthly.expensies.view.panel.ItemsPanel.ITEMS_PANEL;
 import static csg.monthly.expensies.view.panel.MenuPanel.MENU_PANEL;
 import static csg.monthly.expensies.view.util.Name.ITEMS_BACK_BUTTON;
-import static csg.monthly.expensies.view.util.Name.MAIN_PANEL_REFRESH_BUTTON;
 import static csg.monthly.expensies.view.util.Name.TAG_NEW_TAG_PANEL;
 
 import java.awt.event.ActionEvent;
@@ -26,7 +25,6 @@ public class MainPanel extends CsGPanel {
         add(ITEMS_PANEL);
         add(newItemPanel);
         add(newTagPanel);
-        add(new CsGButton(MAIN_PANEL_REFRESH_BUTTON, "Frissítés", this::refresh));//todo english
         add(new CsGButton(ITEMS_BACK_BUTTON, "Vissza", this::back));//todo english
     }
 
