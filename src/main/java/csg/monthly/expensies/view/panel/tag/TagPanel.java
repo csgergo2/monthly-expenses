@@ -1,4 +1,4 @@
-package csg.monthly.expensies.view.panel;
+package csg.monthly.expensies.view.panel.tag;
 
 import static csg.monthly.expensies.view.panel.MenuPanel.MENU_PANEL;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_BACK_BUTTON;
@@ -6,6 +6,7 @@ import static csg.monthly.expensies.view.util.Name.TAG_PANEL_DELETE_BUTTON;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_DELETE_LABEL;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_FILTER_PANEL;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_ITEMS;
+import static csg.monthly.expensies.view.util.Name.TAG_PANEL_NEW_TAG_PANEL;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_OVERWRITE_BUTTON;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_SHOW_BUTTON;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_TAG_NAME;
@@ -42,6 +43,8 @@ public class TagPanel extends CsGPanel {
     private ItemsTablePanel items = new ItemsTablePanel(TAG_PANEL_ITEMS);
     private DefaultFiltersPanel filters = new DefaultFiltersPanel(TAG_PANEL_FILTER_PANEL, this::filter);
 
+    private NewTagPanel newTagPanel = new NewTagPanel(TAG_PANEL_NEW_TAG_PANEL);
+
     private TagPanel() {
         super(Name.TAG_PANEL, MELayout.LAYOUT);
 
@@ -57,6 +60,7 @@ public class TagPanel extends CsGPanel {
         add(new CsGButton(TAG_PANEL_DELETE_BUTTON, "Törlés", this::delete));//todo english
 
         add(filters);
+        add(newTagPanel);
     }
 
     @Override
@@ -65,6 +69,9 @@ public class TagPanel extends CsGPanel {
             setTagSelector();
             setItems();
             filters.setVisible(visible);
+        }
+        if (newTagPanel != null) {
+            newTagPanel.setVisible(visible);
         }
         super.setVisible(visible);
     }
@@ -136,7 +143,6 @@ public class TagPanel extends CsGPanel {
         if (tagService.isTagDeletable(selectedTag)) {
             tagService.delete(selectedTag);
         }
-        setVisible(true);
     }
 
     private void back(ActionEvent event) {

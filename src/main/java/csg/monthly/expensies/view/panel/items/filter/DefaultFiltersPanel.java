@@ -120,7 +120,7 @@ public class DefaultFiltersPanel extends CsGPanel {
 
     @Override
     public void setBounds(Rectangle r) {
-        super.setBounds(new Rectangle((int) r.getX(), (int) r.getY(), 230, (Name.INCOME.y + Name.INCOME.height + 10)));
+        super.setBounds(new Rectangle((int) r.getX(), (int) r.getY(), 230, 325));
     }
 
     protected enum Name {

@@ -3,7 +3,7 @@ package csg.monthly.expensies.view.panel;
 import static csg.monthly.expensies.view.panel.FilteringPanel.FILTERING_PANEL;
 import static csg.monthly.expensies.view.panel.MainPanel.MAIN_PANEL;
 import static csg.monthly.expensies.view.panel.MonthlySumPanel.MONTHLY_SUM_PANEL;
-import static csg.monthly.expensies.view.panel.TagPanel.TAG_PANEL;
+import static csg.monthly.expensies.view.panel.tag.TagPanel.TAG_PANEL;
 import static csg.monthly.expensies.view.util.Name.MENU_PANEL_FILTERING_PANEL_BUTTON;
 import static csg.monthly.expensies.view.util.Name.MENU_PANEL_MONTHLY_SUM_BUTTON;
 import static csg.monthly.expensies.view.util.Name.MENU_PANEL_START_BUTTON;

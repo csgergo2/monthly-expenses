@@ -4,7 +4,7 @@ import csg.monthly.expensies.view.panel.FilteringPanel;
 import csg.monthly.expensies.view.panel.MainPanel;
 import csg.monthly.expensies.view.panel.MenuPanel;
 import csg.monthly.expensies.view.panel.MonthlySumPanel;
-import csg.monthly.expensies.view.panel.TagPanel;
+import csg.monthly.expensies.view.panel.tag.TagPanel;
 import csg.swing.CsGFrameWindow;
 
 public class MonthlyExpensesView extends CsGFrameWindow {
