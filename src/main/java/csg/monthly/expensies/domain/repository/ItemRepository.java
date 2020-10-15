@@ -32,8 +32,11 @@ public interface ItemRepository extends CrudRepository<Item, String> {
             "(:tagId IS NULL OR i.tag = :tagId) AND " +
             "(:isIncome IS NULL OR i.is_income = :isIncome) AND " +
             "(:startDate IS NULL OR i.date >= :startDate) AND " +
-            "(:endDate IS NULL OR i.date <= :endDate)", nativeQuery = true)
+            "(:endDate IS NULL OR i.date <= :endDate) AND " +
+            "(:amountMin IS NULL OR i.amount >= :amountMin) AND " +
+            "(:amountMax IS NULL OR i.amount <= :amountMax)", nativeQuery = true)
     //@formatter:on
     List<Item> findByFilters(@Param("year") Integer year, @Param("month") String month, @Param("name") String name, @Param("tagId") Integer tagId,
-                             @Param("isIncome") Boolean isIncome, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
+                             @Param("isIncome") Boolean isIncome, @Param("startDate") Date startDate, @Param("endDate") Date endDate,
+                             @Param("amountMin") Integer amountMin, @Param("amountMax") Integer amountMax);
 }

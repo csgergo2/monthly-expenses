@@ -111,7 +111,9 @@ public class DefaultFiltersPanel extends CsGPanel {
                 null,
                 null,
                 getStartDate(),
-                getEndDate()
+                getEndDate(),
+                getAmountMin(),
+                getAmountMax()
         );
         //@formatter:on
     }
@@ -125,7 +127,9 @@ public class DefaultFiltersPanel extends CsGPanel {
                 tag,
                 null,
                 getStartDate(),
-                getEndDate()
+                getEndDate(),
+                getAmountMin(),
+                getAmountMax()
         );
         //@formatter:on
     }
@@ -164,6 +168,8 @@ public class DefaultFiltersPanel extends CsGPanel {
         startDate.setText(LocalDate.now().minusYears(1).toString());
         endDate.setText(LocalDate.now().toString());
         name.setText("");
+        amountMin.setText("");
+        amountMax.setText("");
         filterAction.actionPerformed(event);
     }
 

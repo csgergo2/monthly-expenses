@@ -48,7 +48,9 @@ public class DetailedFiltersPanel extends DefaultFiltersPanel {
                 getTag(),
                 getIsIncome(),
                 getStartDate(),
-                getEndDate()
+                getEndDate(),
+                getAmountMin(),
+                getAmountMax()
         );
         //@formatter:on
     }
