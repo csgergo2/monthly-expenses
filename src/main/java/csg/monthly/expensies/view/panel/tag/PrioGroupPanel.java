@@ -3,6 +3,7 @@ package csg.monthly.expensies.view.panel.tag;
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.util.List;
+import java.util.function.Supplier;
 
 import javax.swing.BorderFactory;
 
@@ -14,6 +15,7 @@ import csg.swing.CsGLayout;
 import csg.swing.CsGListBox;
 import csg.swing.CsGPanel;
 import csg.swing.CsGTextField;
+import csg.swing.listener.CsGKeyReleasedListener;
 
 public class PrioGroupPanel extends CsGPanel {
 
@@ -22,6 +24,7 @@ public class PrioGroupPanel extends CsGPanel {
     private CsGTextField prio = new CsGTextField(Name.PRIO, true);
     private CsGTextField color = new CsGTextField(Name.COLOR);
     private CsGTextField textColor = new CsGTextField(Name.TEXT_COLOR);
+    private CsGLabel colorSample = new CsGLabel(Name.COLOR_SAMPLE, "Teszt szöveg");
 
     public PrioGroupPanel(Enum<?> panelName) {
         super(panelName, new PrioGroupPanelLayout());
@@ -41,6 +44,12 @@ public class PrioGroupPanel extends CsGPanel {
 
         add(new CsGLabel(Name.TEXT_COLOR_LABEL, "Szöveg szín:"));//todo english
         add(textColor);
+
+        color.addActionListener(event -> setColorSample(color::getText, textColor::getText, colorSample));
+        color.addKeyListener((CsGKeyReleasedListener) (event -> setColorSample(color::getText, textColor::getText, colorSample)));
+        textColor.addActionListener(event -> setColorSample(color::getText, textColor::getText, colorSample));
+        textColor.addKeyListener((CsGKeyReleasedListener) (event -> setColorSample(color::getText, textColor::getText, colorSample)));
+        add(colorSample);
     }
 
     @Override
@@ -61,6 +70,18 @@ public class PrioGroupPanel extends CsGPanel {
         super.setBounds(new Rectangle((int) r.getX(), (int) r.getY(), 500, 500));
     }
 
+    private void setColorSample(Supplier<String> color, Supplier<String> textColor, CsGLabel sample) {
+        try {
+            final Color decodedBackground = Color.decode(color.get());
+            final Color decodedForeground = Color.decode(textColor.get());
+            sample.setOpaque(true);
+            sample.setBackground(decodedBackground);
+            sample.setForeground(decodedForeground);
+        } catch (NumberFormatException e) {
+            //todo
+        }
+    }
+
     private enum Name {
         TITLE(10, 10, 100, 25),
         PRIO_GROUPS(10, 45, 150, 100),
@@ -71,7 +92,8 @@ public class PrioGroupPanel extends CsGPanel {
         TEXT_COLOR_LABEL(295, 80, 80, 20),
         PRIO(170, 102, 35, 25),
         COLOR(230, 102, 55, 25),
-        TEXT_COLOR(295, 102, 55, 25);
+        TEXT_COLOR(295, 102, 55, 25),
+        COLOR_SAMPLE(230, 129, 120, 25);
 
         private final int x;
         private final int y;
