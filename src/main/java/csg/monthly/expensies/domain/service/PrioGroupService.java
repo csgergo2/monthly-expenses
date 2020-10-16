@@ -27,4 +27,8 @@ public class PrioGroupService {
     public PrioGroup getPrioGroupByName(String name) {
         return prioGroupRepository.findByName(name);
     }
+
+    public void delete(PrioGroup prioGroup) {
+        prioGroupRepository.delete(prioGroup);
+    }
 }

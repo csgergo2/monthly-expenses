@@ -13,6 +13,7 @@ import javax.swing.event.ListSelectionEvent;
 import csg.monthly.expensies.Application;
 import csg.monthly.expensies.domain.PrioGroup;
 import csg.monthly.expensies.domain.service.PrioGroupService;
+import csg.monthly.expensies.domain.service.TagService;
 import csg.swing.CsGButton;
 import csg.swing.CsGLabel;
 import csg.swing.CsGLayout;
@@ -58,6 +59,10 @@ public class PrioGroupPanel extends CsGPanel {
 
         add(new CsGButton(Name.OVERWRITE, "Felülír", event -> overwritePrioGroup()));//todo english
         add(new CsGButton(Name.SAVE_NEW, "Mentés másnként", event -> saveAs()));//todo english
+
+        add(new CsGLabel(Name.DELETE_PRIO_GROUP_LABEL,
+                "<html>Törölni csak akkor lehet Prio csoportot,<br/>ha nem tartozik hozzá egyetlen tag sem!</html>"));//todo english
+        add(new CsGButton(Name.DELETE_PRIO_GROUP_BUTTON, "Prio csoport törlés", event -> delete()));//todo english
 
         add(tags);
     }
@@ -137,9 +142,22 @@ public class PrioGroupPanel extends CsGPanel {
         }
     }
 
+    private void delete() {
+        if (prioGroups.getSelectedValue().isPresent()) {
+            final PrioGroup prioGroup = prioGroups.getSelectedValue().get();
+            boolean isNoTag = Application.getBean(TagService.class).findByPrioGroup(prioGroup).isEmpty();
+            if (isNoTag) {
+                Application.getBean(PrioGroupService.class).delete(prioGroup);
+                setPrioGroups();
+            } else {
+                //todo
+            }
+        }
+    }
+
     @Override
     public void setBounds(Rectangle r) {
-        super.setBounds(new Rectangle((int) r.getX(), (int) r.getY(), 365, 500));
+        super.setBounds(new Rectangle((int) r.getX(), (int) r.getY(), 365, 555));
     }
 
     private enum Name {
@@ -156,7 +174,9 @@ public class PrioGroupPanel extends CsGPanel {
         COLOR_SAMPLE(230, 129, 120, 25),
         OVERWRITE(170, 165, 150, 25),
         SAVE_NEW(170, 200, 150, 25),
-        TAGS(10, 235, 345, 215);
+        DELETE_PRIO_GROUP_LABEL(10, 235, 345, 40),
+        DELETE_PRIO_GROUP_BUTTON(10, 285, 345, 25),
+        TAGS(10, 320, 345, 215);
 
         private final int x;
         private final int y;

@@ -1,11 +1,8 @@
 package csg.monthly.expensies.view.panel.tag;
 
-import java.awt.Color;
 import java.awt.Rectangle;
 import java.util.List;
 import java.util.Optional;
-
-import javax.swing.BorderFactory;
 
 import csg.monthly.expensies.Application;
 import csg.monthly.expensies.domain.PrioGroup;
@@ -27,7 +24,6 @@ public class PrioGroupTagPanel extends CsGPanel {
 
     PrioGroupTagPanel(final Enum<?> name) {
         super(name, new PrioGroupTagPanelLayout());
-        setBorder(BorderFactory.createLineBorder(Color.black));
         add(new CsGLabel(Name.TITLE, "Prio csoport tag-jei:"));//todo english
 
         add(tags);
