@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import javax.swing.BorderFactory;
+import javax.swing.event.ListSelectionEvent;
 
 import csg.monthly.expensies.Application;
 import csg.monthly.expensies.domain.PrioGroup;
@@ -19,7 +20,7 @@ import csg.swing.listener.CsGKeyReleasedListener;
 
 public class PrioGroupPanel extends CsGPanel {
 
-    private CsGListBox<PrioGroup> prioGroups = new CsGListBox<>(Name.PRIO_GROUPS);
+    private CsGListBox<PrioGroup> prioGroups = new CsGListBox<>(Name.PRIO_GROUPS, this::listSelectionEvent);
     private CsGTextField name = new CsGTextField(Name.NAME);
     private CsGTextField prio = new CsGTextField(Name.PRIO, true);
     private CsGTextField color = new CsGTextField(Name.COLOR);
@@ -45,10 +46,10 @@ public class PrioGroupPanel extends CsGPanel {
         add(new CsGLabel(Name.TEXT_COLOR_LABEL, "Szöveg szín:"));//todo english
         add(textColor);
 
-        color.addActionListener(event -> setColorSample(color::getText, textColor::getText, colorSample));
-        color.addKeyListener((CsGKeyReleasedListener) (event -> setColorSample(color::getText, textColor::getText, colorSample)));
-        textColor.addActionListener(event -> setColorSample(color::getText, textColor::getText, colorSample));
-        textColor.addKeyListener((CsGKeyReleasedListener) (event -> setColorSample(color::getText, textColor::getText, colorSample)));
+        color.addActionListener(event -> setColorSample(color::getText, textColor::getText));
+        color.addKeyListener((CsGKeyReleasedListener) (event -> setColorSample(color::getText, textColor::getText)));
+        textColor.addActionListener(event -> setColorSample(color::getText, textColor::getText));
+        textColor.addKeyListener((CsGKeyReleasedListener) (event -> setColorSample(color::getText, textColor::getText)));
         add(colorSample);
     }
 
@@ -65,21 +66,40 @@ public class PrioGroupPanel extends CsGPanel {
         this.prioGroups.reset(prioGroups);
     }
 
-    @Override
-    public void setBounds(Rectangle r) {
-        super.setBounds(new Rectangle((int) r.getX(), (int) r.getY(), 500, 500));
+    private void listSelectionEvent(ListSelectionEvent event) {
+        if (!event.getValueIsAdjusting()) {
+            if (prioGroups.getSelectedValue().isPresent()) {
+                final PrioGroup prioGroup = prioGroups.getSelectedValue().get();
+                name.setText(prioGroup.getName());
+                prio.setText(Integer.toString(prioGroup.getPrio()));
+                color.setText(prioGroup.getColor());
+                textColor.setText(prioGroup.getTextColor());
+                setColorSample(prioGroup::getColor, prioGroup::getTextColor);
+            } else {
+                name.setText("");
+                prio.setText("");
+                color.setText("");
+                textColor.setText("");
+                setColorSample(() -> getBackground().toString(), () -> "#000");
+            }
+        }
     }
 
-    private void setColorSample(Supplier<String> color, Supplier<String> textColor, CsGLabel sample) {
+    private void setColorSample(Supplier<String> color, Supplier<String> textColor) {
         try {
             final Color decodedBackground = Color.decode(color.get());
             final Color decodedForeground = Color.decode(textColor.get());
-            sample.setOpaque(true);
-            sample.setBackground(decodedBackground);
-            sample.setForeground(decodedForeground);
+            colorSample.setOpaque(true);
+            colorSample.setBackground(decodedBackground);
+            colorSample.setForeground(decodedForeground);
         } catch (NumberFormatException e) {
             //todo
         }
+    }
+
+    @Override
+    public void setBounds(Rectangle r) {
+        super.setBounds(new Rectangle((int) r.getX(), (int) r.getY(), 500, 500));
     }
 
     private enum Name {
