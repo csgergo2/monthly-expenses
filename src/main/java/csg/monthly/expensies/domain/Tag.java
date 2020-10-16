@@ -3,7 +3,10 @@ package csg.monthly.expensies.domain;
 import java.util.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity(name = "Tag")
 public class Tag {
@@ -11,6 +14,9 @@ public class Tag {
     private int id;
     private String name;
     private int prio;
+    @OneToOne
+    @JoinColumn(name = "prio_group", foreignKey = @ForeignKey(name = "tag_on_prio_group"))
+    private PrioGroup prioGroup;
 
     public Tag() {
     }

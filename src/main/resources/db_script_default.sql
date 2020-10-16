@@ -2,16 +2,19 @@ CREATE TABLE PRIO_GROUP (
 	id int(100) AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) not null,
     prio int(5) not null,
-    color VARCHAR(7) not null
+    color VARCHAR(7) not null,
+    text_color VARCHAR(7) not null
 );
+ALTER TABLE PRIO_GROUP ADD COLUMN text_color varchar(7) not null;
 drop table prio_group;
 
-INSERT INTO PRIO_GROUP (name, prio, color) values ("Kötelező", 1, "#fa0000");
-INSERT INTO PRIO_GROUP (name, prio, color) values ("Havi költség", 2, "#e0a902");
-INSERT INTO PRIO_GROUP (name, prio, color) values ("Becsúszott", 3, "#00e0b0");
-INSERT INTO PRIO_GROUP (name, prio, color) values ("Bevétel", 100, "#00fa36");
+INSERT INTO PRIO_GROUP (name, prio, color, text_color) values ("Kötelező", 1, "#fa0000", "#000000");
+INSERT INTO PRIO_GROUP (name, prio, color, text_color) values ("Havi költség", 2, "#e0a902", "#000000");
+INSERT INTO PRIO_GROUP (name, prio, color, text_color) values ("Becsúszott", 3, "#00e0b0", "#000000");
+INSERT INTO PRIO_GROUP (name, prio, color, text_color) values ("Bevétel", 100, "#00fa36", "#000000");
 
 select * from prio_group;
+delete from prio_group;
 
 CREATE TABLE TAG (
 	id int(100) AUTO_INCREMENT PRIMARY KEY,
@@ -23,7 +26,7 @@ CREATE TABLE TAG (
 delete from TAG;
 drop table tag;
 
-INSERT INTO TAG (name, prio, prio_group) values ("KP Felvétel", 1, 1);
+INSERT INTO TAG (name, prio, prio_group) values ("KP Felvétel", 1, 2);
 INSERT INTO TAG (name, prio, prio_group) values ("Rezsi", 2, 1);
 INSERT INTO TAG (name, prio, prio_group) values ("Auchan", 1, 2);
 INSERT INTO TAG (name, prio, prio_group) values ("Benzin", 2, 2);
@@ -31,6 +34,7 @@ INSERT INTO TAG (name, prio, prio_group) values ("BKV", 3, 2);
 INSERT INTO TAG (name, prio, prio_group) values ("KV", 1, 3);
 INSERT INTO TAG (name, prio, prio_group) values ("Fizetés", 1, 4);
 INSERT INTO TAG (name, prio, prio_group) values ("Lottó", 2, 4);
+update tag set prio_group = 2;
 
 delete from tag where name like "test";
 select * from TAG;
