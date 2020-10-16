@@ -78,6 +78,12 @@ public class Tag implements Comparable<Tag> {
 
     @Override
     public int compareTo(final Tag o) {
+        if (prioGroup == null) {
+            return o.prioGroup == null ? 0 : 1;
+        }
+        if (o.prioGroup == null) {
+            return -1;
+        }
         final int prioGroupCompared = prioGroup.compareTo(o.prioGroup);
         if (prioGroupCompared != 0) {
             return prioGroupCompared;

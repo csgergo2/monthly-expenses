@@ -9,6 +9,7 @@ import java.util.List;
 
 import csg.monthly.expensies.Application;
 import csg.monthly.expensies.domain.Item;
+import csg.monthly.expensies.domain.PrioGroup;
 import csg.monthly.expensies.domain.Tag;
 import csg.monthly.expensies.domain.date.MonthInfo;
 import csg.monthly.expensies.domain.service.MonthInfoService;
@@ -18,9 +19,6 @@ import csg.monthly.expensies.view.util.Name;
 import csg.swing.CsGButton;
 import csg.swing.CsGPanel;
 import csg.swing.CsGScrollableLabel;
-import csg.swing.html.CsGHtmlBuilder;
-import csg.swing.html.CsGHtmlHeadBuilder;
-import csg.swing.html.CsGHtmlTableBodyBuilder;
 
 public class MonthlySumPanel extends CsGPanel {
 
@@ -41,7 +39,7 @@ public class MonthlySumPanel extends CsGPanel {
         String[] tableHeaders = getHeaders(monthInfo);
         List<Tag> tags = Application.getBean(TagService.class).findAllOrderedByPrioGroup();
         String[][] rows = getRows(tags, monthInfo);
-        buildTable(tableHeaders, rows);
+        buildTable(tableHeaders, rows, tags);
     }
 
     private String[] getHeaders(List<MonthInfo> monthInfo) {
@@ -68,12 +66,26 @@ public class MonthlySumPanel extends CsGPanel {
         return rows;
     }
 
-    private void buildTable(String[] tableHeaders, String[][] rows) {
-        final CsGHtmlTableBodyBuilder tableBodyBuilder = new CsGHtmlTableBodyBuilder(tableHeaders, rows);
-        final CsGHtmlHeadBuilder headBuilder = new CsGHtmlHeadBuilder();
-        headBuilder.addStyle("table, th, td", "border", "1px solid black");
-        headBuilder.addStyle("td", "text-align", "right");
-        table.setText(new CsGHtmlBuilder(headBuilder, tableBodyBuilder).build());
+    private void buildTable(String[] tableHeaders, String[][] rows, List<Tag> tags) {
+        StringBuilder sb = new StringBuilder("<html><table style=\"border:1px solid black;\">");
+
+        sb.append("<tr>");
+        for (String header : tableHeaders) {
+            sb.append("<th style=\"border:1px solid black;\">").append(header).append("</th>");
+        }
+        sb.append("</tr>");
+        for (int i = 0; i < rows.length; i++) {
+            final PrioGroup prioGroup = tags.get(i).getPrioGroup();
+            String background = prioGroup == null ? "#FFFFFF" : prioGroup.getColor();
+            String color = prioGroup == null ? "#000000" : prioGroup.getTextColor();
+            sb.append("<tr style=\"background-color:").append(background).append(";color:").append(color).append(";\"");
+            for (int j = 0; j < rows[i].length; j++) {
+                sb.append("<td style=\"border:1px solid black;\">").append(rows[i][j]).append("</td>");
+            }
+            sb.append("</tr>");
+
+        }
+        table.setText(sb.append("</table>").append("</html>").toString());
     }
 
     @Override
