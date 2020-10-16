@@ -1,5 +1,7 @@
 package csg.monthly.expensies.view.panel.tag;
 
+import static csg.monthly.expensies.view.util.ColorParser.isTextColorParsable;
+
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.util.List;
@@ -11,6 +13,7 @@ import javax.swing.event.ListSelectionEvent;
 import csg.monthly.expensies.Application;
 import csg.monthly.expensies.domain.PrioGroup;
 import csg.monthly.expensies.domain.service.PrioGroupService;
+import csg.swing.CsGButton;
 import csg.swing.CsGLabel;
 import csg.swing.CsGLayout;
 import csg.swing.CsGListBox;
@@ -43,7 +46,7 @@ public class PrioGroupPanel extends CsGPanel {
         add(new CsGLabel(Name.COLOR_LABEL, "Szín:"));//todo english
         add(color);
 
-        add(new CsGLabel(Name.TEXT_COLOR_LABEL, "Szöveg szín:"));//todo english
+        add(new CsGLabel(Name.TEXT_COLOR_LABEL, "Szöveg:"));//todo english
         add(textColor);
 
         color.addActionListener(event -> setColorSample(color::getText, textColor::getText));
@@ -51,6 +54,9 @@ public class PrioGroupPanel extends CsGPanel {
         textColor.addActionListener(event -> setColorSample(color::getText, textColor::getText));
         textColor.addKeyListener((CsGKeyReleasedListener) (event -> setColorSample(color::getText, textColor::getText)));
         add(colorSample);
+
+        add(new CsGButton(Name.OVERWRITE, "Felülír", event -> overwritePrioGroup()));//todo english
+        add(new CsGButton(Name.SAVE_NEW, "Mentés másnként", event -> saveAs()));//todo english
     }
 
     @Override
@@ -64,24 +70,29 @@ public class PrioGroupPanel extends CsGPanel {
     private void setPrioGroups() {
         final List<PrioGroup> prioGroups = Application.getBean(PrioGroupService.class).getPrioGroups();
         this.prioGroups.reset(prioGroups);
+        listSelectionEvent();
     }
 
     private void listSelectionEvent(ListSelectionEvent event) {
         if (!event.getValueIsAdjusting()) {
-            if (prioGroups.getSelectedValue().isPresent()) {
-                final PrioGroup prioGroup = prioGroups.getSelectedValue().get();
-                name.setText(prioGroup.getName());
-                prio.setText(Integer.toString(prioGroup.getPrio()));
-                color.setText(prioGroup.getColor());
-                textColor.setText(prioGroup.getTextColor());
-                setColorSample(prioGroup::getColor, prioGroup::getTextColor);
-            } else {
-                name.setText("");
-                prio.setText("");
-                color.setText("");
-                textColor.setText("");
-                setColorSample(() -> getBackground().toString(), () -> "#000");
-            }
+            listSelectionEvent();
+        }
+    }
+
+    private void listSelectionEvent() {
+        if (prioGroups.getSelectedValue().isPresent()) {
+            final PrioGroup prioGroup = prioGroups.getSelectedValue().get();
+            name.setText(prioGroup.getName());
+            prio.setText(Integer.toString(prioGroup.getPrio()));
+            color.setText(prioGroup.getColor());
+            textColor.setText(prioGroup.getTextColor());
+            setColorSample(prioGroup::getColor, prioGroup::getTextColor);
+        } else {
+            name.setText("");
+            prio.setText("");
+            color.setText("");
+            textColor.setText("");
+            setColorSample(() -> getBackground().toString(), () -> "#000");
         }
     }
 
@@ -97,14 +108,39 @@ public class PrioGroupPanel extends CsGPanel {
         }
     }
 
+    private void overwritePrioGroup() {
+        if (prioGroups.getSelectedValue().isPresent() && !name.getText().isEmpty() && !prio.getText().isEmpty() &&
+                isTextColorParsable(color.getText()) && isTextColorParsable(textColor.getText())) {
+            final PrioGroup prioGroup = prioGroups.getSelectedValue().get();
+            prioGroup.setName(name.getText());
+            prioGroup.setPrio(prio.getTextAsInteger());
+            prioGroup.setColor(color.getText());
+            prioGroup.setTextColor(textColor.getText());
+            Application.getBean(PrioGroupService.class).save(prioGroup);
+            setPrioGroups();
+            prioGroups.setSelectedValue(prioGroup);
+        }
+    }
+
+    private void saveAs() {
+        if (prioGroups.getSelectedValue().isPresent() && !name.getText().isEmpty() && !prio.getText().isEmpty() &&
+                isTextColorParsable(color.getText()) && isTextColorParsable(textColor.getText())) {
+            PrioGroup prioGroup = new PrioGroup(name.getText(), prio.getTextAsInteger(), color.getText(), textColor.getText());
+            Application.getBean(PrioGroupService.class).save(prioGroup);
+            prioGroup = Application.getBean(PrioGroupService.class).getPrioGroupByName(prioGroup.getName());
+            setPrioGroups();
+            prioGroups.setSelectedValue(prioGroup);
+        }
+    }
+
     @Override
     public void setBounds(Rectangle r) {
-        super.setBounds(new Rectangle((int) r.getX(), (int) r.getY(), 500, 500));
+        super.setBounds(new Rectangle((int) r.getX(), (int) r.getY(), 365, 500));
     }
 
     private enum Name {
         TITLE(10, 10, 100, 25),
-        PRIO_GROUPS(10, 45, 150, 100),
+        PRIO_GROUPS(10, 45, 150, 180),
         NAME_LABEL(170, 45, 25, 25),
         NAME(205, 45, 150, 25),
         PRIO_LABEL(170, 80, 30, 20),
@@ -113,7 +149,9 @@ public class PrioGroupPanel extends CsGPanel {
         PRIO(170, 102, 35, 25),
         COLOR(230, 102, 55, 25),
         TEXT_COLOR(295, 102, 55, 25),
-        COLOR_SAMPLE(230, 129, 120, 25);
+        COLOR_SAMPLE(230, 129, 120, 25),
+        OVERWRITE(170, 165, 150, 25),
+        SAVE_NEW(170, 200, 150, 25);
 
         private final int x;
         private final int y;

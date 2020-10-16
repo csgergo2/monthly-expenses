@@ -1,5 +1,6 @@
 package csg.monthly.expensies.domain.service;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,16 @@ public class PrioGroupService {
     private PrioGroupRepository prioGroupRepository;
 
     public List<PrioGroup> getPrioGroups() {
-        return prioGroupRepository.findAll();
+        final List<PrioGroup> prioGroups = prioGroupRepository.findAll();
+        Collections.sort(prioGroups);
+        return prioGroups;
+    }
+
+    public void save(PrioGroup prioGroup) {
+        prioGroupRepository.save(prioGroup);
+    }
+
+    public PrioGroup getPrioGroupByName(String name) {
+        return prioGroupRepository.findByName(name);
     }
 }
