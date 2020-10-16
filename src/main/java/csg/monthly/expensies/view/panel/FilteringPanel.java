@@ -47,7 +47,7 @@ public class FilteringPanel extends CsGPanel {
     }
 
     private void filter() {
-        final List<Tag> tags = Application.getBean(TagService.class).findAll();
+        final List<Tag> tags = Application.getBean(TagService.class).findAllOrderedByFrequency();
         final List<Item> filteredItems = filters.filter();
         if (items != null) {
             items.setVisible(false);

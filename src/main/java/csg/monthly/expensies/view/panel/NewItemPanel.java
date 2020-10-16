@@ -118,7 +118,7 @@ public class NewItemPanel extends CsGPanel {
                 itemDate.setText(LocalDate.now().toString());
             }
             //tags
-            final Iterable<Tag> tags = Application.getBean(TagService.class).findAll();
+            final Iterable<Tag> tags = Application.getBean(TagService.class).findAllOrderedByFrequency();
             itemTags.removeAllItems();
             tags.forEach(itemTags::addItem);
         }

@@ -29,13 +29,19 @@ public class TagService {
     @Autowired
     private TagCommentRepository tagCommentRepository;
 
-    public List<Tag> findAll() {
+    public List<Tag> findAllOrderedByFrequency() {
         List<Tag> tags = tagRepository.findAll();
         Map<String, Tag> tagMap = new HashMap<>();
         for (Tag tag : tags) {
             tagMap.put(tag.getName(), tag);
         }
         return tagRepository.findTagsByTheirFrequency().stream().map(tag -> tagMap.get(tag[0])).collect(Collectors.toList());
+    }
+
+    public List<Tag> findAllOrderedByPrioGroup() {
+        List<Tag> tags = tagRepository.findAll();
+        Collections.sort(tags);
+        return tags;
     }
 
     public void save(final Tag tag) {

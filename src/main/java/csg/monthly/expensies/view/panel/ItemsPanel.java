@@ -83,7 +83,7 @@ public class ItemsPanel extends CsGPanel {
         final ItemService itemService = Application.getBean(ItemService.class);
         final TagService tagService = Application.getBean(TagService.class);
         List<Item> items = itemService.findAllByYearAndMonth((int) yearSelector.getSelectedItem(), (Month) monthSelector.getSelectedItem());
-        final List<Tag> tags = tagService.findAll();
+        final List<Tag> tags = tagService.findAllOrderedByFrequency();
 
         calculateOutgoings(items, tags);
         calculateIncomes(items, tags);

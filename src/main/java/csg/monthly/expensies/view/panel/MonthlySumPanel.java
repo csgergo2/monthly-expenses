@@ -39,7 +39,7 @@ public class MonthlySumPanel extends CsGPanel {
         List<MonthInfo> monthInfo = Application.getBean(MonthInfoService.class).getMonthInfo();
         Collections.sort(monthInfo);
         String[] tableHeaders = getHeaders(monthInfo);
-        List<Tag> tags = Application.getBean(TagService.class).findAll();
+        List<Tag> tags = Application.getBean(TagService.class).findAllOrderedByPrioGroup();
         String[][] rows = getRows(tags, monthInfo);
         buildTable(tableHeaders, rows);
     }

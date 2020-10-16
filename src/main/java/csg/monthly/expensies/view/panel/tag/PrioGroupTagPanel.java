@@ -46,7 +46,7 @@ public class PrioGroupTagPanel extends CsGPanel {
         final List<Tag> tags = tagService.findByPrioGroup(prioGroup);
         this.tags.reset(tags);
         add(this.tags);
-        final List<Tag> allTag = tagService.findAll();
+        final List<Tag> allTag = tagService.findAllOrderedByFrequency();
         tagSelector.reset(allTag);
         tagSelector.setSelectedIndex(0);
     }

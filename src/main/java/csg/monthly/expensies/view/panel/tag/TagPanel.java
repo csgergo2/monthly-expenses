@@ -95,7 +95,7 @@ public class TagPanel extends CsGPanel {
 
     private void setTagSelector() {
         Tag selectedTag = (Tag) tagSelector.getSelectedItem();
-        final List<Tag> tags = Application.getBean(TagService.class).findAll();
+        final List<Tag> tags = Application.getBean(TagService.class).findAllOrderedByFrequency();
         tagSelector.reset(tags);
         if (selectedTag != null) {
             name.setText(selectedTag.getName());
@@ -128,7 +128,7 @@ public class TagPanel extends CsGPanel {
             items.setEnabled(false);
             remove(items);
         }
-        final List<Tag> tags = Application.getBean(TagService.class).findAll();
+        final List<Tag> tags = Application.getBean(TagService.class).findAllOrderedByFrequency();
         items = new ItemsTablePanel(TAG_PANEL_ITEMS);
         for (Item item : filteredItems) {
             items.add(new TableItem(item, tags));

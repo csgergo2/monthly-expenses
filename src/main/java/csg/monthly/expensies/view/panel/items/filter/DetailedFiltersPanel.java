@@ -57,7 +57,7 @@ public class DetailedFiltersPanel extends DefaultFiltersPanel {
 
     private void setTagSelector() {
         Tag selectedTag = (Tag) tag.getSelectedItem();
-        final List<Tag> tags = Application.getBean(TagService.class).findAll();
+        final List<Tag> tags = Application.getBean(TagService.class).findAllOrderedByFrequency();
         tags.add(new Tag());
         tag.reset(tags);
         tag.setSelectedItem(selectedTag);
