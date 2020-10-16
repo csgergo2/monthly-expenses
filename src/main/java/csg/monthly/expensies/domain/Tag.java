@@ -9,7 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity(name = "Tag")
-public class Tag {
+public class Tag implements Comparable<Tag> {
     @Id
     private int id;
     private String name;
@@ -66,5 +66,11 @@ public class Tag {
     @Override
     public String toString() {
         return name;
+    }
+
+    @Override
+    public int compareTo(final Tag o) {
+        final int prioCompared = Integer.compare(prio, o.prio);
+        return prioCompared != 0 ? prioCompared : name.compareTo(o.name);
     }
 }

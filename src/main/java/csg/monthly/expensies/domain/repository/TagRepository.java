@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
+import csg.monthly.expensies.domain.PrioGroup;
 import csg.monthly.expensies.domain.Tag;
 
 public interface TagRepository extends CrudRepository<Tag, String> {
@@ -22,4 +24,6 @@ public interface TagRepository extends CrudRepository<Tag, String> {
             + " order by count(a.item_name) desc;", nativeQuery = true)
     //@formatter:on
     List<String[]> findTagsByTheirFrequency();
+
+    List<Tag> findByPrioGroup(@Param("prioGroup") PrioGroup prioGroup);
 }

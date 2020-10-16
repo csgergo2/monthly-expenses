@@ -1,5 +1,6 @@
 package csg.monthly.expensies.domain.service;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import csg.monthly.expensies.Application;
+import csg.monthly.expensies.domain.PrioGroup;
 import csg.monthly.expensies.domain.Tag;
 import csg.monthly.expensies.domain.TagComment;
 import csg.monthly.expensies.domain.repository.ItemRepository;
@@ -58,5 +60,11 @@ public class TagService {
         if (comment != null && !comment.isEmpty()) {
             tagCommentRepository.save(new TagComment(comment, tag.getId()));
         }
+    }
+
+    public List<Tag> findByPrioGroup(PrioGroup prioGroup) {
+        final List<Tag> tags = tagRepository.findByPrioGroup(prioGroup);
+        Collections.sort(tags);
+        return tags;
     }
 }

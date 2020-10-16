@@ -29,6 +29,7 @@ public class PrioGroupPanel extends CsGPanel {
     private CsGTextField color = new CsGTextField(Name.COLOR);
     private CsGTextField textColor = new CsGTextField(Name.TEXT_COLOR);
     private CsGLabel colorSample = new CsGLabel(Name.COLOR_SAMPLE, "Teszt szöveg");
+    private PrioGroupTagPanel tags = new PrioGroupTagPanel(Name.TAGS);
 
     public PrioGroupPanel(Enum<?> panelName) {
         super(panelName, new PrioGroupPanelLayout());
@@ -57,6 +58,8 @@ public class PrioGroupPanel extends CsGPanel {
 
         add(new CsGButton(Name.OVERWRITE, "Felülír", event -> overwritePrioGroup()));//todo english
         add(new CsGButton(Name.SAVE_NEW, "Mentés másnként", event -> saveAs()));//todo english
+
+        add(tags);
     }
 
     @Override
@@ -87,6 +90,7 @@ public class PrioGroupPanel extends CsGPanel {
             color.setText(prioGroup.getColor());
             textColor.setText(prioGroup.getTextColor());
             setColorSample(prioGroup::getColor, prioGroup::getTextColor);
+            tags.setTags(prioGroup);
         } else {
             name.setText("");
             prio.setText("");
@@ -151,7 +155,8 @@ public class PrioGroupPanel extends CsGPanel {
         TEXT_COLOR(295, 102, 55, 25),
         COLOR_SAMPLE(230, 129, 120, 25),
         OVERWRITE(170, 165, 150, 25),
-        SAVE_NEW(170, 200, 150, 25);
+        SAVE_NEW(170, 200, 150, 25),
+        TAGS(10, 235, 345, 200);
 
         private final int x;
         private final int y;
