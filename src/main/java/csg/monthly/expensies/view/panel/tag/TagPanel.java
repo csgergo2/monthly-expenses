@@ -83,7 +83,10 @@ public class TagPanel extends CsGPanel {
             setItems();
             setComment();
             filters.setVisible(true);
-            prioGroupPanel.setVisible(true);
+            prioGroupPanel.setPrioGroups();
+            if (tagSelector.getSelectedItem() != null) {
+                prioGroupPanel.setPrioGroupByTag((Tag) tagSelector.getSelectedItem());
+            }
         }
         if (newTagPanel != null) {
             newTagPanel.setVisible(visible);

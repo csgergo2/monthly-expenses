@@ -12,6 +12,7 @@ import javax.swing.event.ListSelectionEvent;
 
 import csg.monthly.expensies.Application;
 import csg.monthly.expensies.domain.PrioGroup;
+import csg.monthly.expensies.domain.Tag;
 import csg.monthly.expensies.domain.service.PrioGroupService;
 import csg.monthly.expensies.domain.service.TagService;
 import csg.swing.CsGButton;
@@ -65,17 +66,16 @@ public class PrioGroupPanel extends CsGPanel {
         add(new CsGButton(Name.DELETE_PRIO_GROUP_BUTTON, "Prio csoport törlés", event -> delete()));//todo english
 
         add(tags);
+
+        setVisible(true);
     }
 
-    @Override
-    public void setVisible(boolean visible) {
-        if (visible) {
-            setPrioGroups();
-        }
-        super.setVisible(visible);
+    public void setPrioGroupByTag(Tag tag) {
+        prioGroups.setSelectedValue(tag.getPrioGroup());
+        listSelectionEvent();
     }
 
-    private void setPrioGroups() {
+    public void setPrioGroups() {
         final List<PrioGroup> prioGroups = Application.getBean(PrioGroupService.class).getPrioGroups();
         this.prioGroups.reset(prioGroups);
         listSelectionEvent();
