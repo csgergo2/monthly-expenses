@@ -156,7 +156,7 @@ public class PrioGroupPanel extends CsGPanel {
         COLOR_SAMPLE(230, 129, 120, 25),
         OVERWRITE(170, 165, 150, 25),
         SAVE_NEW(170, 200, 150, 25),
-        TAGS(10, 235, 345, 200);
+        TAGS(10, 235, 345, 215);
 
         private final int x;
         private final int y;

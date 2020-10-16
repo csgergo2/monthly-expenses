@@ -11,36 +11,78 @@ import csg.monthly.expensies.Application;
 import csg.monthly.expensies.domain.PrioGroup;
 import csg.monthly.expensies.domain.Tag;
 import csg.monthly.expensies.domain.service.TagService;
+import csg.swing.CsGButton;
+import csg.swing.CsGComboBox;
+import csg.swing.CsGLabel;
 import csg.swing.CsGLayout;
+import csg.swing.CsGListBox;
 import csg.swing.CsGPanel;
-import csg.swing.CsGScrollableLabel;
-import csg.swing.html.CsGHtmlBodyBuilder;
-import csg.swing.html.CsGHtmlBuilder;
 
 public class PrioGroupTagPanel extends CsGPanel {
-    private CsGScrollableLabel tags = new CsGScrollableLabel(Name.TAGS, "");
+    private CsGListBox<Tag> tags = new CsGListBox<>(Name.TAGS, event -> {
+    });
+    private CsGComboBox<Tag> tagSelector = new CsGComboBox<>(Name.TAG_SELECTOR);
 
-    private Optional<PrioGroup> prioGroup = Optional.empty();
+    private PrioGroup prioGroup = null;
 
-    public PrioGroupTagPanel(final Enum<?> name) {
+    PrioGroupTagPanel(final Enum<?> name) {
         super(name, new PrioGroupTagPanelLayout());
         setBorder(BorderFactory.createLineBorder(Color.black));
+        add(new CsGLabel(Name.TITLE, "Prio csoport tag-jei:"));//todo english
 
         add(tags);
+
+        add(tagSelector);
+        add(new CsGButton(Name.ADD_TAG, "Ad Tag", event -> addTag()));//todo english
+        add(new CsGButton(Name.REMOVE_TAG, "Tag eltávolítása", event -> removeTag()));//todo english
+
         setVisible(true);
     }
 
     public void setTags(PrioGroup prioGroup) {
-        this.prioGroup = Optional.of(prioGroup);
-        final List<Tag> tags = Application.getBean(TagService.class).findByPrioGroup(prioGroup);
-        final CsGHtmlBodyBuilder body = new CsGHtmlBodyBuilder();
-        tags.forEach(tag -> body.addText("p", tag.getName()));
-        final String tagsText = new CsGHtmlBuilder(body).build();
-        this.tags.setText(tagsText);
+        this.prioGroup = prioGroup;
+        if (this.tags != null) {
+            remove(this.tags);
+        }
+        this.tags = new CsGListBox<>(Name.TAGS, event -> {
+        });
+        final TagService tagService = Application.getBean(TagService.class);
+        final List<Tag> tags = tagService.findByPrioGroup(prioGroup);
+        this.tags.reset(tags);
+        add(this.tags);
+        final List<Tag> allTag = tagService.findAll();
+        tagSelector.reset(allTag);
+        tagSelector.setSelectedIndex(0);
+    }
+
+    private void addTag() {
+        if (prioGroup != null) {
+            final Optional<Tag> selectedTag = Optional.ofNullable((Tag) tagSelector.getSelectedItem());
+            if (selectedTag.isPresent()) {
+                final Tag tag = selectedTag.get();
+                tag.setPrioGroup(prioGroup);
+                Application.getBean(TagService.class).save(tag);
+                setTags(prioGroup);
+            }
+        }
+    }
+
+    private void removeTag() {
+        final Optional<Tag> selectedTag = Optional.ofNullable((Tag) tagSelector.getSelectedItem());
+        if (selectedTag.isPresent()) {
+            final Tag tag = selectedTag.get();
+            tag.setPrioGroup(null);
+            Application.getBean(TagService.class).save(tag);
+            setTags(prioGroup);
+        }
     }
 
     private enum Name {
-        TAGS(0, 0, 150, 180);
+        TITLE(0, 0, 150, 25),
+        TAGS(0, 35, 150, 180),
+        TAG_SELECTOR(160, 35, 100, 25),
+        ADD_TAG(270, 35, 75, 25),
+        REMOVE_TAG(160, 190, 185, 25);
 
         private final int x;
         private final int y;

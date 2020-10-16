@@ -45,6 +45,14 @@ public class Tag implements Comparable<Tag> {
         this.prio = prio;
     }
 
+    public PrioGroup getPrioGroup() {
+        return prioGroup;
+    }
+
+    public void setPrioGroup(final PrioGroup prioGroup) {
+        this.prioGroup = prioGroup;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
