@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity(name = "PrioGroup")
 @Table(name = "prio_group")
-public class PrioGroup {
+public class PrioGroup implements Comparable<PrioGroup> {
 
     @Id
     private int id;
@@ -89,13 +89,12 @@ public class PrioGroup {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("PrioGroup{");
-        sb.append("id=").append(id);
-        sb.append(", name='").append(name).append('\'');
-        sb.append(", prio=").append(prio);
-        sb.append(", color='").append(color).append('\'');
-        sb.append(", textColor='").append(textColor).append('\'');
-        sb.append('}');
-        return sb.toString();
+        return name;
+    }
+
+    @Override
+    public int compareTo(final PrioGroup o) {
+        final int prioCompareResult = Integer.compare(prio, o.prio);
+        return prioCompareResult != 0 ? prioCompareResult : name.compareTo(o.name);
     }
 }

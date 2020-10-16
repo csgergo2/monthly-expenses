@@ -71,7 +71,8 @@ public enum Name {
     TAG_PANEL_FILTER_PANEL(575, 80, 230, 395),
     TAG_PANEL_NEW_TAG_PANEL(575, 485, 230, 150),
     TAG_PANEL_DELETE_LABEL(10, 700, 500, 25),
-    TAG_PANEL_DELETE_BUTTON(10, 735, 100, 25);
+    TAG_PANEL_DELETE_BUTTON(10, 735, 100, 25),
+    TAG_PANEL_PRIO_GROUP_PANEL(815, 80, 0, 0);
 
     private final int x;
     private final int y;
@@ -88,5 +89,4 @@ public enum Name {
     public Rectangle getRectangle() {
         return new Rectangle(x, y, width, height);
     }
-
 }

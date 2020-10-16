@@ -9,6 +9,7 @@ import static csg.monthly.expensies.view.util.Name.TAG_PANEL_FILTER_PANEL;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_ITEMS;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_NEW_TAG_PANEL;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_OVERWRITE_BUTTON;
+import static csg.monthly.expensies.view.util.Name.TAG_PANEL_PRIO_GROUP_PANEL;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_SAVE_COMMENT_BUTTON;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_SHOW_BUTTON;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_TAG_NAME;
@@ -51,6 +52,8 @@ public class TagPanel extends CsGPanel {
 
     private CsGScrollableTextArea comment = new CsGScrollableTextArea(TAG_PANEL_COMMENT);
 
+    private PrioGroupPanel prioGroupPanel = new PrioGroupPanel(TAG_PANEL_PRIO_GROUP_PANEL);
+
     private TagPanel() {
         super(Name.TAG_PANEL, MELayout.LAYOUT);
 
@@ -69,6 +72,8 @@ public class TagPanel extends CsGPanel {
         add(newTagPanel);
         add(comment);
         add(new CsGButton(TAG_PANEL_SAVE_COMMENT_BUTTON, "Komment mentése", event -> saveComment()));//todo english
+
+        add(prioGroupPanel);
     }
 
     @Override
@@ -77,7 +82,8 @@ public class TagPanel extends CsGPanel {
             setTagSelector();
             setItems();
             setComment();
-            filters.setVisible(visible);
+            filters.setVisible(true);
+            prioGroupPanel.setVisible(true);
         }
         if (newTagPanel != null) {
             newTagPanel.setVisible(visible);
