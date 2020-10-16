@@ -11,7 +11,6 @@ import static csg.monthly.expensies.view.util.Name.TAG_PANEL_NEW_TAG_PANEL;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_OVERWRITE_BUTTON;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_PRIO_GROUP_PANEL;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_SAVE_COMMENT_BUTTON;
-import static csg.monthly.expensies.view.util.Name.TAG_PANEL_SHOW_BUTTON;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_TAG_NAME;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_TAG_PRIO;
 import static csg.monthly.expensies.view.util.Name.TAG_PANEL_TAG_SELECTOR;
@@ -57,8 +56,8 @@ public class TagPanel extends CsGPanel {
     private TagPanel() {
         super(Name.TAG_PANEL, MELayout.LAYOUT);
 
+        tagSelector.addActionListener(event -> setVisible(true));
         add(tagSelector);
-        add(new CsGButton(TAG_PANEL_SHOW_BUTTON, "Frissítés", event -> setVisible(true)));//todo english
         add(new CsGButton(TAG_PANEL_BACK_BUTTON, "Vissza", event -> back()));//todo english
 
         add(name);
