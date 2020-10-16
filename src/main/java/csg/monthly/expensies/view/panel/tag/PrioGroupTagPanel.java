@@ -65,7 +65,7 @@ public class PrioGroupTagPanel extends CsGPanel {
 
     private void removeTag() {
         final Optional<Tag> selectedTag = Optional.ofNullable((Tag) tagSelector.getSelectedItem());
-        if (selectedTag.isPresent()) {
+        if (selectedTag.isPresent() && prioGroup.equals(selectedTag.get().getPrioGroup())) {
             final Tag tag = selectedTag.get();
             tag.setPrioGroup(null);
             Application.getBean(TagService.class).save(tag);
