@@ -115,10 +115,11 @@ drop table tag_comment;
 CREATE TABLE CUSTOM_COUNTER (
 	id int(100) auto_increment primary key,
     name varchar(100) not null,
-    comment TEXT
+    data TEXT
 );
 
 select * from custom_counter;
-
+delete from custom_counter;
+drop table custom_counter;
 
 

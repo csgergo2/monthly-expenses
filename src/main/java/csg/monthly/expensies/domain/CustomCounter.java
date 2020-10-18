@@ -12,14 +12,14 @@ public class CustomCounter {
     @Id
     private int id;
     private String name;
-    private String comment;
+    private String data;
 
     public CustomCounter() {
     }
 
-    public CustomCounter(final String name, final String comment) {
+    public CustomCounter(final String name, final String data) {
         this.name = name;
-        this.comment = comment;
+        this.data = data;
     }
 
     public int getId() {
@@ -38,12 +38,12 @@ public class CustomCounter {
         this.name = name;
     }
 
-    public String getComment() {
-        return comment;
+    public String getData() {
+        return data;
     }
 
-    public void setComment(final String comment) {
-        this.comment = comment;
+    public void setData(final String data) {
+        this.data = data;
     }
 
     @Override

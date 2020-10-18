@@ -60,7 +60,7 @@ public class CustomCounterPanel extends CsGPanel {
         }
         final CustomCounter customCounter = customCounters.getSelectedValue().get();
         name.setText(customCounter.getName());
-        text.setText(customCounter.getComment());
+        text.setText(customCounter.getData());
     }
 
     private void overwrite() {
@@ -70,7 +70,7 @@ public class CustomCounterPanel extends CsGPanel {
         }
         final CustomCounter customCounter = customCounters.getSelectedValue().get();
         customCounter.setName(name.getText());
-        customCounter.setComment(text.getText());
+        customCounter.setData(text.getText());
         Application.getBean(CustomCounterServcie.class).save(customCounter);
         setUpCustomCounters();
     }
