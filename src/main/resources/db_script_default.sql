@@ -1,11 +1,12 @@
 CREATE TABLE PRIO_GROUP (
 	id int(100) AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) not null,
+    name VARCHAR(100) not null unique,
     prio int(5) not null,
     color VARCHAR(7) not null,
     text_color VARCHAR(7) not null
 );
 ALTER TABLE PRIO_GROUP ADD COLUMN text_color varchar(7) not null;
+ALTER TABLE PRIO_GROUP ADD UNIQUE (name);
 drop table prio_group;
 
 INSERT INTO PRIO_GROUP (name, prio, color, text_color) values ("Kötelező", 1, "#fa0000", "#000000");
@@ -34,7 +35,7 @@ INSERT INTO TAG (name, prio, prio_group) values ("BKV", 3, 2);
 INSERT INTO TAG (name, prio, prio_group) values ("KV", 1, 3);
 INSERT INTO TAG (name, prio, prio_group) values ("Fizetés", 1, 4);
 INSERT INTO TAG (name, prio, prio_group) values ("Lottó", 2, 4);
-update tag set prio_group = 2;
+update tag set prio_group = 3;
 
 delete from tag where name like "test";
 select * from TAG;

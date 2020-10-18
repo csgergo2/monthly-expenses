@@ -83,7 +83,6 @@ public class PrioGroup implements Comparable<PrioGroup> {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(id, name, prio, color, textColor);
     }
 
@@ -94,7 +93,9 @@ public class PrioGroup implements Comparable<PrioGroup> {
 
     @Override
     public int compareTo(final PrioGroup o) {
-        final int prioCompareResult = Integer.compare(prio, o.prio);
-        return prioCompareResult != 0 ? prioCompareResult : name.compareTo(o.name);
+        if (o == null) {
+            return -1;
+        }
+        return Integer.compare(prio, o.prio);
     }
 }

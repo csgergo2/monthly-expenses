@@ -136,7 +136,7 @@ public class PrioGroupPanel extends CsGPanel {
                 isTextColorParsable(color.getText()) && isTextColorParsable(textColor.getText())) {
             PrioGroup prioGroup = new PrioGroup(name.getText(), prio.getTextAsInteger(), color.getText(), textColor.getText());
             Application.getBean(PrioGroupService.class).save(prioGroup);
-            prioGroup = Application.getBean(PrioGroupService.class).getPrioGroupByName(prioGroup.getName());
+            prioGroup = Application.getBean(PrioGroupService.class).getPrioGroupByName(prioGroup.getName()).get();
             setPrioGroups();
             prioGroups.setSelectedValue(prioGroup);
         }
