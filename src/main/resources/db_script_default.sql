@@ -112,3 +112,13 @@ delete from TAG_COMMENT;
 drop table tag_comment;
 
 
+CREATE TABLE CUSTOM_COUNTER (
+	id int(100) auto_increment primary key,
+    name varchar(100) not null,
+    comment TEXT
+);
+
+select * from custom_counter;
+
+
+
