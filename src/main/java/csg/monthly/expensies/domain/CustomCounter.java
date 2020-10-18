@@ -2,8 +2,12 @@ package csg.monthly.expensies.domain;
 
 import java.util.Objects;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity(name = "CustomCounter")
+@Table(name = "custom_counter")
 public class CustomCounter {
     @Id
     private int id;
@@ -11,6 +15,11 @@ public class CustomCounter {
     private String comment;
 
     public CustomCounter() {
+    }
+
+    public CustomCounter(final String name, final String comment) {
+        this.name = name;
+        this.comment = comment;
     }
 
     public int getId() {
@@ -29,12 +38,12 @@ public class CustomCounter {
         this.name = name;
     }
 
-    public String getText() {
+    public String getComment() {
         return comment;
     }
 
-    public void setText(final String text) {
-        this.comment = text;
+    public void setComment(final String comment) {
+        this.comment = comment;
     }
 
     @Override
