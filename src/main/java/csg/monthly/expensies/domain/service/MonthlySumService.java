@@ -67,9 +67,6 @@ public class MonthlySumService {
     private String[][] getRowsByPrioGroup(PrioGroup prioGroup, List<Tag> tagsOfPrioGroup, List<MonthInfo> monthInfo) {
         final String[][] rows = new String[tagsOfPrioGroup.size() + 2][monthInfo.size() + 1];
         rows[0][0] = prioGroup != null ? prioGroup.getName() : "";
-        for (int i = 1; i <= monthInfo.size(); i++) {
-            rows[0][i] = "";
-        }
         for (int i = 1; i <= tagsOfPrioGroup.size(); i++) {
             rows[i][0] = tagsOfPrioGroup.get(i - 1).getName();
             for (int j = 1; j <= monthInfo.size(); j++) {
@@ -88,7 +85,10 @@ public class MonthlySumService {
                 }
             }
             final String monthSum = Integer.toString(sum);
-            rows[tagsOfPrioGroup.size() + 1][i] = monthSum;
+            rows[0][i] = monthSum;
+        }
+        for (int i = 0; i <= monthInfo.size(); i++) {
+            rows[tagsOfPrioGroup.size() + 1][i] = "";
         }
         return rows;
     }
