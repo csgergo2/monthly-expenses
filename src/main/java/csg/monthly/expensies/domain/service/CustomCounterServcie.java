@@ -39,6 +39,10 @@ public class CustomCounterServcie {
         itemCustomCounterRepository.save(new ItemCustomCounter(customCounter.getId(), item.getId()));
     }
 
+    public void removeItemFromCustomCounter(Item item, CustomCounter customCounter) {
+        itemCustomCounterRepository.deleteById(new ItemCustomCounter.ItemCustomCounterId(customCounter.getId(), item.getId()));
+    }
+
     public void delete(CustomCounter customCounter) {
         customCounterRepository.delete(customCounter);
     }

@@ -1,6 +1,7 @@
 package csg.monthly.expensies.domain;
 
 import java.sql.Date;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -138,6 +139,25 @@ public class Item implements Comparable<Item> {
         sb.append(", month=").append(month);
         sb.append('}');
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final Item item = (Item) o;
+        return id == item.id && amount == item.amount && isIncome == item.isIncome && isEndMonth == item.isEndMonth && year == item.year &&
+                Objects.equals(name, item.name) && Objects.equals(tag, item.tag) && Objects.equals(date, item.date) && month == item.month;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, name, tag, amount, isIncome, isEndMonth, date, year, month);
     }
 
     @Override

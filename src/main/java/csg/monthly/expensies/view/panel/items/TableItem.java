@@ -61,7 +61,8 @@ public class TableItem extends CsGPanel {
         add(new CsGButton(TableItemName.NOT_IS_INCOME, "NotIsIncome", event -> notIsIncome()));//todo english
         add(new CsGButton(TableItemName.DELETE, "Delete", event -> delete()));//todo english
         add(customCounterBox);
-        add(new CsGButton(TableItemName.ADD_CUSTOM_COUNTER, "Add Cus.Count.", event -> addCustomCounter()));//todo english
+        add(new CsGButton(TableItemName.ADD_CUSTOM_COUNTER, "Add CC.", event -> addCustomCounter()));//todo english
+        add(new CsGButton(TableItemName.REMOVE_CUSTOM_COUNTER, "Del CC.", event -> removeCustomCounter()));//todo english
 
         itemService = Application.getBean(ItemService.class);
         customCounterServcie = Application.getBean(CustomCounterServcie.class);
@@ -77,6 +78,15 @@ public class TableItem extends CsGPanel {
         itemService.save(item);
     }
 
+    private void notIsIncome() {
+        item.setIncome(!item.isIncome());
+        itemService.save(item);
+    }
+
+    private void delete() {
+        itemService.deleteItem(item);
+    }
+
     private void addCustomCounter() {
         final List<Item> itemsByCustomCounter = itemService.findAllByCustomCounter((CustomCounter) customCounterBox.getSelectedItem());
         if (itemsByCustomCounter.contains(item)) {
@@ -85,13 +95,11 @@ public class TableItem extends CsGPanel {
         customCounterServcie.saveItemForCustomCounter(item, (CustomCounter) customCounterBox.getSelectedItem());
     }
 
-    private void notIsIncome() {
-        item.setIncome(!item.isIncome());
-        itemService.save(item);
-    }
-
-    private void delete() {
-        itemService.deleteItem(item);
+    private void removeCustomCounter() {
+        final List<Item> itemsByCustomCounter = itemService.findAllByCustomCounter((CustomCounter) customCounterBox.getSelectedItem());
+        if (itemsByCustomCounter.contains(item)) {
+            customCounterServcie.removeItemFromCustomCounter(item, (CustomCounter) customCounterBox.getSelectedItem());
+        }
     }
 
     private enum TableItemName {
@@ -104,7 +112,8 @@ public class TableItem extends CsGPanel {
         NOT_IS_INCOME(535, 0, 100, 25),
         DELETE(636, 0, 100, 25),
         CUSTOM_COUNTER(737, 0, 100, 25),
-        ADD_CUSTOM_COUNTER(838, 0, 100, 25);
+        ADD_CUSTOM_COUNTER(838, 0, 100, 25),
+        REMOVE_CUSTOM_COUNTER(939, 0, 100, 25);
         private final int x;
         private final int y;
         private final int width;

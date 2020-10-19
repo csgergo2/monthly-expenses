@@ -15,14 +15,14 @@ import csg.swing.CsGPanel;
 public class ItemsTablePanel extends JScrollPane {
     private static final int RANGE_X = 1;
     private static final int RANGE_Y = 1;
+    private static final int WIDTH = 1050;
 
     private CsGPanel panel = new CsGPanel(Name.MENU_PANEL, new ItemsTableLayout()) {
     };
 
-    private int width = 939;
 
     public ItemsTablePanel(final Enum<?> name) {
-        panel.setPreferredSize(new Dimension(width, 10));
+        panel.setPreferredSize(new Dimension(WIDTH, 10));
         panel.setBackground(Color.BLACK);
         panel.setLayout(new ItemsTableLayout());
         panel.setVisible(true);
@@ -41,7 +41,7 @@ public class ItemsTablePanel extends JScrollPane {
     public Component add(final Component comp) {
         if (comp instanceof TableItem) {
             panel.add(comp);
-            panel.setPreferredSize(new Dimension(width, (int) panel.getPreferredSize().getHeight() + 26));
+            panel.setPreferredSize(new Dimension(WIDTH, (int) panel.getPreferredSize().getHeight() + 26));
         } else {
             super.add(comp);
         }
@@ -71,7 +71,7 @@ public class ItemsTablePanel extends JScrollPane {
         public void layoutContainer(final Container parent) {
             int currentY = RANGE_Y;
             for (Component component : parent.getComponents()) {
-                component.setBounds(RANGE_X, currentY, 797, 25);
+                component.setBounds(RANGE_X, currentY, WIDTH, 25);
                 currentY = currentY + 25 + RANGE_Y;
             }
         }
