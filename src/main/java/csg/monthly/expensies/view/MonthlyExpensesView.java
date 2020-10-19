@@ -1,5 +1,6 @@
 package csg.monthly.expensies.view;
 
+import csg.monthly.expensies.view.panel.CustomCounterPanel;
 import csg.monthly.expensies.view.panel.FilteringPanel;
 import csg.monthly.expensies.view.panel.MainPanel;
 import csg.monthly.expensies.view.panel.MenuPanel;

@@ -1,4 +1,4 @@
-package csg.monthly.expensies.view;
+package csg.monthly.expensies.view.panel;
 
 import static csg.monthly.expensies.view.util.Name.CUSTOM_COUNTER;
 
@@ -12,7 +12,6 @@ import csg.monthly.expensies.domain.CustomCounter;
 import csg.monthly.expensies.domain.Item;
 import csg.monthly.expensies.domain.service.CustomCounterServcie;
 import csg.monthly.expensies.domain.service.ItemService;
-import csg.monthly.expensies.view.panel.MenuPanel;
 import csg.monthly.expensies.view.panel.items.ItemsTablePanel;
 import csg.monthly.expensies.view.panel.items.TableItem;
 import csg.swing.CsGButton;
@@ -35,9 +34,10 @@ public class CustomCounterPanel extends CsGPanel {
 
         add(customCounters);
         add(name);
-        add(new CsGButton(Name.OVERWRITE_BUTTON, "Felül ír", event -> overwrite()));
-        add(new CsGButton(Name.SAVE_NEW_BUTTON, "Új mentés", event -> saveNew()));
-        add(new CsGButton(Name.CUSTOM_COUNTER_BACK_BUTTON, "Vissza", event -> back()));
+        add(new CsGButton(Name.OVERWRITE_BUTTON, "Felül ír", event -> overwrite()));//todo english
+        add(new CsGButton(Name.SAVE_NEW_BUTTON, "Új mentés", event -> saveNew()));//todo english
+        add(new CsGButton(Name.CUSTOM_COUNTER_BACK_BUTTON, "Vissza", event -> back()));//todo english
+        add(new CsGButton(Name.DELETE_CUSTOM_COUNTER_BUTTON, "Törlés", event -> delete()));//todo english
         add(text);
         add(items);
     }
@@ -116,12 +116,27 @@ public class CustomCounterPanel extends CsGPanel {
         add(items);
     }
 
+    private void delete() {
+        if (!customCounters.getSelectedValue().isPresent() || customCounters.getSelectedValue().get().getName().isEmpty()) {
+            return;
+        }
+        final CustomCounter selectedCustomCounter = customCounters.getSelectedValue().get();
+        final boolean isNoItemForCustomCounter = Application.getBean(ItemService.class).findAllByCustomCounter(selectedCustomCounter).isEmpty();
+        if (selectedCustomCounter.getData().isEmpty() && isNoItemForCustomCounter) {
+            Application.getBean(CustomCounterServcie.class).delete(selectedCustomCounter);
+            name.setText("");
+            text.setText("");
+            setUpCustomCounters();
+        }
+    }
+
     private enum Name {
         CUSTOM_COUNTERS(10, 10, 150, 130),
         NAME(170, 10, 150, 25),
         OVERWRITE_BUTTON(170, 45, 150, 25),
         SAVE_NEW_BUTTON(170, 80, 150, 25),
-        CUSTOM_COUNTER_BACK_BUTTON(170, 115, 150, 25),
+        DELETE_CUSTOM_COUNTER_BUTTON(170, 115, 150, 25),
+        CUSTOM_COUNTER_BACK_BUTTON(330, 10, 150, 25),
         TEXT(10, 150, 500, 500),
         ITEMS(520, 150, 500, 500);
 

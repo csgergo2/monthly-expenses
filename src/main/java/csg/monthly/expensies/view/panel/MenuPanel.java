@@ -1,6 +1,6 @@
 package csg.monthly.expensies.view.panel;
 
-import static csg.monthly.expensies.view.CustomCounterPanel.CUSTOM_COUNTER_PANEL;
+import static csg.monthly.expensies.view.panel.CustomCounterPanel.CUSTOM_COUNTER_PANEL;
 import static csg.monthly.expensies.view.panel.FilteringPanel.FILTERING_PANEL;
 import static csg.monthly.expensies.view.panel.MainPanel.MAIN_PANEL;
 import static csg.monthly.expensies.view.panel.MonthlySumPanel.MONTHLY_SUM_PANEL;

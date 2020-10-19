@@ -38,4 +38,8 @@ public class CustomCounterServcie {
     public void saveItemForCustomCounter(Item item, CustomCounter customCounter) {
         itemCustomCounterRepository.save(new ItemCustomCounter(customCounter.getId(), item.getId()));
     }
+
+    public void delete(CustomCounter customCounter) {
+        customCounterRepository.delete(customCounter);
+    }
 }
