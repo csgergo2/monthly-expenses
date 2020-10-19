@@ -2,10 +2,13 @@ package csg.monthly.expensies.view.panel;
 
 import static csg.monthly.expensies.view.util.Name.CUSTOM_COUNTER;
 
+import java.awt.Color;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import javax.swing.BorderFactory;
 
 import csg.monthly.expensies.Application;
 import csg.monthly.expensies.domain.CustomCounter;
@@ -25,9 +28,15 @@ import csg.swing.CsGTextField;
 public class CustomCounterPanel extends CsGPanel {
     public static final CustomCounterPanel CUSTOM_COUNTER_PANEL = new CustomCounterPanel();
 
+    private static CsGTextArea getTextTextArea() {
+        CsGTextArea text = new CsGTextArea(Name.TEXT);
+        text.setBorder(BorderFactory.createLineBorder(Color.black));
+        return text;
+    }
+
     private CsGListBox<CustomCounter> customCounters = new CsGListBox<>(Name.CUSTOM_COUNTERS, event -> selectCustomCounter());
     private CsGTextField name = new CsGTextField(Name.NAME);
-    private CsGTextArea text = new CsGTextArea(Name.TEXT);
+    private CsGTextArea text = getTextTextArea();
     private ItemsTablePanel items = new ItemsTablePanel(Name.ITEMS);
     private CsGLabel sum = new CsGLabel(Name.SUM, "");
 
@@ -145,9 +154,9 @@ public class CustomCounterPanel extends CsGPanel {
         SAVE_NEW_BUTTON(170, 80, 150, 25),
         DELETE_CUSTOM_COUNTER_BUTTON(170, 115, 150, 25),
         CUSTOM_COUNTER_BACK_BUTTON(330, 10, 150, 25),
-        TEXT(10, 150, 500, 500),
-        ITEMS(520, 150, 500, 500),
-        SUM(520, 660, 500, 25);
+        TEXT(10, 150, 690, 500),
+        ITEMS(710, 150, 1070, 500),
+        SUM(710, 660, 500, 25);
 
         private final int x;
         private final int y;
