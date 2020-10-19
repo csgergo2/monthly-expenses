@@ -9,8 +9,14 @@ import java.util.Optional;
 
 import csg.monthly.expensies.Application;
 import csg.monthly.expensies.domain.CustomCounter;
+import csg.monthly.expensies.domain.Item;
+import csg.monthly.expensies.domain.Tag;
 import csg.monthly.expensies.domain.service.CustomCounterServcie;
+import csg.monthly.expensies.domain.service.ItemService;
+import csg.monthly.expensies.domain.service.TagService;
 import csg.monthly.expensies.view.panel.MenuPanel;
+import csg.monthly.expensies.view.panel.items.ItemsTablePanel;
+import csg.monthly.expensies.view.panel.items.TableItem;
 import csg.swing.CsGButton;
 import csg.swing.CsGLayout;
 import csg.swing.CsGListBox;
@@ -24,6 +30,7 @@ public class CustomCounterPanel extends CsGPanel {
     private CsGListBox<CustomCounter> customCounters = new CsGListBox<>(Name.CUSTOM_COUNTERS, event -> selectCustomCounter());
     private CsGTextField name = new CsGTextField(Name.NAME);
     private CsGTextArea text = new CsGTextArea(Name.TEXT);
+    private ItemsTablePanel items = new ItemsTablePanel(Name.ITEMS);
 
     private CustomCounterPanel() {
         super(CUSTOM_COUNTER, new CustomCounterPanelLayout());
@@ -34,24 +41,24 @@ public class CustomCounterPanel extends CsGPanel {
         add(new CsGButton(Name.SAVE_NEW_BUTTON, "Új mentés", event -> saveNew()));
         add(new CsGButton(Name.CUSTOM_COUNTER_BACK_BUTTON, "Vissza", event -> back()));
         add(text);
+        add(items);
     }
 
     @Override
     public void setVisible(boolean visible) {
         if (visible) {
             setUpCustomCounters();
+            setUpItems();
         }
         super.setVisible(visible);
     }
 
     private void setUpCustomCounters() {
-        Optional<CustomCounter> selectedValue = customCounters.getSelectedValue();
         final CustomCounter nul = new CustomCounter("", "");
         List<CustomCounter> customCounterList = new ArrayList<>();
         customCounterList.add(nul);
         customCounterList.addAll(Application.getBean(CustomCounterServcie.class).findAll());
         customCounters.reset(customCounterList);
-        selectedValue.ifPresent(customCounter -> customCounters.setSelectedValue(customCounter));
     }
 
     private void selectCustomCounter() {
@@ -61,6 +68,7 @@ public class CustomCounterPanel extends CsGPanel {
         final CustomCounter customCounter = customCounters.getSelectedValue().get();
         name.setText(customCounter.getName());
         text.setText(customCounter.getData());
+        setUpItems();
     }
 
     private void overwrite() {
@@ -84,11 +92,31 @@ public class CustomCounterPanel extends CsGPanel {
         final Optional<CustomCounter> created = Application.getBean(CustomCounterServcie.class).findByName(name.getText());
         setUpCustomCounters();
         customCounters.setSelectedValue(created.get());
+        setUpItems();
     }
 
     private void back() {
         setVisible(false);
         MenuPanel.MENU_PANEL.setVisible(true);
+    }
+
+    private void setUpItems() {
+        if (items != null) {
+            items.setVisible(false);
+            items.setEnabled(false);
+            remove(items);
+        }
+        final Optional<CustomCounter> selectedCustomCounter = customCounters.getSelectedValue();
+        items = new ItemsTablePanel(Name.ITEMS);
+        if (selectedCustomCounter.isPresent() && !selectedCustomCounter.get().getName().isEmpty()) {
+            final List<Item> itemsOfCustomCounter = Application.getBean(ItemService.class).findAllByCustomCounter(selectedCustomCounter.get());
+            final List<Tag> tags = Application.getBean(TagService.class).findAllOrderedByFrequency();
+            for (Item item : itemsOfCustomCounter) {
+                items.add(new TableItem(item, tags));
+            }
+            items.setScrollBarToBottom();
+        }
+        add(items);
     }
 
     private enum Name {
@@ -97,7 +125,8 @@ public class CustomCounterPanel extends CsGPanel {
         OVERWRITE_BUTTON(170, 45, 150, 25),
         SAVE_NEW_BUTTON(170, 80, 150, 25),
         CUSTOM_COUNTER_BACK_BUTTON(170, 115, 150, 25),
-        TEXT(10, 150, 500, 500);
+        TEXT(10, 150, 500, 500),
+        ITEMS(520, 150, 500, 500);
 
         private final int x;
         private final int y;

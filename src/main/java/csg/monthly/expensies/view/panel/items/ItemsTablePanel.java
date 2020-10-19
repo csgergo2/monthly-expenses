@@ -21,7 +21,7 @@ public class ItemsTablePanel extends JScrollPane {
 
     private int width = 737;
 
-    public ItemsTablePanel(final Name name) {
+    public ItemsTablePanel(final Enum<?> name) {
         panel.setPreferredSize(new Dimension(width, 10));
         panel.setBackground(Color.BLACK);
         panel.setLayout(new ItemsTableLayout());

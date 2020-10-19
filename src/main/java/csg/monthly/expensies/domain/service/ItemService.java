@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import csg.monthly.expensies.domain.CustomCounter;
 import csg.monthly.expensies.domain.Item;
 import csg.monthly.expensies.domain.MonthComment;
 import csg.monthly.expensies.domain.Tag;
@@ -68,5 +69,12 @@ public class ItemService {
         all.forEach(items::add);
         Collections.sort(items);
         return items;
+    }
+
+    public List<Item> findAllByCustomCounter(CustomCounter customCounter) {
+        if (customCounter == null) {
+            return Collections.emptyList();
+        }
+        return itemRepository.findByCustomCounter(customCounter.getId());
     }
 }

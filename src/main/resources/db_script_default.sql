@@ -122,4 +122,21 @@ select * from custom_counter;
 delete from custom_counter;
 drop table custom_counter;
 
+CREATE TABLE CUSTOM_COUNTER_ITEM (
+	custom_counter_id int(100) not null,
+    item_id int(100) not null,
+    primary key (custom_counter_id, item_id),
+    foreign key (custom_counter_id) references CUSTOM_COUNTER(id),
+    foreign key (item_id) references item(id)
+)ENGINE=INNODB;
+drop table CUSTOM_COUNTER_ITEM;
+select * from custom_counter_item;
+select * from item;
+select * from custom_counter;
+insert into custom_counter_item (custom_counter_id, item_id) values (1, 20);
+insert into custom_counter_item (custom_counter_id, item_id) values (1, 21);
+insert into custom_counter_item (custom_counter_id, item_id) values (1, 25);
+insert into custom_counter_item (custom_counter_id, item_id) values (2, 22);
+insert into custom_counter_item (custom_counter_id, item_id) values (2, 24);
 
+select i.* from custom_counter_item cci left join item i on i.id = cci.item_id where cci.custom_counter_id = 2;

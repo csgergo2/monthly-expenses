@@ -39,4 +39,7 @@ public interface ItemRepository extends CrudRepository<Item, String> {
     List<Item> findByFilters(@Param("year") Integer year, @Param("month") String month, @Param("name") String name, @Param("tagId") Integer tagId,
                              @Param("isIncome") Boolean isIncome, @Param("startDate") Date startDate, @Param("endDate") Date endDate,
                              @Param("amountMin") Integer amountMin, @Param("amountMax") Integer amountMax);
+
+    @Query(value = "select i.* from custom_counter_item cci left join item i on i.id = cci.item_id where cci.custom_counter_id = :customCounterId", nativeQuery = true)
+    List<Item> findByCustomCounter(@Param("customCounterId") int customCounterId);
 }
