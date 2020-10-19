@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 
 import csg.monthly.expensies.domain.CustomCounter;
 import csg.monthly.expensies.domain.Item;
+import csg.monthly.expensies.domain.ItemCustomCounter;
 import csg.monthly.expensies.domain.repository.CustomCounterRepository;
-import csg.monthly.expensies.domain.repository.itemcustomcounter.ItemCustomCounter;
-import csg.monthly.expensies.domain.repository.itemcustomcounter.ItemCustomCounterRepository;
+import csg.monthly.expensies.domain.repository.ItemCustomCounterRepository;
 
 @Service
 public class CustomCounterServcie {

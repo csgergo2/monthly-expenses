@@ -1,4 +1,4 @@
-package csg.monthly.expensies.domain.repository.itemcustomcounter;
+package csg.monthly.expensies.domain;
 
 import java.io.Serializable;
 import java.util.Objects;
