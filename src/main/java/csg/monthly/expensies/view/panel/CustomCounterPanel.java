@@ -15,6 +15,7 @@ import csg.monthly.expensies.domain.service.ItemService;
 import csg.monthly.expensies.view.panel.items.ItemsTablePanel;
 import csg.monthly.expensies.view.panel.items.TableItem;
 import csg.swing.CsGButton;
+import csg.swing.CsGLabel;
 import csg.swing.CsGLayout;
 import csg.swing.CsGListBox;
 import csg.swing.CsGPanel;
@@ -28,6 +29,7 @@ public class CustomCounterPanel extends CsGPanel {
     private CsGTextField name = new CsGTextField(Name.NAME);
     private CsGTextArea text = new CsGTextArea(Name.TEXT);
     private ItemsTablePanel items = new ItemsTablePanel(Name.ITEMS);
+    private CsGLabel sum = new CsGLabel(Name.SUM, "");
 
     private CustomCounterPanel() {
         super(CUSTOM_COUNTER, new CustomCounterPanelLayout());
@@ -40,6 +42,7 @@ public class CustomCounterPanel extends CsGPanel {
         add(new CsGButton(Name.DELETE_CUSTOM_COUNTER_BUTTON, "Törlés", event -> delete()));//todo english
         add(text);
         add(items);
+        add(sum);
     }
 
     @Override
@@ -112,6 +115,11 @@ public class CustomCounterPanel extends CsGPanel {
                 items.add(TableItem.of(item));
             }
             items.setScrollBarToBottom();
+            if (itemsOfCustomCounter.size() > 0) {
+                final String sum = Integer.toString(itemsOfCustomCounter.stream().mapToInt(Item::getAmount).sum());
+                final String avg = Integer.toString((int) itemsOfCustomCounter.stream().mapToInt(Item::getAmount).average().getAsDouble());
+                this.sum.setText("Összesen: " + sum + ";     Átlag: " + avg);
+            }
         }
         add(items);
     }
@@ -138,7 +146,8 @@ public class CustomCounterPanel extends CsGPanel {
         DELETE_CUSTOM_COUNTER_BUTTON(170, 115, 150, 25),
         CUSTOM_COUNTER_BACK_BUTTON(330, 10, 150, 25),
         TEXT(10, 150, 500, 500),
-        ITEMS(520, 150, 500, 500);
+        ITEMS(520, 150, 500, 500),
+        SUM(520, 660, 500, 25);
 
         private final int x;
         private final int y;
