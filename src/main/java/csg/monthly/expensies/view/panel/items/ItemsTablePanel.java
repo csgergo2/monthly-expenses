@@ -19,7 +19,7 @@ public class ItemsTablePanel extends JScrollPane {
     private CsGPanel panel = new CsGPanel(Name.MENU_PANEL, new ItemsTableLayout()) {
     };
 
-    private int width = 737;
+    private int width = 939;
 
     public ItemsTablePanel(final Enum<?> name) {
         panel.setPreferredSize(new Dimension(width, 10));

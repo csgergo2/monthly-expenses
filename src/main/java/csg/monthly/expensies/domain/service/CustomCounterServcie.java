@@ -7,13 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import csg.monthly.expensies.domain.CustomCounter;
+import csg.monthly.expensies.domain.Item;
 import csg.monthly.expensies.domain.repository.CustomCounterRepository;
+import csg.monthly.expensies.domain.repository.itemcustomcounter.ItemCustomCounter;
+import csg.monthly.expensies.domain.repository.itemcustomcounter.ItemCustomCounterRepository;
 
 @Service
 public class CustomCounterServcie {
 
     @Autowired
     private CustomCounterRepository customCounterRepository;
+    @Autowired
+    private ItemCustomCounterRepository itemCustomCounterRepository;
 
     public List<CustomCounter> findAll() {
         return customCounterRepository.findAll();
@@ -28,5 +33,9 @@ public class CustomCounterServcie {
 
     public Optional<CustomCounter> findByName(String name) {
         return customCounterRepository.findByName(name);
+    }
+
+    public void saveItemForCustomCounter(Item item, CustomCounter customCounter) {
+        itemCustomCounterRepository.save(new ItemCustomCounter(customCounter.getId(), item.getId()));
     }
 }

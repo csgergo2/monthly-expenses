@@ -10,10 +10,8 @@ import java.util.Optional;
 import csg.monthly.expensies.Application;
 import csg.monthly.expensies.domain.CustomCounter;
 import csg.monthly.expensies.domain.Item;
-import csg.monthly.expensies.domain.Tag;
 import csg.monthly.expensies.domain.service.CustomCounterServcie;
 import csg.monthly.expensies.domain.service.ItemService;
-import csg.monthly.expensies.domain.service.TagService;
 import csg.monthly.expensies.view.panel.MenuPanel;
 import csg.monthly.expensies.view.panel.items.ItemsTablePanel;
 import csg.monthly.expensies.view.panel.items.TableItem;
@@ -110,9 +108,8 @@ public class CustomCounterPanel extends CsGPanel {
         items = new ItemsTablePanel(Name.ITEMS);
         if (selectedCustomCounter.isPresent() && !selectedCustomCounter.get().getName().isEmpty()) {
             final List<Item> itemsOfCustomCounter = Application.getBean(ItemService.class).findAllByCustomCounter(selectedCustomCounter.get());
-            final List<Tag> tags = Application.getBean(TagService.class).findAllOrderedByFrequency();
             for (Item item : itemsOfCustomCounter) {
-                items.add(new TableItem(item, tags));
+                items.add(TableItem.of(item));
             }
             items.setScrollBarToBottom();
         }
