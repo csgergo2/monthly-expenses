@@ -57,8 +57,8 @@ public class MonthlySumService {
         rows[0][0] = "Össz";
         for (int i = 1; i <= monthInfo.size(); i++) {
             final MonthInfo month = monthInfo.get(i - 1);
-            final String sum =
-                    Integer.toString(month.getItems().values().stream().mapToInt(items -> items.stream().mapToInt(Item::getAmount).sum()).sum());
+            final String sum = Integer.toString(month.getItems().values().stream().mapToInt(
+                    items -> items.stream().filter(item -> !item.isIncome()).mapToInt(Item::getAmount).sum()).sum());
             rows[0][i] = sum;
         }
         return rows;
@@ -71,7 +71,8 @@ public class MonthlySumService {
             rows[i][0] = tagsOfPrioGroup.get(i - 1).getName();
             for (int j = 1; j <= monthInfo.size(); j++) {
                 final Optional<List<Item>> items = Optional.ofNullable(monthInfo.get(j - 1).getItems().get(tagsOfPrioGroup.get(i - 1)));
-                rows[i][j] = items.map(items1 -> Integer.toString(items1.stream().mapToInt(Item::getAmount).sum())).orElse("");
+                rows[i][j] = items.map(items1 -> Integer.toString(items1.stream().filter(item -> !item.isIncome()).mapToInt(Item::getAmount).sum()))
+                                  .orElse("");
             }
         }
         rows[tagsOfPrioGroup.size() + 1][0] = "";
@@ -81,7 +82,7 @@ public class MonthlySumService {
             int sum = 0;
             for (List<Item> items : collectedItems) {
                 if (items != null) {
-                    sum += items.stream().mapToInt(Item::getAmount).sum();
+                    sum += items.stream().filter(item -> !item.isIncome()).mapToInt(Item::getAmount).sum();
                 }
             }
             final String monthSum = Integer.toString(sum);
@@ -92,7 +93,6 @@ public class MonthlySumService {
         }
         return rows;
     }
-
 
     private String[] getHeaders(List<MonthInfo> monthInfo) {
         String[] headers = new String[monthInfo.size() + 1];
