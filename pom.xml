@@ -13,7 +13,7 @@
 
     <groupId>csg</groupId>
     <artifactId>csg.monthly-expensies</artifactId>
-    <version>1.2.2-SNAPSHOT</version>
+    <version>1.3.0</version>
 
     <dependencies>
         <!--SPRING-->
