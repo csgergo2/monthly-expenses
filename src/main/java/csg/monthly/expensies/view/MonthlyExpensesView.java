@@ -13,13 +13,19 @@ public class MonthlyExpensesView extends CsGFrameWindow {
 
     public MonthlyExpensesView() {
         //@formatter:off
-        super(TITLE, MenuPanel.MENU_PANEL,
+        super(TITLE,1800, 825, MenuPanel.MENU_PANEL,
                 MainPanel.MAIN_PANEL,
                 FilteringPanel.FILTERING_PANEL,
                 MonthlySumPanel.MONTHLY_SUM_PANEL,
                 TagPanel.TAG_PANEL,
                 CustomCounterPanel.CUSTOM_COUNTER_PANEL);
         //@formatter:on
+        MainPanel.MAIN_PANEL.setLocation(0, 25);
+        FilteringPanel.FILTERING_PANEL.setLocation(0, 25);
+        MonthlySumPanel.MONTHLY_SUM_PANEL.setLocation(0, 25);
+        TagPanel.TAG_PANEL.setLocation(0, 25);
+        CustomCounterPanel.CUSTOM_COUNTER_PANEL.setLocation(0, 25);
+
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
