@@ -36,26 +36,34 @@ public class MenuPanel extends CsGPanel {
 
     private void mainPanelStart(ActionEvent event) {
         setVisible(false);
-        MAIN_PANEL.setVisible(true);
+        panelSwitch(true, false, false, false, false);
     }
 
     private void filteringPanel(ActionEvent event) {
         setVisible(false);
-        FILTERING_PANEL.setVisible(true);
+        panelSwitch(false, true, false, false, false);
     }
 
     private void monthlySumPanel(ActionEvent event) {
         setVisible(false);
-        MONTHLY_SUM_PANEL.setVisible(true);
+        panelSwitch(false, false, true, false, false);
     }
 
     private void tagPanel(ActionEvent event) {
         setVisible(false);
-        TAG_PANEL.setVisible(true);
+        panelSwitch(false, false, false, true, false);
     }
 
     private void customCounterPanel(ActionEvent event) {
         setVisible(false);
-        CUSTOM_COUNTER_PANEL.setVisible(true);
+        panelSwitch(false, false, false, false, true);
+    }
+
+    private void panelSwitch(boolean main, boolean filtering, boolean monthlySum, boolean tag, boolean custom) {
+        MAIN_PANEL.setVisible(main);
+        FILTERING_PANEL.setVisible(filtering);
+        MONTHLY_SUM_PANEL.setVisible(monthlySum);
+        TAG_PANEL.setVisible(tag);
+        CUSTOM_COUNTER_PANEL.setVisible(custom);
     }
 }
