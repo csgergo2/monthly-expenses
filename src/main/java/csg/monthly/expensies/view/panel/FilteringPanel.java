@@ -56,7 +56,7 @@ public class FilteringPanel extends CsGPanel {
 
     private enum Name {
         FILTERING_ITEMS(10, 10, 555, 500),
-        FILTERING_FILTER_PANEL(575, 45, 555, 500),
+        FILTERING_FILTER_PANEL(575, 10, 555, 500),
         FILTERING_SUMMARIZE_LABEL(10, 520, 500, 25);
 
         private final int x;
