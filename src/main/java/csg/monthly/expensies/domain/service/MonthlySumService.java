@@ -82,7 +82,7 @@ public class MonthlySumService {
             int sum = 0;
             for (List<Item> items : collectedItems) {
                 if (items != null) {
-                    sum += items.stream().filter(item -> !item.isIncome()).mapToInt(Item::getAmount).sum();
+                    sum += items.stream()/*.filter(item -> !item.isIncome())*/.mapToInt(Item::getAmount).sum();
                 }
             }
             final String monthSum = Integer.toString(sum);
