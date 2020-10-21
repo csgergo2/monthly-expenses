@@ -3,7 +3,6 @@ package csg.monthly.expensies.view.util;
 import java.awt.Rectangle;
 
 public enum Name {
-    ITEMS_BACK_BUTTON(1372, 698, 200, 30),
     ITEMS_PANEL(10, 10, 1140, 750),
     NEW_ITEM_PANEL(1162, 10, 530, 210),
     TAG_NEW_TAG_PANEL(1162, 232, 530, 458);

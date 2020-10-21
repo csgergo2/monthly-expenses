@@ -7,7 +7,6 @@ import csg.monthly.expensies.domain.Item;
 import csg.monthly.expensies.view.panel.items.ItemsTablePanel;
 import csg.monthly.expensies.view.panel.items.TableItem;
 import csg.monthly.expensies.view.panel.items.filter.DetailedFiltersPanel;
-import csg.swing.CsGButton;
 import csg.swing.CsGLabel;
 import csg.swing.CsGLayout;
 import csg.swing.CsGPanel;
@@ -22,8 +21,6 @@ public class FilteringPanel extends CsGPanel {
 
     private FilteringPanel() {
         super(MenuPanel.Name.FILTERING_PANEL, (CsGLayout) name -> Name.valueOf(name).getRectangle());
-
-        add(new CsGButton(Name.FILTERING_PANEL_BACK_BUTTON, "Vissza", event -> back()));//todo english
 
         add(filters);
         add(summarize);
@@ -57,14 +54,8 @@ public class FilteringPanel extends CsGPanel {
         summarize.setText("Darab: " + filteredItems.size() + "; Összeg: " + sum + "; Átlag: " + avg);//todo english
     }
 
-    private void back() {
-        setVisible(false);
-        MenuPanel.MENU_PANEL.setVisible(true);
-    }
-
     private enum Name {
         FILTERING_ITEMS(10, 10, 555, 500),
-        FILTERING_PANEL_BACK_BUTTON(575, 10, 100, 25),
         FILTERING_FILTER_PANEL(575, 45, 555, 500),
         FILTERING_SUMMARIZE_LABEL(10, 520, 500, 25);
 

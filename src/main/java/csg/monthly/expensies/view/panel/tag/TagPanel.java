@@ -1,7 +1,5 @@
 package csg.monthly.expensies.view.panel.tag;
 
-import static csg.monthly.expensies.view.panel.MenuPanel.MENU_PANEL;
-
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +44,6 @@ public class TagPanel extends CsGPanel {
 
         tagSelector.addActionListener(event -> setVisible(true));
         add(tagSelector);
-        add(new CsGButton(Name.TAG_PANEL_BACK_BUTTON, "Vissza", event -> back()));//todo english
 
         add(name);
         add(prio);
@@ -144,14 +141,8 @@ public class TagPanel extends CsGPanel {
         setVisible(true);
     }
 
-    private void back() {
-        setVisible(false);
-        MENU_PANEL.setVisible(true);
-    }
-
     private enum Name {
         TAG_PANEL_TAG_SELECTOR(10, 10, 100, 25),
-        TAG_PANEL_BACK_BUTTON(265, 10, 100, 25),
         TAG_PANEL_TAG_NAME(10, 45, 100, 25),
         TAG_PANEL_TAG_PRIO(120, 45, 35, 25),
         TAG_PANEL_OVERWRITE_BUTTON(165, 45, 200, 25),

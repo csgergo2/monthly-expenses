@@ -47,7 +47,6 @@ public class CustomCounterPanel extends CsGPanel {
         add(name);
         add(new CsGButton(Name.OVERWRITE_BUTTON, "Felül ír", event -> overwrite()));//todo english
         add(new CsGButton(Name.SAVE_NEW_BUTTON, "Új mentés", event -> saveNew()));//todo english
-        add(new CsGButton(Name.CUSTOM_COUNTER_BACK_BUTTON, "Vissza", event -> back()));//todo english
         add(new CsGButton(Name.DELETE_CUSTOM_COUNTER_BUTTON, "Törlés", event -> delete()));//todo english
         add(text);
         add(items);
@@ -105,11 +104,6 @@ public class CustomCounterPanel extends CsGPanel {
         setUpItems();
     }
 
-    private void back() {
-        setVisible(false);
-        MenuPanel.MENU_PANEL.setVisible(true);
-    }
-
     private void setUpItems() {
         if (items != null) {
             items.setVisible(false);
@@ -153,7 +147,6 @@ public class CustomCounterPanel extends CsGPanel {
         OVERWRITE_BUTTON(170, 45, 150, 25),
         SAVE_NEW_BUTTON(170, 80, 150, 25),
         DELETE_CUSTOM_COUNTER_BUTTON(170, 115, 150, 25),
-        CUSTOM_COUNTER_BACK_BUTTON(330, 10, 150, 25),
         TEXT(10, 150, 690, 500),
         ITEMS(710, 150, 1070, 500),
         SUM(710, 660, 500, 25);
