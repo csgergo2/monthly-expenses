@@ -1,6 +1,6 @@
 package csg.monthly.expensies.view.panel;
 
-import static csg.monthly.expensies.view.util.Name.CUSTOM_COUNTER;
+import static csg.monthly.expensies.view.panel.MenuPanel.Name.CUSTOM_COUNTER;
 
 import java.awt.Color;
 import java.awt.Rectangle;

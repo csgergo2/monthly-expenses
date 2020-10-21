@@ -7,7 +7,6 @@ import static csg.monthly.expensies.view.util.Name.TAG_NEW_TAG_PANEL;
 
 import csg.monthly.expensies.view.panel.tag.NewTagPanel;
 import csg.monthly.expensies.view.util.MELayout;
-import csg.monthly.expensies.view.util.Name;
 import csg.swing.CsGButton;
 import csg.swing.CsGPanel;
 
@@ -18,7 +17,7 @@ public class MainPanel extends CsGPanel {
     private NewTagPanel newTagPanel = new NewTagPanel(TAG_NEW_TAG_PANEL, this::refresh);
 
     private MainPanel() {
-        super(Name.MAIN_PANEL, MELayout.LAYOUT);
+        super(MenuPanel.Name.MAIN_PANEL, MELayout.LAYOUT);
 
         add(ITEMS_PANEL);
         add(newItemPanel);

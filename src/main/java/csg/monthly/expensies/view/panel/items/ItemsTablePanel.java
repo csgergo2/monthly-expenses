@@ -9,7 +9,7 @@ import java.awt.LayoutManager;
 
 import javax.swing.JScrollPane;
 
-import csg.monthly.expensies.view.util.Name;
+import csg.monthly.expensies.view.panel.MenuPanel;
 import csg.swing.CsGPanel;
 
 public class ItemsTablePanel extends JScrollPane {
@@ -17,7 +17,7 @@ public class ItemsTablePanel extends JScrollPane {
     private static final int RANGE_Y = 1;
     private static final int WIDTH = 1050;
 
-    private CsGPanel panel = new CsGPanel(Name.MENU_PANEL, new ItemsTableLayout()) {
+    private CsGPanel panel = new CsGPanel(MenuPanel.Name.MENU_PANEL, new ItemsTableLayout()) {
     };
 
 

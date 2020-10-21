@@ -21,7 +21,7 @@ public class FilteringPanel extends CsGPanel {
     private final CsGLabel summarize = new CsGLabel(Name.FILTERING_SUMMARIZE_LABEL, "");
 
     private FilteringPanel() {
-        super(csg.monthly.expensies.view.util.Name.FILTERING_PANEL, (CsGLayout) name -> Name.valueOf(name).getRectangle());
+        super(MenuPanel.Name.FILTERING_PANEL, (CsGLayout) name -> Name.valueOf(name).getRectangle());
 
         add(new CsGButton(Name.FILTERING_PANEL_BACK_BUTTON, "Vissza", event -> back()));//todo english
 

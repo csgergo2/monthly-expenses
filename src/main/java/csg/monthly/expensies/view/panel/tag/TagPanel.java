@@ -12,6 +12,7 @@ import csg.monthly.expensies.domain.Item;
 import csg.monthly.expensies.domain.Tag;
 import csg.monthly.expensies.domain.TagComment;
 import csg.monthly.expensies.domain.service.TagService;
+import csg.monthly.expensies.view.panel.MenuPanel;
 import csg.monthly.expensies.view.panel.items.ItemsTablePanel;
 import csg.monthly.expensies.view.panel.items.TableItem;
 import csg.monthly.expensies.view.panel.items.filter.DefaultFiltersPanel;
@@ -41,7 +42,7 @@ public class TagPanel extends CsGPanel {
     private PrioGroupPanel prioGroupPanel = new PrioGroupPanel(Name.TAG_PANEL_PRIO_GROUP_PANEL);
 
     private TagPanel() {
-        super(csg.monthly.expensies.view.util.Name.TAG_PANEL, (CsGLayout) name -> Name.valueOf(name).getRectangle());
+        super(MenuPanel.Name.TAG_PANEL, (CsGLayout) name -> Name.valueOf(name).getRectangle());
 
         tagSelector.addActionListener(event -> setVisible(true));
         add(tagSelector);

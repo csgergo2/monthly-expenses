@@ -18,7 +18,7 @@ public class MonthlySumPanel extends CsGPanel {
     private CsGScrollableLabel table = new CsGScrollableLabel(Name.MONTHLY_SUM_MAIN_LABEL, "");
 
     private MonthlySumPanel() {
-        super(csg.monthly.expensies.view.util.Name.MONTHLY_SUM_PANEL, (CsGLayout) name -> Name.valueOf(name).getRectangle());
+        super(MenuPanel.Name.MONTHLY_SUM_PANEL, (CsGLayout) name -> Name.valueOf(name).getRectangle());
 
         add(new CsGButton(Name.MONTHLY_SUM_BACK_BUTTON, "Vissza", event -> back()));//todo english
         add(table);
